@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditUserMTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.EditUserMLabel_userid}" for="userid" />
+                    <h:inputText id="userid" value="#{userMController.selected.userid}" title="#{bundle.EditUserMTitle_userid}" required="true" requiredMessage="#{bundle.EditUserMRequiredMessage_userid}"/>
+                    <h:outputLabel value="#{bundle.EditUserMLabel_passwd}" for="passwd" />
+                    <h:inputText id="passwd" value="#{userMController.selected.passwd}" title="#{bundle.EditUserMTitle_passwd}" />
+                    <h:outputLabel value="#{bundle.EditUserMLabel_username}" for="username" />
+                    <h:inputText id="username" value="#{userMController.selected.username}" title="#{bundle.EditUserMTitle_username}" required="true" requiredMessage="#{bundle.EditUserMRequiredMessage_username}"/>
+                    <h:outputLabel value="#{bundle.EditUserMLabel_groupid}" for="groupid" />
+                    <h:inputText id="groupid" value="#{userMController.selected.groupid}" title="#{bundle.EditUserMTitle_groupid}" />
+                    <h:outputLabel value="#{bundle.EditUserMLabel_phone}" for="phone" />
+                    <h:inputText id="phone" value="#{userMController.selected.phone}" title="#{bundle.EditUserMTitle_phone}" />
+                    <h:outputLabel value="#{bundle.EditUserMLabel_mobilephone}" for="mobilephone" />
+                    <h:inputText id="mobilephone" value="#{userMController.selected.mobilephone}" title="#{bundle.EditUserMTitle_mobilephone}" />
+                    <h:outputLabel value="#{bundle.EditUserMLabel_mail}" for="mail" />
+                    <h:inputText id="mail" value="#{userMController.selected.mail}" title="#{bundle.EditUserMTitle_mail}" />
+                    <h:outputLabel value="#{bundle.EditUserMLabel_mobilemail}" for="mobilemail" />
+                    <h:inputText id="mobilemail" value="#{userMController.selected.mobilemail}" title="#{bundle.EditUserMTitle_mobilemail}" />
+                    <h:outputLabel value="#{bundle.EditUserMLabel_joindate}" for="joindate" />
+                    <h:inputText id="joindate" value="#{userMController.selected.joindate}" title="#{bundle.EditUserMTitle_joindate}" >
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.EditUserMLabel_leavedate}" for="leavedate" />
+                    <h:inputText id="leavedate" value="#{userMController.selected.leavedate}" title="#{bundle.EditUserMTitle_leavedate}" >
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.EditUserMLabel_statejoin}" for="statejoin" />
+                    <h:inputText id="statejoin" value="#{userMController.selected.statejoin}" title="#{bundle.EditUserMTitle_statejoin}" required="true" requiredMessage="#{bundle.EditUserMRequiredMessage_statejoin}"/>
+                    <h:outputLabel value="#{bundle.EditUserMLabel_administrator}" for="administrator" />
+                    <h:inputText id="administrator" value="#{userMController.selected.administrator}" title="#{bundle.EditUserMTitle_administrator}" required="true" requiredMessage="#{bundle.EditUserMRequiredMessage_administrator}"/>
+                    <h:outputLabel value="#{bundle.EditUserMLabel_viewpersonalinfo}" for="viewpersonalinfo" />
+                    <h:inputText id="viewpersonalinfo" value="#{userMController.selected.viewpersonalinfo}" title="#{bundle.EditUserMTitle_viewpersonalinfo}" required="true" requiredMessage="#{bundle.EditUserMRequiredMessage_viewpersonalinfo}"/>
+                    <h:outputLabel value="#{bundle.EditUserMLabel_viewallschedule}" for="viewallschedule" />
+                    <h:inputText id="viewallschedule" value="#{userMController.selected.viewallschedule}" title="#{bundle.EditUserMTitle_viewallschedule}" required="true" requiredMessage="#{bundle.EditUserMRequiredMessage_viewallschedule}"/>
+                    <h:outputLabel value="#{bundle.EditUserMLabel_writeotherschedule}" for="writeotherschedule" />
+                    <h:inputText id="writeotherschedule" value="#{userMController.selected.writeotherschedule}" title="#{bundle.EditUserMTitle_writeotherschedule}" required="true" requiredMessage="#{bundle.EditUserMRequiredMessage_writeotherschedule}"/>
+                    <h:outputLabel value="#{bundle.EditUserMLabel_viewotherschedule}" for="viewotherschedule" />
+                    <h:inputText id="viewotherschedule" value="#{userMController.selected.viewotherschedule}" title="#{bundle.EditUserMTitle_viewotherschedule}" required="true" requiredMessage="#{bundle.EditUserMRequiredMessage_viewotherschedule}"/>
+                    <h:outputLabel value="#{bundle.EditUserMLabel_viewallmessage}" for="viewallmessage" />
+                    <h:inputText id="viewallmessage" value="#{userMController.selected.viewallmessage}" title="#{bundle.EditUserMTitle_viewallmessage}" required="true" requiredMessage="#{bundle.EditUserMRequiredMessage_viewallmessage}"/>
+                    <h:outputLabel value="#{bundle.EditUserMLabel_viewalluser}" for="viewalluser" />
+                    <h:inputText id="viewalluser" value="#{userMController.selected.viewalluser}" title="#{bundle.EditUserMTitle_viewalluser}" required="true" requiredMessage="#{bundle.EditUserMRequiredMessage_viewalluser}"/>
+                    <h:outputLabel value="#{bundle.EditUserMLabel_adddate}" for="adddate" />
+                    <h:inputText id="adddate" value="#{userMController.selected.adddate}" title="#{bundle.EditUserMTitle_adddate}" required="true" requiredMessage="#{bundle.EditUserMRequiredMessage_adddate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.EditUserMLabel_addprogram}" for="addprogram" />
+                    <h:inputText id="addprogram" value="#{userMController.selected.addprogram}" title="#{bundle.EditUserMTitle_addprogram}" required="true" requiredMessage="#{bundle.EditUserMRequiredMessage_addprogram}"/>
+                    <h:outputLabel value="#{bundle.EditUserMLabel_addcode}" for="addcode" />
+                    <h:inputText id="addcode" value="#{userMController.selected.addcode}" title="#{bundle.EditUserMTitle_addcode}" required="true" requiredMessage="#{bundle.EditUserMRequiredMessage_addcode}"/>
+                    <h:outputLabel value="#{bundle.EditUserMLabel_updatedate}" for="updatedate" />
+                    <h:inputText id="updatedate" value="#{userMController.selected.updatedate}" title="#{bundle.EditUserMTitle_updatedate}" required="true" requiredMessage="#{bundle.EditUserMRequiredMessage_updatedate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.EditUserMLabel_updateprogram}" for="updateprogram" />
+                    <h:inputText id="updateprogram" value="#{userMController.selected.updateprogram}" title="#{bundle.EditUserMTitle_updateprogram}" required="true" requiredMessage="#{bundle.EditUserMRequiredMessage_updateprogram}"/>
+                    <h:outputLabel value="#{bundle.EditUserMLabel_updatecode}" for="updatecode" />
+                    <h:inputText id="updatecode" value="#{userMController.selected.updatecode}" title="#{bundle.EditUserMTitle_updatecode}" required="true" requiredMessage="#{bundle.EditUserMRequiredMessage_updatecode}"/>
+                    <h:outputLabel value="#{bundle.EditUserMLabel_validrow}" for="validrow" />
+                    <h:inputText id="validrow" value="#{userMController.selected.validrow}" title="#{bundle.EditUserMTitle_validrow}" required="true" requiredMessage="#{bundle.EditUserMRequiredMessage_validrow}"/>
+                    <h:outputLabel value="#{bundle.EditUserMLabel_roworder}" for="roworder" />
+                    <h:inputText id="roworder" value="#{userMController.selected.roworder}" title="#{bundle.EditUserMTitle_roworder}" required="true" requiredMessage="#{bundle.EditUserMRequiredMessage_roworder}"/>
+                    <h:outputLabel value="#{bundle.EditUserMLabel_bbspermit}" for="bbspermit" />
+                    <h:inputText id="bbspermit" value="#{userMController.selected.bbspermit}" title="#{bundle.EditUserMTitle_bbspermit}" />
+                    <h:outputLabel value="#{bundle.EditUserMLabel_itemadmin}" for="itemadmin" />
+                    <h:inputText id="itemadmin" value="#{userMController.selected.itemadmin}" title="#{bundle.EditUserMTitle_itemadmin}" />
+                </h:panelGrid>
+                <h:commandLink action="#{userMController.update}" value="#{bundle.EditUserMSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundle.EditUserMViewLink}"/>
+                <br />
+                <h:commandLink action="#{userMController.prepareList}" value="#{bundle.EditUserMShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.EditUserMIndexLink}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

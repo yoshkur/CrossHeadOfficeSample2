@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+	  xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.SearchItemTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <p:panelGrid columns="2">
+                    <p:outputLabel value="#{bundle.SearchItemLabel_itemcd}"/>
+                    <p:inputText value="#{itemController.condition.itemcd}" title="#{bundle.SearchItemTitle_itemcd}"/>
+
+                    <p:outputLabel value="#{bundle.SearchItemLabel_keyword}"/>
+                    <p:inputText value="#{itemController.condition.keyword}" title="#{bundle.SearchItemTitle_keyword}"/>
+
+                    <p:outputLabel value="#{bundle.SearchItemLabel_customer}"/>
+                    <p:selectOneMenu value="#{itemController.condition.customer}">
+						<f:selectItem itemLabel="条件なし" itemValue=""/>
+						<f:selectItems value="#{itemController.condition.customerList}" var="customer" itemLabel="#{customer.customername}"/>
+					</p:selectOneMenu>
+
+                    <h:outputLabel value="#{bundle.SearchItemLabel_workuser}"/>
+                    <h:commandLink action="#{itemController.searchUserOnItemSearch()}" value="作業員検索" rendered="#{itemController.condition.user == null}"/>
+					<h:panelGroup layout="block" rendered="#{itemController.condition.user != null}">
+						<h:commandLink action="#{itemController.searchUserOnItemSearch()}" value="#{itemController.condition.user.username}" rendered="#{itemController.condition.user != null}"/>
+						&nbsp;
+						<h:commandLink action="#{userMController.clearUser()}" value="ユーザー条件を削除する" rendered="#{itemController.condition.user != null}"/>
+					</h:panelGroup>
+
+                    <p:outputLabel value="#{bundle.SearchItemLabel_appoint}"/>
+                    <p:selectOneMenu value="#{itemController.condition.appoint}">
+						<f:selectItem itemLabel="条件なし" itemValue=""/>
+						<f:selectItem itemLabel="アポイント中" itemValue="#{false}"/>
+						<f:selectItem itemLabel="アポイント済み" itemValue="#{true}"/>
+					</p:selectOneMenu>
+
+                    <p:outputLabel value="#{bundle.SearchItemLabel_turnstart}"/>
+                    <p:calendar value="#{itemController.condition.turnStart}" pattern="yyyy/MM/dd" title="#{bundle.SearchItemTitle_turnstart}"/>
+
+                    <p:outputLabel value="#{bundle.SearchItemLabel_turnend}"/>
+                    <p:calendar value="#{itemController.condition.turnEnd}" pattern="yyyy/MM/dd" title="#{bundle.SearchItemTitle_turnend}"/>
+
+                    <p:outputLabel value="#{bundle.SearchItemLabel_worked}"/>
+                    <p:selectOneMenu value="#{itemController.condition.worked}">
+						<f:selectItem itemLabel="条件なし" itemValue=""/>
+						<f:selectItem itemLabel="作業待ち" itemValue="#{false}"/>
+						<f:selectItem itemLabel="作業済み" itemValue="#{true}"/>
+					</p:selectOneMenu>
+
+                    <p:outputLabel value="#{bundle.SearchItemLabel_finished}"/>
+                    <p:selectOneMenu value="#{itemController.condition.finished}">
+						<f:selectItem itemLabel="条件なし" itemValue=""/>
+						<f:selectItem itemLabel="報告待ち" itemValue="#{false}"/>
+						<f:selectItem itemLabel="報告済み" itemValue="#{true}"/>
+					</p:selectOneMenu>
+
+                    <p:outputLabel value="#{bundle.SearchItemLabel_accounting}"/>
+                    <p:selectOneMenu value="#{itemController.condition.accounting}">
+						<f:selectItem itemLabel="条件なし" itemValue=""/>
+						<f:selectItem itemLabel="未完了" itemValue="#{false}"/>
+						<f:selectItem itemLabel="完了" itemValue="#{true}"/>
+					</p:selectOneMenu>
+
+                    <p:outputLabel value="#{bundle.SearchItemLabel_cancel}"/>
+                    <p:selectOneMenu value="#{itemController.condition.cancel}">
+						<f:selectItem itemLabel="条件なし" itemValue=""/>
+						<f:selectItem itemLabel="通常" itemValue="#{false}"/>
+						<f:selectItem itemLabel="キャンセル" itemValue="#{true}"/>
+					</p:selectOneMenu>
+
+                    <p:outputLabel value="#{bundle.SearchItemLabel_onhold}"/>
+                    <p:selectOneMenu value="#{itemController.condition.onhold}">
+						<f:selectItem itemLabel="条件なし" itemValue=""/>
+						<f:selectItem itemLabel="通常" itemValue="#{false}"/>
+						<f:selectItem itemLabel="保留中" itemValue="#{true}"/>
+					</p:selectOneMenu>
+
+                    <p:outputLabel value="#{bundle.SearchItemLabel_adddatestart}"/>
+                    <p:calendar value="#{itemController.condition.addDateStart}" pattern="yyyy/MM/dd" title="#{bundle.SearchItemTitle_adddatestart}"/>
+
+                    <p:outputLabel value="#{bundle.SearchItemLabel_adddateend}"/>
+                    <p:calendar value="#{itemController.condition.addDateEnd}" pattern="yyyy/MM/dd" title="#{bundle.SearchItemTitle_adddateend}"/>
+
+                    <p:outputLabel value="#{bundle.SearchItemLabel_updatedatestart}"/>
+                    <p:calendar value="#{itemController.condition.updateDateStart}" pattern="yyyy/MM/dd" title="#{bundle.SearchItemTitle_updatedatestart}"/>
+
+                    <p:outputLabel value="#{bundle.SearchItemLabel_updatedateend}"/>
+                    <p:calendar value="#{itemController.condition.updateDateEnd}" pattern="yyyy/MM/dd" title="#{bundle.SearchItemTitle_updatedateend}"/>
+
+				</p:panelGrid>
+				<p:commandButton action="#{itemController.searchList()}" value="#{bundle.SearchItemButton}"/>
+            </h:form>
+			<br />
+			<h:link outcome="/index" value="#{bundle.IndexLink}"/>
+        </ui:define>
+    </ui:composition>
+
+</html>

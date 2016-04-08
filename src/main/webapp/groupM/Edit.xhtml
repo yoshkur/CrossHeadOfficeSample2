@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditGroupMTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.EditGroupMLabel_groupid}" for="groupid" />
+                    <h:inputText id="groupid" value="#{groupMController.selected.groupid}" title="#{bundle.EditGroupMTitle_groupid}" required="true" requiredMessage="#{bundle.EditGroupMRequiredMessage_groupid}"/>
+                    <h:outputLabel value="#{bundle.EditGroupMLabel_groupname}" for="groupname" />
+                    <h:inputText id="groupname" value="#{groupMController.selected.groupname}" title="#{bundle.EditGroupMTitle_groupname}" required="true" requiredMessage="#{bundle.EditGroupMRequiredMessage_groupname}"/>
+                    <h:outputLabel value="#{bundle.EditGroupMLabel_memo}" for="memo" />
+                    <h:inputText id="memo" value="#{groupMController.selected.memo}" title="#{bundle.EditGroupMTitle_memo}" />
+                    <h:outputLabel value="#{bundle.EditGroupMLabel_adddate}" for="adddate" />
+                    <h:inputText id="adddate" value="#{groupMController.selected.adddate}" title="#{bundle.EditGroupMTitle_adddate}" required="true" requiredMessage="#{bundle.EditGroupMRequiredMessage_adddate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.EditGroupMLabel_addprogram}" for="addprogram" />
+                    <h:inputText id="addprogram" value="#{groupMController.selected.addprogram}" title="#{bundle.EditGroupMTitle_addprogram}" required="true" requiredMessage="#{bundle.EditGroupMRequiredMessage_addprogram}"/>
+                    <h:outputLabel value="#{bundle.EditGroupMLabel_addcode}" for="addcode" />
+                    <h:inputText id="addcode" value="#{groupMController.selected.addcode}" title="#{bundle.EditGroupMTitle_addcode}" required="true" requiredMessage="#{bundle.EditGroupMRequiredMessage_addcode}"/>
+                    <h:outputLabel value="#{bundle.EditGroupMLabel_updatedate}" for="updatedate" />
+                    <h:inputText id="updatedate" value="#{groupMController.selected.updatedate}" title="#{bundle.EditGroupMTitle_updatedate}" required="true" requiredMessage="#{bundle.EditGroupMRequiredMessage_updatedate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.EditGroupMLabel_updateprogram}" for="updateprogram" />
+                    <h:inputText id="updateprogram" value="#{groupMController.selected.updateprogram}" title="#{bundle.EditGroupMTitle_updateprogram}" required="true" requiredMessage="#{bundle.EditGroupMRequiredMessage_updateprogram}"/>
+                    <h:outputLabel value="#{bundle.EditGroupMLabel_updatecode}" for="updatecode" />
+                    <h:inputText id="updatecode" value="#{groupMController.selected.updatecode}" title="#{bundle.EditGroupMTitle_updatecode}" required="true" requiredMessage="#{bundle.EditGroupMRequiredMessage_updatecode}"/>
+                    <h:outputLabel value="#{bundle.EditGroupMLabel_validrow}" for="validrow" />
+                    <h:inputText id="validrow" value="#{groupMController.selected.validrow}" title="#{bundle.EditGroupMTitle_validrow}" required="true" requiredMessage="#{bundle.EditGroupMRequiredMessage_validrow}"/>
+                    <h:outputLabel value="#{bundle.EditGroupMLabel_roworder}" for="roworder" />
+                    <h:inputText id="roworder" value="#{groupMController.selected.roworder}" title="#{bundle.EditGroupMTitle_roworder}" required="true" requiredMessage="#{bundle.EditGroupMRequiredMessage_roworder}"/>
+                </h:panelGrid>
+                <h:commandLink action="#{groupMController.update}" value="#{bundle.EditGroupMSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundle.EditGroupMViewLink}"/>
+                <br />
+                <h:commandLink action="#{groupMController.prepareList}" value="#{bundle.EditGroupMShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.EditGroupMIndexLink}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

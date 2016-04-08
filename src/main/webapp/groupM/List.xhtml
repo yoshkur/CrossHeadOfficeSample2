@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListGroupMTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+			<h:form styleClass="jsfcrud_list_form">
+				<h:panelGroup id="messagePanel" layout="block">
+					<h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+				</h:panelGroup>
+				<h:outputText escape="false" value="#{bundle.ListGroupMEmpty}" rendered="#{groupMController.items.rowCount == 0}"/>
+				<h:panelGroup rendered="#{groupMController.items.rowCount > 0}">
+					<h:outputText value="#{groupMController.pagination.pageFirstItem + 1}..#{groupMController.pagination.pageLastItem + 1}/#{groupMController.pagination.itemsCount}"/>&nbsp;
+					<h:commandLink action="#{groupMController.previous}" value="#{bundle.Previous} #{groupMController.pagination.pageSize}" rendered="#{groupMController.pagination.hasPreviousPage}"/>&nbsp;
+					<h:commandLink action="#{groupMController.next}" value="#{bundle.Next} #{groupMController.pagination.pageSize}" rendered="#{groupMController.pagination.hasNextPage}"/>&nbsp;
+					<h:dataTable value="#{groupMController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{bundle.ListGroupMTitle_groupid}"/>
+							</f:facet>
+							<h:outputText value="#{item.groupid}"/>
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{bundle.ListGroupMTitle_groupname}"/>
+							</f:facet>
+							<h:outputText value="#{item.groupname}"/>
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{bundle.ListGroupMTitle_memo}"/>
+							</f:facet>
+							<h:outputText value="#{item.memo}"/>
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{bundle.ListGroupMTitle_adddate}"/>
+							</f:facet>
+							<h:outputText value="#{item.adddate}">
+								<f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+							</h:outputText>
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{bundle.ListGroupMTitle_addprogram}"/>
+							</f:facet>
+							<h:outputText value="#{item.addprogram}"/>
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{bundle.ListGroupMTitle_addcode}"/>
+							</f:facet>
+							<h:outputText value="#{item.addcode}"/>
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{bundle.ListGroupMTitle_updatedate}"/>
+							</f:facet>
+							<h:outputText value="#{item.updatedate}">
+								<f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+							</h:outputText>
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{bundle.ListGroupMTitle_updateprogram}"/>
+							</f:facet>
+							<h:outputText value="#{item.updateprogram}"/>
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{bundle.ListGroupMTitle_updatecode}"/>
+							</f:facet>
+							<h:outputText value="#{item.updatecode}"/>
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{bundle.ListGroupMTitle_validrow}"/>
+							</f:facet>
+							<h:outputText value="#{item.validrow}"/>
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="#{bundle.ListGroupMTitle_roworder}"/>
+							</f:facet>
+							<h:outputText value="#{item.roworder}"/>
+						</h:column>
+						<h:column>
+							<f:facet name="header">
+								<h:outputText value="&nbsp;"/>
+							</f:facet>
+							<h:commandLink action="#{groupMController.prepareView}" value="#{bundle.ListGroupMViewLink}"/>
+							<h:outputText value=" "/>
+							<h:commandLink action="#{groupMController.prepareEdit}" value="#{bundle.ListGroupMEditLink}"/>
+							<h:outputText value=" "/>
+							<h:commandLink action="#{groupMController.destroy}" value="#{bundle.ListGroupMDestroyLink}"/>
+						</h:column>
+					</h:dataTable>
+				</h:panelGroup>
+				<br />
+				<h:commandLink action="#{groupMController.prepareCreate}" value="#{bundle.ListGroupMCreateLink}"/>
+				<br />
+				<br />
+				<h:link outcome="/index" value="#{bundle.ListGroupMIndexLink}"/>
+			</h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewUserMTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewUserMLabel_userid}"/>
+                    <h:outputText value="#{userMController.selected.userid}" title="#{bundle.ViewUserMTitle_userid}"/>
+                    <h:outputText value="#{bundle.ViewUserMLabel_passwd}"/>
+                    <h:outputText value="#{userMController.selected.passwd}" title="#{bundle.ViewUserMTitle_passwd}"/>
+                    <h:outputText value="#{bundle.ViewUserMLabel_username}"/>
+                    <h:outputText value="#{userMController.selected.username}" title="#{bundle.ViewUserMTitle_username}"/>
+                    <h:outputText value="#{bundle.ViewUserMLabel_groupid}"/>
+                    <h:outputText value="#{userMController.selected.groupid}" title="#{bundle.ViewUserMTitle_groupid}"/>
+                    <h:outputText value="#{bundle.ViewUserMLabel_phone}"/>
+                    <h:outputText value="#{userMController.selected.phone}" title="#{bundle.ViewUserMTitle_phone}"/>
+                    <h:outputText value="#{bundle.ViewUserMLabel_mobilephone}"/>
+                    <h:outputText value="#{userMController.selected.mobilephone}" title="#{bundle.ViewUserMTitle_mobilephone}"/>
+                    <h:outputText value="#{bundle.ViewUserMLabel_mail}"/>
+                    <h:outputText value="#{userMController.selected.mail}" title="#{bundle.ViewUserMTitle_mail}"/>
+                    <h:outputText value="#{bundle.ViewUserMLabel_mobilemail}"/>
+                    <h:outputText value="#{userMController.selected.mobilemail}" title="#{bundle.ViewUserMTitle_mobilemail}"/>
+                    <h:outputText value="#{bundle.ViewUserMLabel_joindate}"/>
+                    <h:outputText value="#{userMController.selected.joindate}" title="#{bundle.ViewUserMTitle_joindate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+                    <h:outputText value="#{bundle.ViewUserMLabel_leavedate}"/>
+                    <h:outputText value="#{userMController.selected.leavedate}" title="#{bundle.ViewUserMTitle_leavedate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+                    <h:outputText value="#{bundle.ViewUserMLabel_statejoin}"/>
+                    <h:outputText value="#{userMController.selected.statejoin}" title="#{bundle.ViewUserMTitle_statejoin}"/>
+                    <h:outputText value="#{bundle.ViewUserMLabel_administrator}"/>
+                    <h:outputText value="#{userMController.selected.administrator}" title="#{bundle.ViewUserMTitle_administrator}"/>
+                    <h:outputText value="#{bundle.ViewUserMLabel_viewpersonalinfo}"/>
+                    <h:outputText value="#{userMController.selected.viewpersonalinfo}" title="#{bundle.ViewUserMTitle_viewpersonalinfo}"/>
+                    <h:outputText value="#{bundle.ViewUserMLabel_viewallschedule}"/>
+                    <h:outputText value="#{userMController.selected.viewallschedule}" title="#{bundle.ViewUserMTitle_viewallschedule}"/>
+                    <h:outputText value="#{bundle.ViewUserMLabel_writeotherschedule}"/>
+                    <h:outputText value="#{userMController.selected.writeotherschedule}" title="#{bundle.ViewUserMTitle_writeotherschedule}"/>
+                    <h:outputText value="#{bundle.ViewUserMLabel_viewotherschedule}"/>
+                    <h:outputText value="#{userMController.selected.viewotherschedule}" title="#{bundle.ViewUserMTitle_viewotherschedule}"/>
+                    <h:outputText value="#{bundle.ViewUserMLabel_viewallmessage}"/>
+                    <h:outputText value="#{userMController.selected.viewallmessage}" title="#{bundle.ViewUserMTitle_viewallmessage}"/>
+                    <h:outputText value="#{bundle.ViewUserMLabel_viewalluser}"/>
+                    <h:outputText value="#{userMController.selected.viewalluser}" title="#{bundle.ViewUserMTitle_viewalluser}"/>
+                    <h:outputText value="#{bundle.ViewUserMLabel_adddate}"/>
+                    <h:outputText value="#{userMController.selected.adddate}" title="#{bundle.ViewUserMTitle_adddate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:outputText>
+                    <h:outputText value="#{bundle.ViewUserMLabel_addprogram}"/>
+                    <h:outputText value="#{userMController.selected.addprogram}" title="#{bundle.ViewUserMTitle_addprogram}"/>
+                    <h:outputText value="#{bundle.ViewUserMLabel_addcode}"/>
+                    <h:outputText value="#{userMController.selected.addcode}" title="#{bundle.ViewUserMTitle_addcode}"/>
+                    <h:outputText value="#{bundle.ViewUserMLabel_updatedate}"/>
+                    <h:outputText value="#{userMController.selected.updatedate}" title="#{bundle.ViewUserMTitle_updatedate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:outputText>
+                    <h:outputText value="#{bundle.ViewUserMLabel_updateprogram}"/>
+                    <h:outputText value="#{userMController.selected.updateprogram}" title="#{bundle.ViewUserMTitle_updateprogram}"/>
+                    <h:outputText value="#{bundle.ViewUserMLabel_updatecode}"/>
+                    <h:outputText value="#{userMController.selected.updatecode}" title="#{bundle.ViewUserMTitle_updatecode}"/>
+                    <h:outputText value="#{bundle.ViewUserMLabel_validrow}"/>
+                    <h:outputText value="#{userMController.selected.validrow}" title="#{bundle.ViewUserMTitle_validrow}"/>
+                    <h:outputText value="#{bundle.ViewUserMLabel_roworder}"/>
+                    <h:outputText value="#{userMController.selected.roworder}" title="#{bundle.ViewUserMTitle_roworder}"/>
+                    <h:outputText value="#{bundle.ViewUserMLabel_bbspermit}"/>
+                    <h:outputText value="#{userMController.selected.bbspermit}" title="#{bundle.ViewUserMTitle_bbspermit}"/>
+                    <h:outputText value="#{bundle.ViewUserMLabel_itemadmin}"/>
+                    <h:outputText value="#{userMController.selected.itemadmin}" title="#{bundle.ViewUserMTitle_itemadmin}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{userMController.destroyAndView}" value="#{bundle.ViewUserMDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewUserMEditLink}"/>
+                <br />
+                <h:commandLink action="#{userMController.prepareCreate}" value="#{bundle.ViewUserMCreateLink}" />
+                <br />
+                <h:commandLink action="#{userMController.prepareList}" value="#{bundle.ViewUserMShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewUserMIndexLink}"/>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

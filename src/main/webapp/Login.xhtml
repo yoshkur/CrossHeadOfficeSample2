@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+	  xmlns:p="http://primefaces.org/ui">
+
+	<h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>ログイン　#{bundle.ApplicationTitle}</title>
+        <h:outputStylesheet library="css" name="jsfcrud.css"/>
+        <h:outputScript library="js" name="jsfcrud.js"/>
+		<link rel="stylesheet" href="/CrossHeadOfficeSample2/resources/css/reset.css" type="text/css" />
+		<link rel="stylesheet" href="/CrossHeadOfficeSample2/resources/css/default.css" type="text/css" />
+		<link rel="stylesheet" href="/CrossHeadOfficeSample2/resources/css/style.css" type="text/css" />
+		<!--[if IE]>
+		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+	</h:head>
+
+	<h:body>
+		<header>
+			<div class="header_left">
+				<h1 class="logo">#{bundle.ApplicationTitle}</h1>
+			</div>
+			<div class="header_right">
+				<address>059-255-5452</address>
+			</div>
+			<div style="clear:both;"></div>
+			<div id="headermenu">
+				<ul>
+					<li><h:link outcome="/index" value="トップページ" /></li>
+				</ul>
+			</div>
+		</header>
+
+		<section id="content">
+			<h2>ログイン</h2>
+			<article>
+				<h:form styleClass="jsfcrud_list_form">
+					<p:panelGrid columns="2">
+						<p:outputLabel value="#{bundle.LoginLabel_Userid}" for="userid" />
+						<p:inputText id="userid" value="#{loginController.loginUser.userid}" title="#{bundle.LoginTitle_Userid}" required="true" requiredMessage="#{bundle.LoginRequiredMessage_Userid}"/>
+						<p:outputLabel value="#{bundle.LoginLabel_Password}" for="password" />
+						<p:keyboard password="true" id="password" value="#{loginController.loginUser.passwd}" title="#{bundle.LoginTitle_Password}" required="true" requiredMessage="#{bundle.LoginRequiredMessage_Password}"/>
+					</p:panelGrid>
+					<p:commandButton action="#{loginController.login()}" value="ログイン" />
+				</h:form>
+			</article>
+		</section>
+
+		<nav>
+			<h3>メニュー</h3>
+			<ul>
+				<li><h:link outcome="/index" value="トップページ" /></li>
+			</ul>
+		</nav>
+
+		<footer>
+			[フッター]
+		</footer>
+
+	</h:body>
+</html>
+

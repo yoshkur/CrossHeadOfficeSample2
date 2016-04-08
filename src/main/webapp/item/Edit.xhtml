@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditItemTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.EditItemLabel_itemid}" for="itemid" />
+                    <h:inputText id="itemid" value="#{itemController.selected.itemid}" title="#{bundle.EditItemTitle_itemid}" required="true" requiredMessage="#{bundle.EditItemRequiredMessage_itemid}"/>
+                    <h:outputLabel value="#{bundle.EditItemLabel_itemcd}" for="itemcd" />
+                    <h:inputText id="itemcd" value="#{itemController.selected.itemcd}" title="#{bundle.EditItemTitle_itemcd}" required="true" requiredMessage="#{bundle.EditItemRequiredMessage_itemcd}"/>
+                    <h:outputLabel value="#{bundle.EditItemLabel_detail}" for="detail" />
+                    <h:inputText id="detail" value="#{itemController.selected.detail}" title="#{bundle.EditItemTitle_detail}" required="true" requiredMessage="#{bundle.EditItemRequiredMessage_detail}"/>
+                    <h:outputLabel value="#{bundle.EditItemLabel_appoint}" for="appoint" />
+                    <h:inputText id="appoint" value="#{itemController.selected.appoint}" title="#{bundle.EditItemTitle_appoint}" required="true" requiredMessage="#{bundle.EditItemRequiredMessage_appoint}"/>
+                    <h:outputLabel value="#{bundle.EditItemLabel_scheid}" for="scheid" />
+                    <h:inputText id="scheid" value="#{itemController.selected.scheid}" title="#{bundle.EditItemTitle_scheid}" />
+                    <h:outputLabel value="#{bundle.EditItemLabel_worked}" for="worked" />
+                    <h:inputText id="worked" value="#{itemController.selected.worked}" title="#{bundle.EditItemTitle_worked}" required="true" requiredMessage="#{bundle.EditItemRequiredMessage_worked}"/>
+                    <h:outputLabel value="#{bundle.EditItemLabel_workedreport}" for="workedreport" />
+                    <h:inputText id="workedreport" value="#{itemController.selected.workedreport}" title="#{bundle.EditItemTitle_workedreport}" />
+                    <h:outputLabel value="#{bundle.EditItemLabel_finished}" for="finished" />
+                    <h:inputText id="finished" value="#{itemController.selected.finished}" title="#{bundle.EditItemTitle_finished}" required="true" requiredMessage="#{bundle.EditItemRequiredMessage_finished}"/>
+                    <h:outputLabel value="#{bundle.EditItemLabel_cancel}" for="cancel" />
+                    <h:inputText id="cancel" value="#{itemController.selected.cancel}" title="#{bundle.EditItemTitle_cancel}" required="true" requiredMessage="#{bundle.EditItemRequiredMessage_cancel}"/>
+                    <h:outputLabel value="#{bundle.EditItemLabel_accounting}" for="accounting" />
+                    <h:inputText id="accounting" value="#{itemController.selected.accounting}" title="#{bundle.EditItemTitle_accounting}" required="true" requiredMessage="#{bundle.EditItemRequiredMessage_accounting}"/>
+                    <h:outputLabel value="#{bundle.EditItemLabel_onhold}" for="onhold" />
+                    <h:inputText id="onhold" value="#{itemController.selected.onhold}" title="#{bundle.EditItemTitle_onhold}" required="true" requiredMessage="#{bundle.EditItemRequiredMessage_onhold}"/>
+                    <h:outputLabel value="#{bundle.EditItemLabel_directpayment}" for="directpayment" />
+                    <h:inputText id="directpayment" value="#{itemController.selected.directpayment}" title="#{bundle.EditItemTitle_directpayment}" required="true" requiredMessage="#{bundle.EditItemRequiredMessage_directpayment}"/>
+                    <h:outputLabel value="#{bundle.EditItemLabel_memo}" for="memo" />
+                    <h:inputText id="memo" value="#{itemController.selected.memo}" title="#{bundle.EditItemTitle_memo}" />
+                    <h:outputLabel value="#{bundle.EditItemLabel_adddate}" for="adddate" />
+                    <h:inputText id="adddate" value="#{itemController.selected.adddate}" title="#{bundle.EditItemTitle_adddate}" required="true" requiredMessage="#{bundle.EditItemRequiredMessage_adddate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.EditItemLabel_addprogram}" for="addprogram" />
+                    <h:inputText id="addprogram" value="#{itemController.selected.addprogram}" title="#{bundle.EditItemTitle_addprogram}" required="true" requiredMessage="#{bundle.EditItemRequiredMessage_addprogram}"/>
+                    <h:outputLabel value="#{bundle.EditItemLabel_addcode}" for="addcode" />
+                    <h:inputText id="addcode" value="#{itemController.selected.addcode}" title="#{bundle.EditItemTitle_addcode}" required="true" requiredMessage="#{bundle.EditItemRequiredMessage_addcode}"/>
+                    <h:outputLabel value="#{bundle.EditItemLabel_updatedate}" for="updatedate" />
+                    <h:inputText id="updatedate" value="#{itemController.selected.updatedate}" title="#{bundle.EditItemTitle_updatedate}" required="true" requiredMessage="#{bundle.EditItemRequiredMessage_updatedate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.EditItemLabel_updateprogram}" for="updateprogram" />
+                    <h:inputText id="updateprogram" value="#{itemController.selected.updateprogram}" title="#{bundle.EditItemTitle_updateprogram}" required="true" requiredMessage="#{bundle.EditItemRequiredMessage_updateprogram}"/>
+                    <h:outputLabel value="#{bundle.EditItemLabel_updatecode}" for="updatecode" />
+                    <h:inputText id="updatecode" value="#{itemController.selected.updatecode}" title="#{bundle.EditItemTitle_updatecode}" required="true" requiredMessage="#{bundle.EditItemRequiredMessage_updatecode}"/>
+                    <h:outputLabel value="#{bundle.EditItemLabel_validrow}" for="validrow" />
+                    <h:inputText id="validrow" value="#{itemController.selected.validrow}" title="#{bundle.EditItemTitle_validrow}" required="true" requiredMessage="#{bundle.EditItemRequiredMessage_validrow}"/>
+                    <h:outputLabel value="#{bundle.EditItemLabel_customerid}" for="customerid" />
+                    <h:selectOneMenu id="customerid" value="#{itemController.selected.customerid}" title="#{bundle.EditItemTitle_customerid}" >
+                        <f:selectItems value="#{customerController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                    <h:outputLabel value="#{bundle.EditItemLabel_userid}" for="userid" />
+                    <h:selectOneMenu id="userid" value="#{itemController.selected.userid}" title="#{bundle.EditItemTitle_userid}" required="true" requiredMessage="#{bundle.EditItemRequiredMessage_userid}">
+                        <f:selectItems value="#{userMController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <h:commandLink action="#{itemController.update}" value="#{bundle.EditItemSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundle.EditItemViewLink}"/>
+                <br />
+                <h:commandLink action="#{itemController.prepareList}" value="#{bundle.EditItemShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.EditItemIndexLink}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateScheduleTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.CreateScheduleLabel_scheid}" for="scheid" />
+                    <h:inputText id="scheid" value="#{scheduleController.selected.scheid}" title="#{bundle.CreateScheduleTitle_scheid}" required="true" requiredMessage="#{bundle.CreateScheduleRequiredMessage_scheid}"/>
+                    <h:outputLabel value="#{bundle.CreateScheduleLabel_ownerid}" for="ownerid" />
+                    <h:inputText id="ownerid" value="#{scheduleController.selected.ownerid}" title="#{bundle.CreateScheduleTitle_ownerid}" required="true" requiredMessage="#{bundle.CreateScheduleRequiredMessage_ownerid}"/>
+                    <h:outputLabel value="#{bundle.CreateScheduleLabel_title}" for="title" />
+                    <h:inputText id="title" value="#{scheduleController.selected.title}" title="#{bundle.CreateScheduleTitle_title}" required="true" requiredMessage="#{bundle.CreateScheduleRequiredMessage_title}"/>
+                    <h:outputLabel value="#{bundle.CreateScheduleLabel_datefrom}" for="datefrom" />
+                    <h:inputText id="datefrom" value="#{scheduleController.selected.datefrom}" title="#{bundle.CreateScheduleTitle_datefrom}" required="true" requiredMessage="#{bundle.CreateScheduleRequiredMessage_datefrom}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.CreateScheduleLabel_dateto}" for="dateto" />
+                    <h:inputText id="dateto" value="#{scheduleController.selected.dateto}" title="#{bundle.CreateScheduleTitle_dateto}" required="true" requiredMessage="#{bundle.CreateScheduleRequiredMessage_dateto}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.CreateScheduleLabel_state}" for="state" />
+                    <h:inputText id="state" value="#{scheduleController.selected.state}" title="#{bundle.CreateScheduleTitle_state}" />
+                    <h:outputLabel value="#{bundle.CreateScheduleLabel_itemno}" for="itemno" />
+                    <h:inputText id="itemno" value="#{scheduleController.selected.itemno}" title="#{bundle.CreateScheduleTitle_itemno}" />
+                    <h:outputLabel value="#{bundle.CreateScheduleLabel_address}" for="address" />
+                    <h:inputText id="address" value="#{scheduleController.selected.address}" title="#{bundle.CreateScheduleTitle_address}" />
+                    <h:outputLabel value="#{bundle.CreateScheduleLabel_customer}" for="customer" />
+                    <h:inputText id="customer" value="#{scheduleController.selected.customer}" title="#{bundle.CreateScheduleTitle_customer}" />
+                    <h:outputLabel value="#{bundle.CreateScheduleLabel_tel}" for="tel" />
+                    <h:inputText id="tel" value="#{scheduleController.selected.tel}" title="#{bundle.CreateScheduleTitle_tel}" required="true" requiredMessage="#{bundle.CreateScheduleRequiredMessage_tel}"/>
+                    <h:outputLabel value="#{bundle.CreateScheduleLabel_note}" for="note" />
+                    <h:inputText id="note" value="#{scheduleController.selected.note}" title="#{bundle.CreateScheduleTitle_note}" />
+                    <h:outputLabel value="#{bundle.CreateScheduleLabel_workmemo}" for="workmemo" />
+                    <h:inputText id="workmemo" value="#{scheduleController.selected.workmemo}" title="#{bundle.CreateScheduleTitle_workmemo}" />
+                    <h:outputLabel value="#{bundle.CreateScheduleLabel_statein}" for="statein" />
+                    <h:inputText id="statein" value="#{scheduleController.selected.statein}" title="#{bundle.CreateScheduleTitle_statein}" required="true" requiredMessage="#{bundle.CreateScheduleRequiredMessage_statein}"/>
+                    <h:outputLabel value="#{bundle.CreateScheduleLabel_datein}" for="datein" />
+                    <h:inputText id="datein" value="#{scheduleController.selected.datein}" title="#{bundle.CreateScheduleTitle_datein}" >
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.CreateScheduleLabel_stateout}" for="stateout" />
+                    <h:inputText id="stateout" value="#{scheduleController.selected.stateout}" title="#{bundle.CreateScheduleTitle_stateout}" required="true" requiredMessage="#{bundle.CreateScheduleRequiredMessage_stateout}"/>
+                    <h:outputLabel value="#{bundle.CreateScheduleLabel_dateout}" for="dateout" />
+                    <h:inputText id="dateout" value="#{scheduleController.selected.dateout}" title="#{bundle.CreateScheduleTitle_dateout}" >
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.CreateScheduleLabel_open}" for="open" />
+                    <h:inputText id="open" value="#{scheduleController.selected.open}" title="#{bundle.CreateScheduleTitle_open}" required="true" requiredMessage="#{bundle.CreateScheduleRequiredMessage_open}"/>
+                    <h:outputLabel value="#{bundle.CreateScheduleLabel_adddate}" for="adddate" />
+                    <h:inputText id="adddate" value="#{scheduleController.selected.adddate}" title="#{bundle.CreateScheduleTitle_adddate}" required="true" requiredMessage="#{bundle.CreateScheduleRequiredMessage_adddate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.CreateScheduleLabel_addprogram}" for="addprogram" />
+                    <h:inputText id="addprogram" value="#{scheduleController.selected.addprogram}" title="#{bundle.CreateScheduleTitle_addprogram}" required="true" requiredMessage="#{bundle.CreateScheduleRequiredMessage_addprogram}"/>
+                    <h:outputLabel value="#{bundle.CreateScheduleLabel_addcode}" for="addcode" />
+                    <h:inputText id="addcode" value="#{scheduleController.selected.addcode}" title="#{bundle.CreateScheduleTitle_addcode}" required="true" requiredMessage="#{bundle.CreateScheduleRequiredMessage_addcode}"/>
+                    <h:outputLabel value="#{bundle.CreateScheduleLabel_updatedate}" for="updatedate" />
+                    <h:inputText id="updatedate" value="#{scheduleController.selected.updatedate}" title="#{bundle.CreateScheduleTitle_updatedate}" required="true" requiredMessage="#{bundle.CreateScheduleRequiredMessage_updatedate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.CreateScheduleLabel_updateprogram}" for="updateprogram" />
+                    <h:inputText id="updateprogram" value="#{scheduleController.selected.updateprogram}" title="#{bundle.CreateScheduleTitle_updateprogram}" required="true" requiredMessage="#{bundle.CreateScheduleRequiredMessage_updateprogram}"/>
+                    <h:outputLabel value="#{bundle.CreateScheduleLabel_updatecode}" for="updatecode" />
+                    <h:inputText id="updatecode" value="#{scheduleController.selected.updatecode}" title="#{bundle.CreateScheduleTitle_updatecode}" required="true" requiredMessage="#{bundle.CreateScheduleRequiredMessage_updatecode}"/>
+                    <h:outputLabel value="#{bundle.CreateScheduleLabel_validrow}" for="validrow" />
+                    <h:inputText id="validrow" value="#{scheduleController.selected.validrow}" title="#{bundle.CreateScheduleTitle_validrow}" required="true" requiredMessage="#{bundle.CreateScheduleRequiredMessage_validrow}"/>
+                    <h:outputLabel value="#{bundle.CreateScheduleLabel_userid}" for="userid" />
+                    <h:selectOneMenu id="userid" value="#{scheduleController.selected.userid}" title="#{bundle.CreateScheduleTitle_userid}" required="true" requiredMessage="#{bundle.CreateScheduleRequiredMessage_userid}">
+                        <f:selectItems value="#{userMController.itemsAvailableSelectOne}"/>
+                    </h:selectOneMenu>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{scheduleController.create}" value="#{bundle.CreateScheduleSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{scheduleController.prepareList}" value="#{bundle.CreateScheduleShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreateScheduleIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

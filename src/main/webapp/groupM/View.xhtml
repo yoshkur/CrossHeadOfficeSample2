@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewGroupMTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewGroupMLabel_groupid}"/>
+                    <h:outputText value="#{groupMController.selected.groupid}" title="#{bundle.ViewGroupMTitle_groupid}"/>
+                    <h:outputText value="#{bundle.ViewGroupMLabel_groupname}"/>
+                    <h:outputText value="#{groupMController.selected.groupname}" title="#{bundle.ViewGroupMTitle_groupname}"/>
+                    <h:outputText value="#{bundle.ViewGroupMLabel_memo}"/>
+                    <h:outputText value="#{groupMController.selected.memo}" title="#{bundle.ViewGroupMTitle_memo}"/>
+                    <h:outputText value="#{bundle.ViewGroupMLabel_adddate}"/>
+                    <h:outputText value="#{groupMController.selected.adddate}" title="#{bundle.ViewGroupMTitle_adddate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:outputText>
+                    <h:outputText value="#{bundle.ViewGroupMLabel_addprogram}"/>
+                    <h:outputText value="#{groupMController.selected.addprogram}" title="#{bundle.ViewGroupMTitle_addprogram}"/>
+                    <h:outputText value="#{bundle.ViewGroupMLabel_addcode}"/>
+                    <h:outputText value="#{groupMController.selected.addcode}" title="#{bundle.ViewGroupMTitle_addcode}"/>
+                    <h:outputText value="#{bundle.ViewGroupMLabel_updatedate}"/>
+                    <h:outputText value="#{groupMController.selected.updatedate}" title="#{bundle.ViewGroupMTitle_updatedate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:outputText>
+                    <h:outputText value="#{bundle.ViewGroupMLabel_updateprogram}"/>
+                    <h:outputText value="#{groupMController.selected.updateprogram}" title="#{bundle.ViewGroupMTitle_updateprogram}"/>
+                    <h:outputText value="#{bundle.ViewGroupMLabel_updatecode}"/>
+                    <h:outputText value="#{groupMController.selected.updatecode}" title="#{bundle.ViewGroupMTitle_updatecode}"/>
+                    <h:outputText value="#{bundle.ViewGroupMLabel_validrow}"/>
+                    <h:outputText value="#{groupMController.selected.validrow}" title="#{bundle.ViewGroupMTitle_validrow}"/>
+                    <h:outputText value="#{bundle.ViewGroupMLabel_roworder}"/>
+                    <h:outputText value="#{groupMController.selected.roworder}" title="#{bundle.ViewGroupMTitle_roworder}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{groupMController.destroyAndView}" value="#{bundle.ViewGroupMDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewGroupMEditLink}"/>
+                <br />
+                <h:commandLink action="#{groupMController.prepareCreate}" value="#{bundle.ViewGroupMCreateLink}" />
+                <br />
+                <h:commandLink action="#{groupMController.prepareList}" value="#{bundle.ViewGroupMShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewGroupMIndexLink}"/>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

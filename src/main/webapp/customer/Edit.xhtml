@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditCustomerTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.EditCustomerLabel_customerid}" for="customerid" />
+                    <h:inputText id="customerid" value="#{customerController.selected.customerid}" title="#{bundle.EditCustomerTitle_customerid}" required="true" requiredMessage="#{bundle.EditCustomerRequiredMessage_customerid}"/>
+                    <h:outputLabel value="#{bundle.EditCustomerLabel_customername}" for="customername" />
+                    <h:inputText id="customername" value="#{customerController.selected.customername}" title="#{bundle.EditCustomerTitle_customername}" required="true" requiredMessage="#{bundle.EditCustomerRequiredMessage_customername}"/>
+                    <h:outputLabel value="#{bundle.EditCustomerLabel_memo}" for="memo" />
+                    <h:inputText id="memo" value="#{customerController.selected.memo}" title="#{bundle.EditCustomerTitle_memo}" />
+                    <h:outputLabel value="#{bundle.EditCustomerLabel_adddate}" for="adddate" />
+                    <h:inputText id="adddate" value="#{customerController.selected.adddate}" title="#{bundle.EditCustomerTitle_adddate}" required="true" requiredMessage="#{bundle.EditCustomerRequiredMessage_adddate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.EditCustomerLabel_addprogram}" for="addprogram" />
+                    <h:inputText id="addprogram" value="#{customerController.selected.addprogram}" title="#{bundle.EditCustomerTitle_addprogram}" required="true" requiredMessage="#{bundle.EditCustomerRequiredMessage_addprogram}"/>
+                    <h:outputLabel value="#{bundle.EditCustomerLabel_addcode}" for="addcode" />
+                    <h:inputText id="addcode" value="#{customerController.selected.addcode}" title="#{bundle.EditCustomerTitle_addcode}" required="true" requiredMessage="#{bundle.EditCustomerRequiredMessage_addcode}"/>
+                    <h:outputLabel value="#{bundle.EditCustomerLabel_updatedate}" for="updatedate" />
+                    <h:inputText id="updatedate" value="#{customerController.selected.updatedate}" title="#{bundle.EditCustomerTitle_updatedate}" required="true" requiredMessage="#{bundle.EditCustomerRequiredMessage_updatedate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.EditCustomerLabel_updateprogram}" for="updateprogram" />
+                    <h:inputText id="updateprogram" value="#{customerController.selected.updateprogram}" title="#{bundle.EditCustomerTitle_updateprogram}" required="true" requiredMessage="#{bundle.EditCustomerRequiredMessage_updateprogram}"/>
+                    <h:outputLabel value="#{bundle.EditCustomerLabel_updatecode}" for="updatecode" />
+                    <h:inputText id="updatecode" value="#{customerController.selected.updatecode}" title="#{bundle.EditCustomerTitle_updatecode}" required="true" requiredMessage="#{bundle.EditCustomerRequiredMessage_updatecode}"/>
+                    <h:outputLabel value="#{bundle.EditCustomerLabel_validrow}" for="validrow" />
+                    <h:inputText id="validrow" value="#{customerController.selected.validrow}" title="#{bundle.EditCustomerTitle_validrow}" required="true" requiredMessage="#{bundle.EditCustomerRequiredMessage_validrow}"/>
+                </h:panelGrid>
+                <h:commandLink action="#{customerController.update}" value="#{bundle.EditCustomerSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundle.EditCustomerViewLink}"/>
+                <br />
+                <h:commandLink action="#{customerController.prepareList}" value="#{bundle.EditCustomerShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.EditCustomerIndexLink}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>
