@@ -1,25 +1,25 @@
 .cells {
-	width: 80px;
-	float: left;
-	margin: 0px 0px 0px 0px;
-	padding: 0px 0px 0px 0px;
+    width: 80px;
+    float: left;
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
 }
 
 .cellm {
-	width: 180px;
-	float: left;
-	margin: 0px 0px 0px 0px;
-	padding: 0px 0px 0px 0px;
+    width: 180px;
+    float: left;
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
 }
 
 .celll {
-	width: 280px;
-	float: left;
-	margin: 0px 0px 0px 0px;
-	padding: 0px 0px 0px 0px;
+    width: 280px;
+    float: left;
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
 }
 
 .headline {
-	background-color:#ddeeff;
-	text-align:center;
+    background-color:#ddeeff;
+    text-align:center;
 }

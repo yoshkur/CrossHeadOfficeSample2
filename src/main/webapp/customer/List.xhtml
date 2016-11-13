@@ -10,98 +10,98 @@
             <h:outputText value="#{bundle.ListCustomerTitle}"></h:outputText>
         </ui:define>
         <ui:define name="body">
-			<h:form styleClass="jsfcrud_list_form">
-				<h:panelGroup id="messagePanel" layout="block">
-					<h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
-				</h:panelGroup>
-				<h:outputText escape="false" value="#{bundle.ListCustomerEmpty}" rendered="#{customerController.items.rowCount == 0}"/>
-				<h:panelGroup rendered="#{customerController.items.rowCount > 0}">
-					<h:outputText value="#{customerController.pagination.pageFirstItem + 1}..#{customerController.pagination.pageLastItem + 1}/#{customerController.pagination.itemsCount}"/>&nbsp;
-					<h:commandLink action="#{customerController.previous}" value="#{bundle.Previous} #{customerController.pagination.pageSize}" rendered="#{customerController.pagination.hasPreviousPage}"/>&nbsp;
-					<h:commandLink action="#{customerController.next}" value="#{bundle.Next} #{customerController.pagination.pageSize}" rendered="#{customerController.pagination.hasNextPage}"/>&nbsp;
-					<h:dataTable value="#{customerController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="#{bundle.ListCustomerTitle_customerid}"/>
-							</f:facet>
-							<h:outputText value="#{item.customerid}"/>
-						</h:column>
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="#{bundle.ListCustomerTitle_customername}"/>
-							</f:facet>
-							<h:outputText value="#{item.customername}"/>
-						</h:column>
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="#{bundle.ListCustomerTitle_memo}"/>
-							</f:facet>
-							<h:outputText value="#{item.memo}"/>
-						</h:column>
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="#{bundle.ListCustomerTitle_adddate}"/>
-							</f:facet>
-							<h:outputText value="#{item.adddate}">
-								<f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-							</h:outputText>
-						</h:column>
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="#{bundle.ListCustomerTitle_addprogram}"/>
-							</f:facet>
-							<h:outputText value="#{item.addprogram}"/>
-						</h:column>
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="#{bundle.ListCustomerTitle_addcode}"/>
-							</f:facet>
-							<h:outputText value="#{item.addcode}"/>
-						</h:column>
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="#{bundle.ListCustomerTitle_updatedate}"/>
-							</f:facet>
-							<h:outputText value="#{item.updatedate}">
-								<f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
-							</h:outputText>
-						</h:column>
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="#{bundle.ListCustomerTitle_updateprogram}"/>
-							</f:facet>
-							<h:outputText value="#{item.updateprogram}"/>
-						</h:column>
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="#{bundle.ListCustomerTitle_updatecode}"/>
-							</f:facet>
-							<h:outputText value="#{item.updatecode}"/>
-						</h:column>
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="#{bundle.ListCustomerTitle_validrow}"/>
-							</f:facet>
-							<h:outputText value="#{item.validrow}"/>
-						</h:column>
-						<h:column>
-							<f:facet name="header">
-								<h:outputText value="&nbsp;"/>
-							</f:facet>
-							<h:commandLink action="#{customerController.prepareView}" value="#{bundle.ListCustomerViewLink}"/>
-							<h:outputText value=" "/>
-							<h:commandLink action="#{customerController.prepareEdit}" value="#{bundle.ListCustomerEditLink}"/>
-							<h:outputText value=" "/>
-							<h:commandLink action="#{customerController.destroy}" value="#{bundle.ListCustomerDestroyLink}"/>
-						</h:column>
-					</h:dataTable>
-				</h:panelGroup>
-				<br />
-				<h:commandLink action="#{customerController.prepareCreate}" value="#{bundle.ListCustomerCreateLink}"/>
-				<br />
-				<br />
-				<h:link outcome="/index" value="#{bundle.ListCustomerIndexLink}"/>
-			</h:form>
+            <h:form styleClass="jsfcrud_list_form">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                <h:outputText escape="false" value="#{bundle.ListCustomerEmpty}" rendered="#{customerController.items.rowCount == 0}"/>
+                <h:panelGroup rendered="#{customerController.items.rowCount > 0}">
+                    <h:outputText value="#{customerController.pagination.pageFirstItem + 1}..#{customerController.pagination.pageLastItem + 1}/#{customerController.pagination.itemsCount}"/>&nbsp;
+                    <h:commandLink action="#{customerController.previous}" value="#{bundle.Previous} #{customerController.pagination.pageSize}" rendered="#{customerController.pagination.hasPreviousPage}"/>&nbsp;
+                    <h:commandLink action="#{customerController.next}" value="#{bundle.Next} #{customerController.pagination.pageSize}" rendered="#{customerController.pagination.hasNextPage}"/>&nbsp;
+                    <h:dataTable value="#{customerController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCustomerTitle_customerid}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.customerid}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCustomerTitle_customername}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.customername}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCustomerTitle_memo}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.memo}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCustomerTitle_adddate}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.adddate}">
+                                <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                            </h:outputText>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCustomerTitle_addprogram}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.addprogram}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCustomerTitle_addcode}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.addcode}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCustomerTitle_updatedate}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.updatedate}">
+                                <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                            </h:outputText>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCustomerTitle_updateprogram}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.updateprogram}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCustomerTitle_updatecode}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.updatecode}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListCustomerTitle_validrow}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.validrow}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="&nbsp;"/>
+                            </f:facet>
+                            <h:commandLink action="#{customerController.prepareView}" value="#{bundle.ListCustomerViewLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{customerController.prepareEdit}" value="#{bundle.ListCustomerEditLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{customerController.destroy}" value="#{bundle.ListCustomerDestroyLink}"/>
+                        </h:column>
+                    </h:dataTable>
+                </h:panelGroup>
+                <br />
+                <h:commandLink action="#{customerController.prepareCreate}" value="#{bundle.ListCustomerCreateLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ListCustomerIndexLink}"/>
+            </h:form>
         </ui:define>
     </ui:composition>
 

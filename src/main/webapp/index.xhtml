@@ -2,58 +2,58 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-	  xmlns:p="http://primefaces.org/ui"
-	  xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
     <ui:composition template="/template.xhtml">
         <ui:define name="title">
             <h:outputText value="Cross本部用メニュー"></h:outputText>
         </ui:define>
         <ui:define name="body">
-			<h:form styleClass="jsfcrud_list_form">
+            <h:form styleClass="jsfcrud_list_form">
 
-				<h3><h:link outcome="/item/List" value="案件" /></h3>
-				<h4>アポイント</h4>
-				<p>
-					<p:commandLink action="#{itemController.appointList()}" value="アポイント中" />
-				</p>
-				<p>
-					<p:commandLink action="#{itemController.appointLateList()}" value="アポイント中(登録後1週間経過)" />
-				</p>
-				<h4>作業</h4>
-				<p>
-					<p:commandLink action="#{itemController.twoDayslatersWorkList()}" value="明後日訪問予定" />
-				</p>
-				<p>
-					<p:commandLink action="#{itemController.tomorrowsWorkList()}" value="明日訪問予定" />
-				</p>
-				<p>
-					<p:commandLink action="#{itemController.todaysWorkList()}" value="本日訪問予定" />
-				</p>
-				<p>
-					<p:commandLink action="#{itemController.willWorkList()}" value="作業待ち" />
-				</p>
-				<p>
-					<p:commandLink action="#{itemController.notWorkReportList()}" value="作業報告待ち" />
-				</p>
-				<p>
-					<p:commandLink action="#{itemController.workedList()}" value="作業済み" />
-				</p>
-				<h4>案件検索</h4>
-				<p>
-					<h:link outcome="/item/Search" value="案件検索条件指定" />
-				</p>
+                <h3><h:link outcome="/item/List" value="案件" /></h3>
+                <h4>アポイント</h4>
+                <p>
+                    <p:commandLink action="#{itemController.appointList()}" value="アポイント中" />
+                </p>
+                <p>
+                    <p:commandLink action="#{itemController.appointLateList()}" value="アポイント中(登録後1週間経過)" />
+                </p>
+                <h4>作業</h4>
+                <p>
+                    <p:commandLink action="#{itemController.twoDayslatersWorkList()}" value="明後日訪問予定" />
+                </p>
+                <p>
+                    <p:commandLink action="#{itemController.tomorrowsWorkList()}" value="明日訪問予定" />
+                </p>
+                <p>
+                    <p:commandLink action="#{itemController.todaysWorkList()}" value="本日訪問予定" />
+                </p>
+                <p>
+                    <p:commandLink action="#{itemController.willWorkList()}" value="作業待ち" />
+                </p>
+                <p>
+                    <p:commandLink action="#{itemController.notWorkReportList()}" value="作業報告待ち" />
+                </p>
+                <p>
+                    <p:commandLink action="#{itemController.workedList()}" value="作業済み" />
+                </p>
+                <h4>案件検索</h4>
+                <p>
+                    <h:link outcome="/item/Search" value="案件検索条件指定" />
+                </p>
 
-				<h4>案件登録</h4>
-				<p>
-					<h:link outcome="/item/Create" value="日本PC案件登録" />
-				</p>
+                <h4>案件登録</h4>
+                <p>
+                    <h:link outcome="/item/Create" value="日本PC案件登録" />
+                </p>
 
-				<h3>システム</h3>
-				<p>
-					<p:commandLink action="#{loginController.logout()}" value="ログアウト" />
-				</p>
-			</h:form>
+                <h3>システム</h3>
+                <p>
+                    <p:commandLink action="#{loginController.logout()}" value="ログアウト" />
+                </p>
+            </h:form>
         </ui:define>
-	</ui:composition>
+    </ui:composition>
 </html>
 

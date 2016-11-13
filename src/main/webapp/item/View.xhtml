@@ -4,7 +4,7 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-	  xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui">
 
     <ui:composition template="/template.xhtml">
         <ui:define name="title">
@@ -19,52 +19,52 @@
                     <p:outputLabel value="#{bundle.ItemLabel_itemid}"/>
                     <h:outputText value="#{itemController.selected.itemid}" title="#{bundle.ItemTitle_itemid}"/>
 
-					<p:outputLabel value="#{bundle.ItemLabel_itemcd}"/>
+                    <p:outputLabel value="#{bundle.ItemLabel_itemcd}"/>
                     <h:outputText value="#{itemController.selected.itemcd}" title="#{bundle.ItemTitle_itemcd}"/>
 
-					<p:outputLabel value="#{bundle.ItemLabel_customerid}"/>
-					<h:outputText value="#{itemController.selected.customerid}" title="#{bundle.ItemTitle_customerid}"/>
+                    <p:outputLabel value="#{bundle.ItemLabel_customerid}"/>
+                    <h:outputText value="#{itemController.selected.customerid}" title="#{bundle.ItemTitle_customerid}"/>
 
-					<p:outputLabel value="#{bundle.ItemLabel_userid}"/>
-					<h:outputText value="#{itemController.selected.userid}" title="#{bundle.ItemTitle_userid}"/>
+                    <p:outputLabel value="#{bundle.ItemLabel_userid}"/>
+                    <h:outputText value="#{itemController.selected.userid}" title="#{bundle.ItemTitle_userid}"/>
 
-					<p:outputLabel value="#{bundle.ItemLabel_detail}"/>
+                    <p:outputLabel value="#{bundle.ItemLabel_detail}"/>
                     <h:outputText value="#{itemController.selected.detail}" title="#{bundle.ItemTitle_detail}"/>
 
-					<p:outputLabel value="#{bundle.ItemLabel_state}"/>
+                    <p:outputLabel value="#{bundle.ItemLabel_state}"/>
                     <h:outputText value="#{itemController.selected.status}" title="#{bundle.ItemTitle_state}"/>
 
-					<p:outputLabel value="#{bundle.ItemLabel_scheid}"/>
-					<h:outputLink value="http://www.orange-right.co.jp/cross/schedule_edit.jsp?scheid=#{itemController.selected.scheid.scheid}" target="_new" title="#{bundle.ItemTitle_scheid}" rendered="#{itemController.selected.appoint}">
-						<h:outputText value="#{itemController.selected.scheid.datefrom}">
-							<f:convertDateTime pattern="yyyy/MM/dd HH:mm" />
-						</h:outputText>
-					</h:outputLink>
-					<h:outputText value="アポイント中" rendered="#{!itemController.selected.appoint}"/>
+                    <p:outputLabel value="#{bundle.ItemLabel_scheid}"/>
+                    <h:outputLink value="http://www.orange-right.co.jp/cross/schedule_edit.jsp?scheid=#{itemController.selected.scheid.scheid}" target="_new" title="#{bundle.ItemTitle_scheid}" rendered="#{itemController.selected.appoint}">
+                        <h:outputText value="#{itemController.selected.scheid.datefrom}">
+                            <f:convertDateTime pattern="yyyy/MM/dd HH:mm" />
+                        </h:outputText>
+                    </h:outputLink>
+                    <h:outputText value="アポイント中" rendered="#{!itemController.selected.appoint}"/>
 
-					<p:outputLabel value="#{bundle.ItemLabel_worked}"/>
-					<h:outputText value="作業未完了" rendered="#{!itemController.selected.worked}"/>
-					<h:outputText value="#{itemController.selected.workedfilename}" rendered="#{itemController.selected.worked}"/>
+                    <p:outputLabel value="#{bundle.ItemLabel_worked}"/>
+                    <h:outputText value="作業未完了" rendered="#{!itemController.selected.worked}"/>
+                    <h:outputText value="#{itemController.selected.workedfilename}" rendered="#{itemController.selected.worked}"/>
 
-					<p:outputLabel value="#{bundle.ItemLabel_directpayment}"/>
-					<h:outputText value="#{itemController.selected.payment}" title="#{bundle.ItemTitle_directpayment}"/>
+                    <p:outputLabel value="#{bundle.ItemLabel_directpayment}"/>
+                    <h:outputText value="#{itemController.selected.payment}" title="#{bundle.ItemTitle_directpayment}"/>
 
-					<p:outputLabel value="#{bundle.ItemLabel_memo}"/>
-					<h:outputText value="#{itemController.selected.memo}" title="#{bundle.ItemTitle_memo}"/>
+                    <p:outputLabel value="#{bundle.ItemLabel_memo}"/>
+                    <h:outputText value="#{itemController.selected.memo}" title="#{bundle.ItemTitle_memo}"/>
 
-					<p:outputLabel value="#{bundle.ItemLabel_adddate}"/>
-					<h:outputText value="#{itemController.selected.adddate}" title="#{bundle.ItemTitle_adddate}">
-						<f:convertDateTime pattern="yyyy/MM/dd HH:mm:ss" />
-					</h:outputText>
+                    <p:outputLabel value="#{bundle.ItemLabel_adddate}"/>
+                    <h:outputText value="#{itemController.selected.adddate}" title="#{bundle.ItemTitle_adddate}">
+                        <f:convertDateTime pattern="yyyy/MM/dd HH:mm:ss" />
+                    </h:outputText>
 
-					<p:outputLabel value="#{bundle.ItemLabel_updatedate}"/>
-					<h:outputText value="#{itemController.selected.updatedate}" title="#{bundle.ItemTitle_updatedate}">
-						<f:convertDateTime pattern="yyyy/MM/dd HH:mm:ss" />
-					</h:outputText>
+                    <p:outputLabel value="#{bundle.ItemLabel_updatedate}"/>
+                    <h:outputText value="#{itemController.selected.updatedate}" title="#{bundle.ItemTitle_updatedate}">
+                        <f:convertDateTime pattern="yyyy/MM/dd HH:mm:ss" />
+                    </h:outputText>
                 </p:panelGrid>
-				<h:outputLink value="http://www.orange-right.co.jp/cross/item_edit.jsp?itemid=#{itemController.selected.itemid}" target="_new">
-					<h:outputText value="Crossで閲覧"/>
-				</h:outputLink>
+                <h:outputLink value="http://www.orange-right.co.jp/cross/item_edit.jsp?itemid=#{itemController.selected.itemid}" target="_new">
+                    <h:outputText value="Crossで閲覧"/>
+                </h:outputLink>
                 <br />
                 <h:commandLink action="#{itemController.prepareList}" value="#{bundle.ItemShowAllLink}"/>
                 <br />

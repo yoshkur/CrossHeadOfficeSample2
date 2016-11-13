@@ -15,32 +15,32 @@ import jp.co.orangeright.crossheadofficesample2.jsf.util.SearchCondition;
  */
 public class UserMSearchCondition extends SearchCondition {
 
-	private String userName;
-	private GroupM group;
-	private List<GroupM> groupList;
+    private String userName;
+    private GroupM group;
+    private List<GroupM> groupList;
 
-	public String getUserName() {
-		return userName;
-	}
+    public String getUserName() {
+        return userName;
+    }
 
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
-	public GroupM getGroup() {
-		return group;
-	}
+    public GroupM getGroup() {
+        return group;
+    }
 
-	public void setGroup(GroupM group) {
-		this.group = group;
-	}
+    public void setGroup(GroupM group) {
+        this.group = group;
+    }
 
-	public List<GroupM> getGroupList() {
-		return groupList;
-	}
+    public List<GroupM> getGroupList() {
+        return groupList;
+    }
 
-	public void setGroupList(List<GroupM> groupList) {
-		this.groupList = groupList;
-	}
+    public void setGroupList(List<GroupM> groupList) {
+        this.groupList = groupList;
+    }
 
 }

@@ -4,7 +4,7 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-	  xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui">
 
     <ui:composition template="/template.xhtml">
         <ui:define name="title">
@@ -28,16 +28,16 @@
                     <p:inputText id="memo" value="#{itemController.selected.memo}" title="#{bundle.ItemTitle_memo}" />
                     <p:outputLabel value="#{bundle.ItemLabel_customerid}" for="customerid" />
                     <p:selectOneMenu id="customerid" value="#{itemController.selected.customerid}">
-						<f:selectItem itemLabel="条件なし" itemValue=""/>
+                        <f:selectItem itemLabel="条件なし" itemValue=""/>
                         <f:selectItems value="#{customerController.customerList}" var="customer" itemLabel="#{customer.customername}"/>
                     </p:selectOneMenu>
                     <p:outputLabel value="#{bundle.ItemLabel_userid}" />
                     <h:commandLink action="#{itemController.searchUserOnItemCreate()}" value="作業員検索" rendered="#{itemController.condition.user == null}"/>
-					<h:panelGroup layout="block" rendered="#{itemController.condition.user != null}">
-						<h:commandLink action="#{itemController.searchUserOnItemCreate()}" value="#{itemController.condition.user.username}" rendered="#{itemController.condition.user != null}"/>
-						&nbsp;
-						<h:commandLink action="#{userMController.clearUser()}" value="ユーザー条件を削除する" rendered="#{itemController.condition.user != null}"/>
-					</h:panelGroup>
+                    <h:panelGroup layout="block" rendered="#{itemController.condition.user != null}">
+                        <h:commandLink action="#{itemController.searchUserOnItemCreate()}" value="#{itemController.condition.user.username}" rendered="#{itemController.condition.user != null}"/>
+                        &nbsp;
+                        <h:commandLink action="#{userMController.clearUser()}" value="ユーザー条件を削除する" rendered="#{itemController.condition.user != null}"/>
+                    </h:panelGroup>
                 </h:panelGrid>
                 <br />
                 <h:commandLink action="#{itemController.create}" value="#{bundle.CreateItemSaveLink}" />

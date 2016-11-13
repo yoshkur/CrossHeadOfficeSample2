@@ -13,23 +13,23 @@ import javax.persistence.metamodel.SingularAttribute;
  */
 public class SearchCondition {
 
-	private Boolean asc;
-	private SingularAttribute orderBy;
+    private Boolean asc;
+    private SingularAttribute orderBy;
 
-	public Boolean getAsc() {
-		return asc;
-	}
+    public Boolean getAsc() {
+        return asc;
+    }
 
-	public void setAsc(Boolean asc) {
-		this.asc = asc;
-	}
+    public void setAsc(Boolean asc) {
+        this.asc = asc;
+    }
 
-	public SingularAttribute getOrderBy() {
-		return orderBy;
-	}
+    public SingularAttribute getOrderBy() {
+        return orderBy;
+    }
 
-	public void setOrderBy(SingularAttribute orderBy) {
-		this.orderBy = orderBy;
-	}
+    public void setOrderBy(SingularAttribute orderBy) {
+        this.orderBy = orderBy;
+    }
 
 }

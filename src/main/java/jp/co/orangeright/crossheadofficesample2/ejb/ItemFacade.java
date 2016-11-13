@@ -28,150 +28,150 @@ import jp.co.orangeright.crossheadofficesample2.jsf.item.ItemSearchCondition;
 @Stateless
 public class ItemFacade extends AbstractFacade<Item> {
 
-	@PersistenceContext(unitName = "jp.co.orange-right_CrossHeadOfficeSample2_war_1.0-SNAPSHOTPU")
-	private EntityManager em;
+    @PersistenceContext(unitName = "jp.co.orange-right_CrossHeadOfficeSample2_war_1.0-SNAPSHOTPU")
+    private EntityManager em;
 
-	@Override
-	protected EntityManager getEntityManager() {
-		return em;
-	}
+    @Override
+    protected EntityManager getEntityManager() {
+        return em;
+    }
 
-	public ItemFacade() {
-		super(Item.class);
-	}
+    public ItemFacade() {
+        super(Item.class);
+    }
 
-	@Override
-	public void create(Item entity) {
-		super.create(entity);
-	}
+    @Override
+    public void create(Item entity) {
+        super.create(entity);
+    }
 
-	public List<Item> findAll(ItemSearchCondition condition) {
-		CriteriaBuilder cb = this.getEntityManager().getCriteriaBuilder();
-		CriteriaQuery<Item> cq = cb.createQuery(Item.class);
-		Root<Item> root = cq.from(Item.class);
-		cq = this.getSearchQuery(condition, cb, cq, root);
-		this.setOrderby(condition, cb, cq, root);
-		Query q = this.getEntityManager().createQuery(cq);
-		return q.getResultList();
-	}
+    public List<Item> findAll(ItemSearchCondition condition) {
+        CriteriaBuilder cb = this.getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<Item> cq = cb.createQuery(Item.class);
+        Root<Item> root = cq.from(Item.class);
+        cq = this.getSearchQuery(condition, cb, cq, root);
+        this.setOrderby(condition, cb, cq, root);
+        Query q = this.getEntityManager().createQuery(cq);
+        return q.getResultList();
+    }
 
-	public List<Item> findRange(int[] range, ItemSearchCondition condition) {
-		CriteriaBuilder cb = this.getEntityManager().getCriteriaBuilder();
-		CriteriaQuery<Item> cq = cb.createQuery(Item.class);
-		Root<Item> root = cq.from(Item.class);
-		cq = this.getSearchQuery(condition, cb, cq, root);
-		this.setOrderby(condition, cb, cq, root);
-		Query q = this.getEntityManager().createQuery(cq);
-		q.setMaxResults(range[1] - range[0] + 1);
-		q.setFirstResult(range[0]);
-		return q.getResultList();
-	}
+    public List<Item> findRange(int[] range, ItemSearchCondition condition) {
+        CriteriaBuilder cb = this.getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<Item> cq = cb.createQuery(Item.class);
+        Root<Item> root = cq.from(Item.class);
+        cq = this.getSearchQuery(condition, cb, cq, root);
+        this.setOrderby(condition, cb, cq, root);
+        Query q = this.getEntityManager().createQuery(cq);
+        q.setMaxResults(range[1] - range[0] + 1);
+        q.setFirstResult(range[0]);
+        return q.getResultList();
+    }
 
-	public int count(ItemSearchCondition condition) {
-		CriteriaBuilder cb = this.getEntityManager().getCriteriaBuilder();
-		CriteriaQuery cq = cb.createQuery();
-		Root<Item> root = cq.from(Item.class);
-		cq = this.getSearchQuery(condition, cb, cq, root);
+    public int count(ItemSearchCondition condition) {
+        CriteriaBuilder cb = this.getEntityManager().getCriteriaBuilder();
+        CriteriaQuery cq = cb.createQuery();
+        Root<Item> root = cq.from(Item.class);
+        cq = this.getSearchQuery(condition, cb, cq, root);
 
-		cq.select(cb.count(root));
-		Query q = getEntityManager().createQuery(cq);
-		return ((Long) q.getSingleResult()).intValue();
-	}
+        cq.select(cb.count(root));
+        Query q = getEntityManager().createQuery(cq);
+        return ((Long) q.getSingleResult()).intValue();
+    }
 
-	private CriteriaQuery getSearchQuery(ItemSearchCondition condition, CriteriaBuilder cb, CriteriaQuery cq, Root root) {
-		Predicate predicate;
-		cq.select(root).where(cb.equal(root.get(Item_.validrow), true));
-		predicate = cq.getRestriction();
-		if (condition.getItemcd() != null) {
-			cq.select(root).where(predicate, cb.like(root.get(Item_.itemcd).as(String.class), "%" + condition.getItemcd() + "%"));
-			predicate = cq.getRestriction();
-		}
-		if (condition.getKeyword() != null) {
-			cq.select(root).where(predicate, cb.like(root.get(Item_.detail).as(String.class), "%" + condition.getKeyword() + "%"));
-			predicate = cq.getRestriction();
-		}
-		if (condition.getCustomer() != null) {
-			cq.select(root).where(predicate, cb.equal(root.get(Item_.customerid), condition.getCustomer()));
-			predicate = cq.getRestriction();
-		}
-		if (condition.getUser() != null) {
-			cq.select(root).where(predicate, cb.equal(root.get(Item_.userid), condition.getUser()));
-			predicate = cq.getRestriction();
-		}
-		if (condition.getAppoint() != null) {
-			cq.select(root).where(predicate, cb.equal(root.get(Item_.appoint), condition.getAppoint()));
-			predicate = cq.getRestriction();
-		}
-		if (condition.getWorked() != null) {
-			cq.select(root).where(predicate, cb.equal(root.get(Item_.worked), condition.getWorked()));
-			predicate = cq.getRestriction();
-		}
-		if (condition.getFinished() != null) {
-			cq.select(root).where(predicate, cb.equal(root.get(Item_.finished), condition.getFinished()));
-			predicate = cq.getRestriction();
-		}
-		if (condition.getOnhold() != null) {
-			cq.select(root).where(predicate, cb.equal(root.get(Item_.onhold), condition.getOnhold()));
-			predicate = cq.getRestriction();
-		}
-		if (condition.getCancel() != null) {
-			cq.select(root).where(predicate, cb.equal(root.get(Item_.cancel), condition.getCancel()));
-			predicate = cq.getRestriction();
-		}
-		if (condition.getAccounting() != null) {
-			cq.select(root).where(predicate, cb.equal(root.get(Item_.accounting), condition.getAccounting()));
-			predicate = cq.getRestriction();
-		}
-		if (condition.getTurnStart() != null) {
-			cq.select(root).where(predicate, cb.greaterThanOrEqualTo(root.get(Item_.scheid).get(Schedule_.validrow), true));
-			predicate = cq.getRestriction();
-			cq.select(root).where(predicate, cb.greaterThanOrEqualTo(root.get(Item_.scheid).get(Schedule_.datefrom), condition.getTurnStart()));
-			predicate = cq.getRestriction();
-		}
-		if (condition.getTurnEnd() != null) {
-			cq.select(root).where(predicate, cb.greaterThanOrEqualTo(root.get(Item_.scheid).get(Schedule_.validrow), true));
-			predicate = cq.getRestriction();
-			Calendar upper = Calendar.getInstance();
-			upper.setTime(condition.getTurnEnd());
-			upper.add(Calendar.DATE, 1);
-			Date turnEnd = upper.getTime();
-			cq.select(root).where(predicate, cb.lessThan(root.get(Item_.scheid).get(Schedule_.datefrom), turnEnd));
-			predicate = cq.getRestriction();
-		}
-		if (condition.getAddDateStart() != null) {
-			cq.select(root).where(predicate, cb.greaterThanOrEqualTo(root.get(Item_.adddate), condition.getAddDateStart()));
-			predicate = cq.getRestriction();
-		}
-		if (condition.getAddDateEnd() != null) {
-			Calendar upper = Calendar.getInstance();
-			upper.setTime(condition.getAddDateEnd());
-			upper.add(Calendar.DATE, 1);
-			Date turnEnd = upper.getTime();
-			cq.select(root).where(predicate, cb.lessThan(root.get(Item_.adddate), turnEnd));
-			predicate = cq.getRestriction();
-		}
-		if (condition.getUpdateDateStart() != null) {
-			cq.select(root).where(predicate, cb.greaterThanOrEqualTo(root.get(Item_.updatedate), condition.getUpdateDateStart()));
-			predicate = cq.getRestriction();
-		}
-		if (condition.getUpdateDateEnd() != null) {
-			Calendar upper = Calendar.getInstance();
-			upper.setTime(condition.getUpdateDateEnd());
-			upper.add(Calendar.DATE, 1);
-			Date turnEnd = upper.getTime();
-			cq.select(root).where(predicate, cb.lessThan(root.get(Item_.updatedate), turnEnd));
-			predicate = cq.getRestriction();
-		}
-		return cq;
-	}
+    private CriteriaQuery getSearchQuery(ItemSearchCondition condition, CriteriaBuilder cb, CriteriaQuery cq, Root root) {
+        Predicate predicate;
+        cq.select(root).where(cb.equal(root.get(Item_.validrow), true));
+        predicate = cq.getRestriction();
+        if (condition.getItemcd() != null) {
+            cq.select(root).where(predicate, cb.like(root.get(Item_.itemcd).as(String.class), "%" + condition.getItemcd() + "%"));
+            predicate = cq.getRestriction();
+        }
+        if (condition.getKeyword() != null) {
+            cq.select(root).where(predicate, cb.like(root.get(Item_.detail).as(String.class), "%" + condition.getKeyword() + "%"));
+            predicate = cq.getRestriction();
+        }
+        if (condition.getCustomer() != null) {
+            cq.select(root).where(predicate, cb.equal(root.get(Item_.customerid), condition.getCustomer()));
+            predicate = cq.getRestriction();
+        }
+        if (condition.getUser() != null) {
+            cq.select(root).where(predicate, cb.equal(root.get(Item_.userid), condition.getUser()));
+            predicate = cq.getRestriction();
+        }
+        if (condition.getAppoint() != null) {
+            cq.select(root).where(predicate, cb.equal(root.get(Item_.appoint), condition.getAppoint()));
+            predicate = cq.getRestriction();
+        }
+        if (condition.getWorked() != null) {
+            cq.select(root).where(predicate, cb.equal(root.get(Item_.worked), condition.getWorked()));
+            predicate = cq.getRestriction();
+        }
+        if (condition.getFinished() != null) {
+            cq.select(root).where(predicate, cb.equal(root.get(Item_.finished), condition.getFinished()));
+            predicate = cq.getRestriction();
+        }
+        if (condition.getOnhold() != null) {
+            cq.select(root).where(predicate, cb.equal(root.get(Item_.onhold), condition.getOnhold()));
+            predicate = cq.getRestriction();
+        }
+        if (condition.getCancel() != null) {
+            cq.select(root).where(predicate, cb.equal(root.get(Item_.cancel), condition.getCancel()));
+            predicate = cq.getRestriction();
+        }
+        if (condition.getAccounting() != null) {
+            cq.select(root).where(predicate, cb.equal(root.get(Item_.accounting), condition.getAccounting()));
+            predicate = cq.getRestriction();
+        }
+        if (condition.getTurnStart() != null) {
+            cq.select(root).where(predicate, cb.greaterThanOrEqualTo(root.get(Item_.scheid).get(Schedule_.validrow), true));
+            predicate = cq.getRestriction();
+            cq.select(root).where(predicate, cb.greaterThanOrEqualTo(root.get(Item_.scheid).get(Schedule_.datefrom), condition.getTurnStart()));
+            predicate = cq.getRestriction();
+        }
+        if (condition.getTurnEnd() != null) {
+            cq.select(root).where(predicate, cb.greaterThanOrEqualTo(root.get(Item_.scheid).get(Schedule_.validrow), true));
+            predicate = cq.getRestriction();
+            Calendar upper = Calendar.getInstance();
+            upper.setTime(condition.getTurnEnd());
+            upper.add(Calendar.DATE, 1);
+            Date turnEnd = upper.getTime();
+            cq.select(root).where(predicate, cb.lessThan(root.get(Item_.scheid).get(Schedule_.datefrom), turnEnd));
+            predicate = cq.getRestriction();
+        }
+        if (condition.getAddDateStart() != null) {
+            cq.select(root).where(predicate, cb.greaterThanOrEqualTo(root.get(Item_.adddate), condition.getAddDateStart()));
+            predicate = cq.getRestriction();
+        }
+        if (condition.getAddDateEnd() != null) {
+            Calendar upper = Calendar.getInstance();
+            upper.setTime(condition.getAddDateEnd());
+            upper.add(Calendar.DATE, 1);
+            Date turnEnd = upper.getTime();
+            cq.select(root).where(predicate, cb.lessThan(root.get(Item_.adddate), turnEnd));
+            predicate = cq.getRestriction();
+        }
+        if (condition.getUpdateDateStart() != null) {
+            cq.select(root).where(predicate, cb.greaterThanOrEqualTo(root.get(Item_.updatedate), condition.getUpdateDateStart()));
+            predicate = cq.getRestriction();
+        }
+        if (condition.getUpdateDateEnd() != null) {
+            Calendar upper = Calendar.getInstance();
+            upper.setTime(condition.getUpdateDateEnd());
+            upper.add(Calendar.DATE, 1);
+            Date turnEnd = upper.getTime();
+            cq.select(root).where(predicate, cb.lessThan(root.get(Item_.updatedate), turnEnd));
+            predicate = cq.getRestriction();
+        }
+        return cq;
+    }
 
-	private void setOrderby(ItemSearchCondition condition, CriteriaBuilder cb, CriteriaQuery cq, Root root) {
-		if (condition.getOrderBy() != null) {
-			if (condition.getAsc()) {
-				cq.orderBy(cb.asc(root.get(condition.getOrderBy())));
-			} else {
-				cq.orderBy(cb.desc(root.get(condition.getOrderBy())));
-			}
-		}
-	}
+    private void setOrderby(ItemSearchCondition condition, CriteriaBuilder cb, CriteriaQuery cq, Root root) {
+        if (condition.getOrderBy() != null) {
+            if (condition.getAsc()) {
+                cq.orderBy(cb.asc(root.get(condition.getOrderBy())));
+            } else {
+                cq.orderBy(cb.desc(root.get(condition.getOrderBy())));
+            }
+        }
+    }
 }

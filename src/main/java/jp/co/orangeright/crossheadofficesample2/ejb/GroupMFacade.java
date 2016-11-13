@@ -25,65 +25,65 @@ import jp.co.orangeright.crossheadofficesample2.jsf.groupm.GroupMSearchCondition
 @Stateless
 public class GroupMFacade extends AbstractFacade<GroupM> {
 
-	@PersistenceContext(unitName = "jp.co.orange-right_CrossHeadOfficeSample2_war_1.0-SNAPSHOTPU")
-	private EntityManager em;
+    @PersistenceContext(unitName = "jp.co.orange-right_CrossHeadOfficeSample2_war_1.0-SNAPSHOTPU")
+    private EntityManager em;
 
-	@Override
-	protected EntityManager getEntityManager() {
-		return em;
-	}
+    @Override
+    protected EntityManager getEntityManager() {
+        return em;
+    }
 
-	public GroupMFacade() {
-		super(GroupM.class);
-	}
+    public GroupMFacade() {
+        super(GroupM.class);
+    }
 
-	public List<GroupM> findAll(GroupMSearchCondition condition) {
-		CriteriaBuilder cb = this.getEntityManager().getCriteriaBuilder();
-		CriteriaQuery<GroupM> cq = cb.createQuery(GroupM.class);
-		Root<GroupM> root = cq.from(GroupM.class);
-		cq = this.getSearchQuery(condition, cb, cq, root);
-		this.setOrderby(condition, cb, cq, root);
-		Query q = this.getEntityManager().createQuery(cq);
-		return q.getResultList();
-	}
+    public List<GroupM> findAll(GroupMSearchCondition condition) {
+        CriteriaBuilder cb = this.getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<GroupM> cq = cb.createQuery(GroupM.class);
+        Root<GroupM> root = cq.from(GroupM.class);
+        cq = this.getSearchQuery(condition, cb, cq, root);
+        this.setOrderby(condition, cb, cq, root);
+        Query q = this.getEntityManager().createQuery(cq);
+        return q.getResultList();
+    }
 
-	public List<GroupM> findRange(int[] range, GroupMSearchCondition condition) {
-		CriteriaBuilder cb = this.getEntityManager().getCriteriaBuilder();
-		CriteriaQuery<GroupM> cq = cb.createQuery(GroupM.class);
-		Root<GroupM> root = cq.from(GroupM.class);
-		cq = this.getSearchQuery(condition, cb, cq, root);
-		this.setOrderby(condition, cb, cq, root);
-		Query q = this.getEntityManager().createQuery(cq);
-		q.setMaxResults(range[1] - range[0] + 1);
-		q.setFirstResult(range[0]);
-		return q.getResultList();
-	}
+    public List<GroupM> findRange(int[] range, GroupMSearchCondition condition) {
+        CriteriaBuilder cb = this.getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<GroupM> cq = cb.createQuery(GroupM.class);
+        Root<GroupM> root = cq.from(GroupM.class);
+        cq = this.getSearchQuery(condition, cb, cq, root);
+        this.setOrderby(condition, cb, cq, root);
+        Query q = this.getEntityManager().createQuery(cq);
+        q.setMaxResults(range[1] - range[0] + 1);
+        q.setFirstResult(range[0]);
+        return q.getResultList();
+    }
 
-	public int count(GroupMSearchCondition condition) {
-		CriteriaBuilder cb = this.getEntityManager().getCriteriaBuilder();
-		CriteriaQuery cq = cb.createQuery();
-		Root<GroupM> root = cq.from(GroupM.class);
-		cq = this.getSearchQuery(condition, cb, cq, root);
+    public int count(GroupMSearchCondition condition) {
+        CriteriaBuilder cb = this.getEntityManager().getCriteriaBuilder();
+        CriteriaQuery cq = cb.createQuery();
+        Root<GroupM> root = cq.from(GroupM.class);
+        cq = this.getSearchQuery(condition, cb, cq, root);
 
-		cq.select(cb.count(root));
-		Query q = getEntityManager().createQuery(cq);
-		return ((Long) q.getSingleResult()).intValue();
-	}
+        cq.select(cb.count(root));
+        Query q = getEntityManager().createQuery(cq);
+        return ((Long) q.getSingleResult()).intValue();
+    }
 
-	private CriteriaQuery getSearchQuery(GroupMSearchCondition condition, CriteriaBuilder cb, CriteriaQuery cq, Root root) {
-		Predicate predicate;
-		cq.select(root).where(cb.equal(root.get(GroupM_.validrow), true));
-		predicate = cq.getRestriction();
-		return cq;
-	}
+    private CriteriaQuery getSearchQuery(GroupMSearchCondition condition, CriteriaBuilder cb, CriteriaQuery cq, Root root) {
+        Predicate predicate;
+        cq.select(root).where(cb.equal(root.get(GroupM_.validrow), true));
+        predicate = cq.getRestriction();
+        return cq;
+    }
 
-	private void setOrderby(GroupMSearchCondition condition, CriteriaBuilder cb, CriteriaQuery cq, Root root) {
-		if (condition.getOrderBy() != null) {
-			if (condition.getAsc()) {
-				cq.orderBy(cb.asc(root.get(condition.getOrderBy())));
-			} else {
-				cq.orderBy(cb.desc(root.get(condition.getOrderBy())));
-			}
-		}
-	}
+    private void setOrderby(GroupMSearchCondition condition, CriteriaBuilder cb, CriteriaQuery cq, Root root) {
+        if (condition.getOrderBy() != null) {
+            if (condition.getAsc()) {
+                cq.orderBy(cb.asc(root.get(condition.getOrderBy())));
+            } else {
+                cq.orderBy(cb.desc(root.get(condition.getOrderBy())));
+            }
+        }
+    }
 }

@@ -3,89 +3,95 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-	  xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui">
 
     <h:head>
         <title><ui:insert name="title">Default Title</ui:insert></title>
         <h:outputStylesheet library="css" name="jsfcrud.css"/>
         <h:outputScript library="js" name="jsfcrud.js"/>
-		<link rel="stylesheet" href="/CrossHeadOfficeSample2/resources/css/reset.css" type="text/css" />
-		<link rel="stylesheet" href="/CrossHeadOfficeSample2/resources/css/default.css" type="text/css" />
-		<link rel="stylesheet" href="/CrossHeadOfficeSample2/resources/css/style.css" type="text/css" />
-		<!--[if IE]>
-		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-		<![endif]-->
+        <link rel="stylesheet" href="/CrossHeadOfficeSample2/resources/css/reset.css" type="text/css" />
+        <link rel="stylesheet" href="/CrossHeadOfficeSample2/resources/css/default.css" type="text/css" />
+        <link rel="stylesheet" href="/CrossHeadOfficeSample2/resources/css/style.css" type="text/css" />
+        <!--[if IE]>
+        <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
     </h:head>
 
     <h:body>
-		<header>
-			<div class="header_left">
-				<h1 class="logo">#{bundle.ApplicationTitle}</h1>
-			</div>
-			<div class="header_right">
-				#{loginController.loginUserName}<br />
-				<address>〒515-2354 三重県松阪市嬉野下之庄町830-5</address>
-				<address>0598-31-3223</address>
-			</div>
-			<div style="clear:both;"></div>
-			<div id="headermenu">
-				<ul>
-					<li><h:link outcome="/index" value="トップページ" /></li>
-				</ul>
-			</div>
-		</header>
+        <header>
+            <div class="header_left">
+                <h1 class="logo">#{bundle.ApplicationTitle}</h1>
+            </div>
+            <div class="header_right">
+                #{loginController.loginUserName}<br />
+                <address>〒515-2354 三重県松阪市嬉野下之庄町830-5</address>
+                <address>0598-31-3223</address>
+            </div>
+            <div style="clear:both;"></div>
+            <div id="headermenu">
+                <ul>
+                    <li><h:link outcome="/index" value="トップページ" /></li>
+                </ul>
+            </div>
+        </header>
 
-		<section id="content">
-			<h2>
-				<ui:insert name="title">Default Title</ui:insert>
-			</h2>
-			<article>
-				<p>
-					<ui:insert name="body">Default Body</ui:insert>
-				</p>
-			</article>
-		</section>
+        <section id="content">
+            <h2>
+                <ui:insert name="title">Default Title</ui:insert>
+            </h2>
+            <article>
+                <p>
+                    <ui:insert name="body">Default Body</ui:insert>
+                </p>
+            </article>
+        </section>
 
-		<nav>
-			<h:form>
-				<h3>メニュー</h3>
-				<ul>
-					<li><h:link outcome="/index" value="トップページ" /></li>
-				</ul>
-				<h4><h:link outcome="/item/List" value="案件" /></h4>
-				<h5>全案件</h5>
-				<ul>
-					<li><p:commandLink action="#{itemController.allList()}" value="全案件" /></li>
-				</ul>
-				<h5>アポイント</h5>
-				<ul>
-					<li><p:commandLink action="#{itemController.appointList()}" value="アポイント中" /></li>
-					<li><p:commandLink action="#{itemController.appointLateList()}" value="アポイント中(登録後1週間経過)" /></li>
-				</ul>
-				<h5>作業</h5>
-				<ul>
-					<li><p:commandLink action="#{itemController.twoDayslatersWorkList()}" value="明後日訪問予定" /></li>
-					<li><p:commandLink action="#{itemController.tomorrowsWorkList()}" value="明日訪問予定" /></li>
-					<li><p:commandLink action="#{itemController.todaysWorkList()}" value="本日訪問予定" /></li>
-					<li><p:commandLink action="#{itemController.willWorkList()}" value="作業待ち" /></li>
-					<li><p:commandLink action="#{itemController.notWorkReportList()}" value="作業報告待ち" /></li>
-					<li><p:commandLink action="#{itemController.workedList()}" value="作業済み" /></li>
-				</ul>
-				<h5>経理処理</h5>
-				<ul>
-					<li><p:commandLink action="#{itemController.accountingList()}" value="経理確認案件" /></li>
-				</ul>
-				<h5>案件検索</h5>
-				<ul>
-					<li><h:link outcome="/item/Search" value="案件検索条件指定"/></li>
-				</ul>
-			</h:form>
-		</nav>
+        <nav>
+            <h:form>
+                <h3>メニュー</h3>
+                <ul>
+                    <li><h:link outcome="/index" value="トップページ" /></li>
+                </ul>
+                <h4><h:link outcome="/item/List" value="案件" /></h4>
+                <h5>全案件</h5>
+                <ul>
+                    <li><p:commandLink action="#{itemController.allList()}" value="全案件" /></li>
+                </ul>
+                <h5>アポイント</h5>
+                <ul>
+                    <li><p:commandLink action="#{itemController.appointList()}" value="アポイント中" /></li>
+                    <li><p:commandLink action="#{itemController.appointAfterDaysList(1)}" value="アポイント中(登録後1日)" /></li>
+                    <li><p:commandLink action="#{itemController.appointAfterDaysList(2)}" value="アポイント中(登録後2日)" /></li>
+                    <li><p:commandLink action="#{itemController.appointAfterDaysList(3)}" value="アポイント中(登録後3日)" /></li>
+                    <li><p:commandLink action="#{itemController.appointAfterDaysList(4)}" value="アポイント中(登録後4日)" /></li>
+                    <li><p:commandLink action="#{itemController.appointAfterDaysList(5)}" value="アポイント中(登録後5日)" /></li>
+                    <li><p:commandLink action="#{itemController.appointAfterDaysList(6)}" value="アポイント中(登録後6日)" /></li>
+                    <li><p:commandLink action="#{itemController.appointLateList()}" value="アポイント中(登録後1週間経過)" /></li>
+                </ul>
+                <h5>作業</h5>
+                <ul>
+                    <li><p:commandLink action="#{itemController.twoDayslatersWorkList()}" value="明後日訪問予定" /></li>
+                    <li><p:commandLink action="#{itemController.tomorrowsWorkList()}" value="明日訪問予定" /></li>
+                    <li><p:commandLink action="#{itemController.todaysWorkList()}" value="本日訪問予定" /></li>
+                    <li><p:commandLink action="#{itemController.willWorkList()}" value="作業待ち" /></li>
+                    <li><p:commandLink action="#{itemController.notWorkReportList()}" value="作業報告待ち" /></li>
+                    <li><p:commandLink action="#{itemController.workedList()}" value="作業済み" /></li>
+                </ul>
+                <h5>経理処理</h5>
+                <ul>
+                    <li><p:commandLink action="#{itemController.accountingList()}" value="経理確認案件" /></li>
+                </ul>
+                <h5>案件検索</h5>
+                <ul>
+                    <li><h:link outcome="/item/Search" value="案件検索条件指定"/></li>
+                </ul>
+            </h:form>
+        </nav>
 
-		<footer>
-			[フッター]
-		</footer>
+        <footer>
+            [フッター]
+        </footer>
 
-	</h:body>
+    </h:body>
 
 </html>

@@ -23,66 +23,65 @@ import jp.co.orangeright.crossheadofficesample2.entity.UserM;
 @SessionScoped
 public class LoginController implements Serializable {
 
-	private UserM loginUser;
-	@EJB
-	private UserMFacade ejb;
+    private UserM loginUser;
+    @EJB
+    private UserMFacade ejb;
 
-	/**
-	 * Creates a new instance of LoginController
-	 */
-	public LoginController() {
-	}
+    /**
+     * Creates a new instance of LoginController
+     */
+    public LoginController() {
+    }
 
-	public UserM getLoginUser() {
-		if (this.loginUser == null) {
-			this.loginUser = new UserM();
-			this.loginUser.setValidrow(false);
-		}
-		return loginUser;
-	}
+    public UserM getLoginUser() {
+        if (this.loginUser == null) {
+            this.loginUser = new UserM();
+            this.loginUser.setValidrow(false);
+            // テスト用
+//            this.loginUser = this.ejb.find("jimu");
 
-	public void setLoginUser(UserM loginUser) {
-		this.loginUser = loginUser;
-	}
+        }
+        return loginUser;
+    }
 
-	public String login() {
-		if (!this.loginUser.getValidrow()) {
-			UserM tempUser = this.ejb.find(this.loginUser.getUserid());
-			if (tempUser != null && tempUser.getValidrow()
-					&& tempUser.getPasswd().equals(this.loginUser.getPasswd())
-					&& tempUser.getItemadmin()) {
-				this.loginUser = tempUser;
-				return "/index.xhtml?faces-redirect=true";
-//				return "index.xhtml?faces-redirect=true";
-			}
-		}
-		return "";
-	}
+    public void setLoginUser(UserM loginUser) {
+        this.loginUser = loginUser;
+    }
 
-	public String logout() {
-		if (this.loginUser.getValidrow()) {
-			this.loginUser = null;
-			return "Login.xhtml?faces-redirect=true";
-		} else {
-			return "";
-		}
-	}
+    public String login() {
+        if (!this.loginUser.getValidrow()) {
+            UserM tempUser = this.ejb.find(this.loginUser.getUserid());
+            if (tempUser != null && tempUser.getValidrow()
+                    && tempUser.getPasswd().equals(this.loginUser.getPasswd())
+                    && tempUser.getItemadmin()) {
+                this.loginUser = tempUser;
+                return "/index.xhtml?faces-redirect=true";
+            }
+        }
+        return "";
+    }
 
-	public String getLoginUserName() {
-//		テスト用
-//		this.loginUser = this.ejb.find("system");
-//		
-		if (!this.getLoginUser().getValidrow()) {
-			ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-			externalContext.invalidateSession();
-			try {
-				externalContext.dispatch("/faces/Login.xhtml");
-			} catch (IOException e) {
+    public String logout() {
+        if (this.loginUser.getValidrow()) {
+            this.loginUser = null;
+            return "/Login.xhtml?faces-redirect=true";
+        } else {
+            return "";
+        }
+    }
 
-			}
-			return "";
-		} else {
-			return this.getLoginUser().getUsername();
-		}
-	}
+    public String getLoginUserName() {
+        if (!this.getLoginUser().getValidrow()) {
+            ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+            externalContext.invalidateSession();
+            try {
+                externalContext.dispatch("/faces/Login.xhtml");
+            } catch (IOException e) {
+
+            }
+            return "";
+        } else {
+            return this.getLoginUser().getUsername();
+        }
+    }
 }
