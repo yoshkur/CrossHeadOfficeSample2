@@ -74,7 +74,13 @@
                     <li><p:commandLink action="#{itemController.tomorrowsWorkList()}" value="明日訪問予定" /></li>
                     <li><p:commandLink action="#{itemController.todaysWorkList()}" value="本日訪問予定" /></li>
                     <li><p:commandLink action="#{itemController.willWorkList()}" value="作業待ち" /></li>
-                    <li><p:commandLink action="#{itemController.notWorkReportList()}" value="作業報告待ち" /></li>
+                    <li><p:commandLink action="#{itemController.notWorkReportList(1)}" value="作業報告待ち(1日経過)" /></li>
+                    <li><p:commandLink action="#{itemController.notWorkReportList(2)}" value="作業報告待ち(2日経過)" /></li>
+                    <li><p:commandLink action="#{itemController.notWorkReportList(3)}" value="作業報告待ち(3日経過)" /></li>
+                    <li><p:commandLink action="#{itemController.notWorkReportList(4)}" value="作業報告待ち(4日経過)" /></li>
+                    <li><p:commandLink action="#{itemController.notWorkReportList(5)}" value="作業報告待ち(5日経過)" /></li>
+                    <li><p:commandLink action="#{itemController.notWorkReportList(6)}" value="作業報告待ち(6日経過)" /></li>
+                    <li><p:commandLink action="#{itemController.notWorkReportAfter1WeekList()}" value="作業報告待ち(1週間以上経過)" /></li>
                     <li><p:commandLink action="#{itemController.workedList()}" value="作業済み" /></li>
                 </ul>
                 <h5>経理処理</h5>
@@ -84,6 +90,11 @@
                 <h5>案件検索</h5>
                 <ul>
                     <li><h:link outcome="/item/Search" value="案件検索条件指定"/></li>
+                </ul>
+                <h5>案件カウントツール</h5>
+                <ul>
+                    <li><p:commandLink action="#{itemController.openCountRegisteredItem()}" value="案件登録数カウントツール" /></li>
+                    <li><p:commandLink action="#{itemController.openCountExecutedItem()}" value="案件対応数カウントツール" /></li>
                 </ul>
             </h:form>
         </nav>

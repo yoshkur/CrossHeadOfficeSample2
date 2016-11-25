@@ -1,0 +1,141 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="案件登録数カウントツール"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:panelGroup id="conditionPanel" layout="block">
+                <h:form>
+                    <p:panelGrid columns="5">
+                        <p:outputLabel value="#{bundle.SearchItemLabel_customer}"/>
+                        <p:selectOneMenu value="#{itemController.condition.customer}">
+                            <f:selectItem itemLabel="条件なし" itemValue=""/>
+                            <f:selectItems value="#{itemController.condition.customerList}" var="customer" itemLabel="#{customer.customername}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel value="案件登録日"/>
+                        <p:calendar value="#{itemController.condition.addDateStart}" pattern="yyyy/MM/dd" title="#{bundle.SearchItemTitle_adddatestart}"/>
+                        <p:commandButton action="#{itemController.countRegisteredItem()}" value="表示"/>
+                    </p:panelGrid>
+                </h:form>
+            </h:panelGroup>
+            <h:form styleClass="jsfcrud_list_form">
+                <h:outputText escape="false" value="#{bundle.ListItemEmpty}" rendered="#{itemController.items.rowCount == 0}"/>
+                <h:panelGroup rendered="#{itemController.items.rowCount > 0}">
+                    <h:outputText value="#{itemController.pagination.itemsCount}件中#{itemController.pagination.pageFirstItem + 1}〜#{itemController.pagination.pageLastItem + 1}件を表示"/>&nbsp;
+                    <p:dataTable id="datalist" value="#{itemController.items}" var="item"
+                                 resizableColumns="true" liveResize="false"
+                                 paginator="false"
+                                 rowKey="#{item.itemid}"
+                                 rows="#{itemController.pagination.pageSize}"
+                                 >
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ItemTitle_itemid}"/>
+                            </f:facet>
+                            <h:outputLink value="http://www.orange-right.co.jp/cross/item_edit.jsp?itemid=#{item.itemid}" target="_new">
+                                <h:outputText value="#{item.itemid}"/>
+                            </h:outputLink>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ItemTitle_itemcd}"/>
+                            </f:facet>
+                            <h:commandLink action="#{itemController.prepareView}" value="#{item.itemcd}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ItemTitle_adddate}"/>
+                                <br />
+                                <h:commandLink action="#{itemController.orderByAdddateAsc()}" value="昇順" />
+                                <h:outputText value=" / "/>
+                                <h:commandLink action="#{itemController.orderByAdddateDesc()}" value="降順" />
+                            </f:facet>
+                            <h:outputText value="#{item.adddate}">
+                                <f:convertDateTime pattern="yyyy/MM/dd" />
+                            </h:outputText>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ItemTitle_customerid}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.customerid.customername}" rendered="#{!item.isKDDI()}" />
+                            <h:outputLink value="https://auhikari.secure.force.com/PPLogin/search/SearchResults" rendered="#{item.isKDDI()}" target="_grip">
+                                <f:param name="searchType" value="1" />
+                                <f:param name="sen" value="0" />
+                                <f:param name="setLast" value="1" />
+                                <f:param name="sbstr" value="#{item.itemcd}" />
+                                <f:param name="search" value="+Go!+" />
+                                <h:outputText value="#{item.customerid.customername}" />
+                            </h:outputLink>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ItemTitle_userid}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.userid.username}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ItemTitle_state}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.status}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ItemTitle_memo}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.memo}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ItemTitle_scheid}"/>
+                            </f:facet>
+                            <h:outputLink value="http://www.orange-right.co.jp/cross/schedule_edit.jsp?scheid=#{item.scheid.scheid}" target="_new" rendered="#{item.appoint}">
+                                <h:outputText value="#{item.scheid.datefrom}">
+                                    <f:convertDateTime pattern="yyyy/MM/dd HH:mm" />
+                                </h:outputText>
+                            </h:outputLink>
+                            <h:outputText value="アポイント中" rendered="#{!item.appoint}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ItemTitle_worked}"/>
+                            </f:facet>
+                            <h:outputText value="作業未完了" rendered="#{!item.worked}"/>
+                            <h:outputText value="#{item.workedfilename}" rendered="#{item.worked}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ItemTitle_directpayment}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.payment}"/>
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ItemTitle_updatedate}"/>
+                                <br />
+                                <h:commandLink action="#{itemController.orderByUpdatedateAsc()}" value="昇順" />
+                                <h:outputText value=" / "/>
+                                <h:commandLink action="#{itemController.orderByUpdatedateDesc()}" value="降順" />
+                            </f:facet>
+                            <h:outputText value="#{item.updatedate}">
+                                <f:convertDateTime pattern="yyyy/MM/dd" />
+                            </h:outputText>
+                        </p:column>
+                    </p:dataTable>
+                </h:panelGroup>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>
+

@@ -66,10 +66,10 @@ public class ItemController implements Serializable {
             this.condition.setFinished(Boolean.FALSE);
             this.condition.setCancel(Boolean.FALSE);
             this.condition.setCustomerList(this.customerEjb.findAll(new CustomerSearchCondition()));
-            UserMSearchCondition uCon = new UserMSearchCondition();
-            uCon.setAsc(Boolean.TRUE);
-            uCon.setOrderBy(UserM_.roworder);
-            this.condition.setUserList(this.userEjb.findAll(uCon));
+//            UserMSearchCondition uCon = new UserMSearchCondition();
+//            uCon.setAsc(Boolean.TRUE);
+//            uCon.setOrderBy(UserM_.roworder);
+//            this.condition.setUserList(this.userEjb.findAll(uCon));
         }
         return condition;
     }
@@ -86,6 +86,7 @@ public class ItemController implements Serializable {
             this.pageSizeList.add(20);
             this.pageSizeList.add(50);
             this.pageSizeList.add(100);
+            this.pageSizeList.add(10000);
         }
         return pageSizeList;
     }
@@ -254,6 +255,78 @@ public class ItemController implements Serializable {
         return "/item/List?faces-redirect=true";
     }
 
+    public String openCountExecutedItem() {
+        Calendar cal = GregorianCalendar.getInstance();
+        cal.set(Calendar.HOUR, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.add(Calendar.DAY_OF_YEAR, -1);
+        this.getCondition().setTurnStart(cal.getTime());
+        this.getCondition().setCustomer(null);
+        return this.countExecutedItem();
+    }
+
+    public String countExecutedItem() {
+        this.getCondition().setKeyword(null);
+//        this.getCondition().setCustomer(null);
+        this.getCondition().setUser(null);
+        this.getCondition().setFinished(Boolean.FALSE);
+        this.getCondition().setAccounting(Boolean.FALSE);
+        this.getCondition().setItemcd(null);
+        this.getCondition().setPayment(null);
+        this.getCondition().setAppoint(null);
+        this.getCondition().setWorked(null);
+//        this.getCondition().setTurnStart(null);
+        this.getCondition().setTurnEnd(this.getCondition().getTurnStart());
+        this.getCondition().setCancel(null);
+        this.getCondition().setOnhold(null);
+        this.getCondition().setAddDateStart(null);
+        this.getCondition().setAddDateEnd(null);
+        this.getCondition().setUpdateDateStart(null);
+        this.getCondition().setUpdateDateEnd(null);
+        this.getPagination().setPage(0);
+        this.getPagination().setPageSize(10000);
+        this.setPageSize(this.getPagination().getPageSize());
+        recreateModel();
+        return "/item/CountExecutedItem?faces-redirect=true";
+    }
+
+    public String openCountRegisteredItem() {
+        Calendar cal = GregorianCalendar.getInstance();
+        cal.set(Calendar.HOUR, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.add(Calendar.DAY_OF_YEAR, -1);
+        this.getCondition().setAddDateStart(cal.getTime());
+        this.getCondition().setCustomer(null);
+        return this.countRegisteredItem();
+    }
+
+    public String countRegisteredItem() {
+        this.getCondition().setKeyword(null);
+//        this.getCondition().setCustomer(null);
+        this.getCondition().setUser(null);
+        this.getCondition().setFinished(Boolean.FALSE);
+        this.getCondition().setAccounting(Boolean.FALSE);
+        this.getCondition().setItemcd(null);
+        this.getCondition().setPayment(null);
+        this.getCondition().setAppoint(null);
+        this.getCondition().setWorked(null);
+        this.getCondition().setTurnStart(null);
+        this.getCondition().setTurnEnd(null);
+        this.getCondition().setCancel(null);
+        this.getCondition().setOnhold(null);
+//        this.getCondition().setAddDateStart(null);
+        this.getCondition().setAddDateEnd(this.getCondition().getAddDateStart());
+        this.getCondition().setUpdateDateStart(null);
+        this.getCondition().setUpdateDateEnd(null);
+        this.getPagination().setPage(0);
+        this.getPagination().setPageSize(10000);
+        this.setPageSize(this.getPagination().getPageSize());
+        recreateModel();
+        return "/item/CountRegisteredItem?faces-redirect=true";
+    }
+
     public String todaysWorkList() {
         this.getCondition().setKeyword(null);
         this.getCondition().setCustomer(null);
@@ -388,7 +461,36 @@ public class ItemController implements Serializable {
         return "/item/List?faces-redirect=true";
     }
 
-    public String notWorkReportList() {
+    public String notWorkReportList(int days) {
+        this.getCondition().setKeyword(null);
+        this.getCondition().setCustomer(null);
+        this.getCondition().setUser(null);
+        this.getCondition().setFinished(Boolean.FALSE);
+        this.getCondition().setAccounting(Boolean.FALSE);
+        this.getCondition().setItemcd(null);
+        this.getCondition().setPayment(null);
+        this.getCondition().setAppoint(Boolean.TRUE);
+        this.getCondition().setWorked(Boolean.FALSE);
+        Calendar cal = GregorianCalendar.getInstance();
+        cal.set(Calendar.HOUR, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.add(Calendar.DAY_OF_MONTH, -1 * days);
+        this.getCondition().setTurnStart(cal.getTime());
+        this.getCondition().setTurnEnd(cal.getTime());
+        this.getCondition().setCancel(Boolean.FALSE);
+        this.getCondition().setOnhold(Boolean.FALSE);
+        this.getCondition().setAddDateStart(null);
+        this.getCondition().setAddDateEnd(null);
+        this.getCondition().setUpdateDateStart(null);
+        this.getCondition().setUpdateDateEnd(null);
+        this.getPagination().setPage(0);
+        this.setPageSize(this.getPagination().getPageSize());
+        recreateModel();
+        return "/item/List?faces-redirect=true";
+    }
+
+    public String notWorkReportAfter1WeekList() {
         this.getCondition().setKeyword(null);
         this.getCondition().setCustomer(null);
         this.getCondition().setUser(null);
