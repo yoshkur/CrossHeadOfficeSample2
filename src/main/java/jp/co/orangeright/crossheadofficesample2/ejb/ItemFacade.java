@@ -14,6 +14,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Expression;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import jp.co.orangeright.crossheadofficesample2.entity.Item;
@@ -168,10 +169,18 @@ public class ItemFacade extends AbstractFacade<Item> {
     private void setOrderby(ItemSearchCondition condition, CriteriaBuilder cb, CriteriaQuery cq, Root root) {
         if (condition.getOrderBy() != null) {
             if (condition.getAsc()) {
-                cq.orderBy(cb.asc(root.get(condition.getOrderBy())));
+                cq.orderBy(cb.asc(this.makeOrderBy(condition, cb, cq, root)));
             } else {
-                cq.orderBy(cb.desc(root.get(condition.getOrderBy())));
+                cq.orderBy(cb.desc(this.makeOrderBy(condition, cb, cq, root)));
             }
+        }
+    }
+
+    private Expression makeOrderBy(ItemSearchCondition condition, CriteriaBuilder cb, CriteriaQuery cq, Root root) {
+        if (condition.getOrderBy().equals(Schedule_.datefrom)) {
+            return root.get(Item_.scheid).get(Schedule_.datefrom);
+        } else {
+            return root.get(condition.getOrderBy());
         }
     }
 }

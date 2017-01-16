@@ -95,6 +95,10 @@
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ItemTitle_scheid}"/>
+                                <br />
+                                <h:commandLink action="#{itemController.orderByVisitdateAsc()}" value="昇順" />
+                                <h:outputText value=" / "/>
+                                <h:commandLink action="#{itemController.orderByVisitdateDesc()}" value="降順" />
                             </f:facet>
                             <h:outputLink value="http://www.orange-right.co.jp/cross/schedule_edit.jsp?scheid=#{item.scheid.scheid}" target="_new" rendered="#{item.appoint}">
                                 <h:outputText value="#{item.scheid.datefrom}">

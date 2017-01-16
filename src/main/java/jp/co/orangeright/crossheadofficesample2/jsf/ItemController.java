@@ -27,6 +27,7 @@ import jp.co.orangeright.crossheadofficesample2.ejb.ItemFacade;
 import jp.co.orangeright.crossheadofficesample2.ejb.UserMFacade;
 import jp.co.orangeright.crossheadofficesample2.entity.Schedule;
 import jp.co.orangeright.crossheadofficesample2.entity.Item_;
+import jp.co.orangeright.crossheadofficesample2.entity.Schedule_;
 import jp.co.orangeright.crossheadofficesample2.entity.UserM_;
 import jp.co.orangeright.crossheadofficesample2.jsf.customer.CustomerSearchCondition;
 import jp.co.orangeright.crossheadofficesample2.jsf.item.ItemSearchCondition;
@@ -587,6 +588,30 @@ public class ItemController implements Serializable {
 
     public String create() {
         try {
+            this.current.setCancel(false);
+            this.current.setDirectpayment(false);
+            this.current.setFinished(false);
+            this.current.setOnhold(false);
+            this.current.setWorked(false);
+            this.current.setAdddate(new Date());
+            this.current.setAddcode(this.loginController.getLoginUser().getUserid());
+            this.current.setAddprogram(this.getClass().getName());
+            this.current.setUpdatedate(new Date());
+            this.current.setUpdatecode(this.loginController.getLoginUser().getUserid());
+            this.current.setUpdateprogram(this.getClass().getName());
+            this.current.setValidrow(true);
+
+            getFacade().create(current);
+            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ItemCreated"));
+            return prepareCreate();
+        } catch (Exception e) {
+            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+            return null;
+        }
+    }
+
+    public String createItemSchedule() {
+        try {
             this.schedule4Create.setItemno(this.current.getItemcd());
             this.schedule4Create.setOwnerid(this.loginController.getLoginUser().getUserid());
             this.schedule4Create.setUserid(this.condition.getUser());
@@ -635,7 +660,7 @@ public class ItemController implements Serializable {
             return null;
         }
     }
-
+    
     public String prepareEdit() {
         current = (Item) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
@@ -745,6 +770,22 @@ public class ItemController implements Serializable {
     public String orderByAdddateDesc() {
         this.condition.setAsc(Boolean.FALSE);
         this.condition.setOrderBy(Item_.adddate);
+        this.getPagination().setPage(0);
+        recreateModel();
+        return "List";
+    }
+
+    public String orderByVisitdateAsc() {
+        this.condition.setAsc(Boolean.TRUE);
+        this.condition.setOrderBy(Schedule_.datefrom);
+        this.getPagination().setPage(0);
+        recreateModel();
+        return "List";
+    }
+
+    public String orderByVisitdateDesc() {
+        this.condition.setAsc(Boolean.FALSE);
+        this.condition.setOrderBy(Schedule_.datefrom);
         this.getPagination().setPage(0);
         recreateModel();
         return "List";

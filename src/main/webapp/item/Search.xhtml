@@ -44,10 +44,16 @@
                     </p:selectOneMenu>
 
                     <p:outputLabel value="#{bundle.SearchItemLabel_turnstart}"/>
-                    <p:calendar value="#{itemController.condition.turnStart}" pattern="yyyy/MM/dd" title="#{bundle.SearchItemTitle_turnstart}"/>
+                    <p:calendar id="turnstart" value="#{itemController.condition.turnStart}" pattern="yyyy/MM/dd" title="#{bundle.SearchItemTitle_turnstart}" maxdate="#{itemController.condition.turnEnd}">
+                        <p:ajax event="dateSelect" update="turnend" />
+                        <p:ajax event="blur" update="turnend" />
+                    </p:calendar>
 
                     <p:outputLabel value="#{bundle.SearchItemLabel_turnend}"/>
-                    <p:calendar value="#{itemController.condition.turnEnd}" pattern="yyyy/MM/dd" title="#{bundle.SearchItemTitle_turnend}"/>
+                    <p:calendar id="turnend" value="#{itemController.condition.turnEnd}" pattern="yyyy/MM/dd" title="#{bundle.SearchItemTitle_turnend}" mindate="#{itemController.condition.turnStart}">
+                        <p:ajax event="dateSelect" update="turnstart" />
+                        <p:ajax event="blur" update="turnstart" />
+                    </p:calendar>
 
                     <p:outputLabel value="#{bundle.SearchItemLabel_worked}"/>
                     <p:selectOneMenu value="#{itemController.condition.worked}">
