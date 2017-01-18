@@ -602,10 +602,10 @@ public class ItemController implements Serializable {
             this.current.setValidrow(true);
 
             getFacade().create(current);
-            JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ItemCreated"));
+            JsfUtil.addSuccessMessage(this.current.getItemcd() + " " + ResourceBundle.getBundle("/Bundle").getString("ItemCreated"));
             return prepareCreate();
         } catch (Exception e) {
-            JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
+            JsfUtil.addErrorMessage(e, this.current.getItemcd() + " " + ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
             return null;
         }
     }

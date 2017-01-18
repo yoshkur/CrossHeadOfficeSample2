@@ -74,7 +74,7 @@ public class ItemFileInterfaceContoroller implements Serializable {
                     this.itemController.getSelected().setCustomerid(this.customerEjb.find(14541));
                     this.itemController.getSelected().setUserid(this.userEjb.find("ariie"));
                     StringBuilder detail = new StringBuilder();
-                    detail.append("/****** auRora案件 ******/");
+                    detail.append("/****** 公衆Wi-Fi案件 ******/");
                     detail.append(System.lineSeparator());
                     detail.append(System.lineSeparator());
                     detail.append("対応ID: ");
@@ -106,7 +106,7 @@ public class ItemFileInterfaceContoroller implements Serializable {
                     count++;
                 }
             }
-
+            br.close();
         } catch (Exception e) {
             e.getLocalizedMessage();
             return null;
