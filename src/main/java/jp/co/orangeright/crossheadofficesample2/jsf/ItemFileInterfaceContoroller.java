@@ -107,11 +107,11 @@ public class ItemFileInterfaceContoroller implements Serializable {
                 }
             }
             br.close();
+            JsfUtil.addSuccessMessage(count + "件登録しました。");
         } catch (Exception e) {
             e.getLocalizedMessage();
             return null;
         }
-        JsfUtil.addSuccessMessage(count + "件登録しました。");
         return "/index?faces-redirect=true";
     }
 }
