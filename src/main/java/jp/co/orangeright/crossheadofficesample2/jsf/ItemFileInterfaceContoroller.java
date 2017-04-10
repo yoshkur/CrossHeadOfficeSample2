@@ -6,12 +6,13 @@
 package jp.co.orangeright.crossheadofficesample2.jsf;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.util.Set;
 import java.util.List;
+import java.util.TreeSet;
 import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.servlet.http.Part;
@@ -39,6 +40,8 @@ public class ItemFileInterfaceContoroller implements Serializable {
     private CustomerFacade customerEjb;
     @EJB
     private UserMFacade userEjb;
+    private Integer wifiItemCount;
+    private Integer wifihoshuItemCount;
 
     /**
      * Creates a new instance of ItemFileInterfaceContoroller
@@ -54,7 +57,7 @@ public class ItemFileInterfaceContoroller implements Serializable {
         this.dataFile = dataFile;
     }
 
-    public String auroraItemCreate() {
+    public String createWifiItem() {
         int count = 0;
         try {
             BufferedReader br = new BufferedReader(new InputStreamReader(this.dataFile.getInputStream()));
@@ -109,9 +112,95 @@ public class ItemFileInterfaceContoroller implements Serializable {
             br.close();
             JsfUtil.addSuccessMessage(count + "件登録しました。");
         } catch (Exception e) {
-            e.getLocalizedMessage();
             return null;
         }
-        return "/index?faces-redirect=true";
+        return null;
     }
+
+    public String createWifiHoshItem() {
+        int count = 0;
+        try {
+            BufferedReader br = new BufferedReader(new InputStreamReader(this.dataFile.getInputStream()));
+            //1行目はヘッダなので処理しない。
+            String line = br.readLine();
+            while ((line = br.readLine()) != null || line.length() > 0) {
+                line = line.replaceAll("\"", "");
+                String[] cols = line.split(",");
+                ItemSearchCondition itemCondition = new ItemSearchCondition();
+                itemCondition.setItemcd(cols[0]);
+                List<Item> itemList = this.itemEjb.findAll(itemCondition);
+                if (itemList.size() > 0) {
+
+                //アポコメントに改行があった場合に対応。
+                } else if (cols.length > 20) {
+                    this.itemController.prepareCreate();
+                    this.itemController.getSelected().setItemcd(cols[0]);
+                    this.itemController.getSelected().setCustomerid(this.customerEjb.find(6));
+                    this.itemController.getSelected().setUserid(this.userEjb.find("ariie"));
+                    StringBuilder detail = new StringBuilder();
+                    detail.append("/****** 公衆Wi-Fi(保守)案件 ******/");
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("工事オーダーNo: ");
+                    detail.append(cols[0]);
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("設置場所名: ");
+                    detail.append(cols[4]);
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("住所: ");
+                    detail.append(cols[6]);
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("案件名: ");
+                    detail.append(cols[10]);
+                    this.itemController.getSelected().setDetail(detail.toString());
+                    this.itemController.getSelected().setMemo("");
+                    this.itemController.create();
+                    count++;
+                }
+            }
+            br.close();
+            JsfUtil.addSuccessMessage(count + "件登録しました。");
+        } catch (Exception e) {
+            return null;
+        }
+        return null;
+    }
+
+    public Integer getWifiItemCount() {
+        ItemSearchCondition iCon = new ItemSearchCondition();
+        iCon.setCustomer(this.customerEjb.find(14541));
+        Set<String> itemSet = new TreeSet<>();
+        for (Item item : this.itemEjb.findAll(iCon)) {
+            if (item.getItemcd().startsWith("tsk")) {
+                itemSet.add(item.getItemcd());
+            }
+        }
+        this.setWifiItemCount(itemSet.size());
+        return wifiItemCount;
+    }
+
+    public void setWifiItemCount(Integer wifiItemCount) {
+        this.wifiItemCount = wifiItemCount;
+    }
+
+    public Integer getWifihoshuItemCount() {
+        ItemSearchCondition iCon = new ItemSearchCondition();
+        iCon.setCustomer(this.customerEjb.find(6));
+        Set<String> itemSet = new TreeSet<>();
+        for (Item item : this.itemEjb.findAll(iCon)) {
+            if (item.getItemcd().startsWith("order_work")) {
+                itemSet.add(item.getItemcd());
+            }
+        }
+        this.setWifihoshuItemCount(itemSet.size());
+        return wifihoshuItemCount;
+    }
+
+    public void setWifihoshuItemCount(Integer wifihoshuItemCount) {
+        this.wifihoshuItemCount = wifihoshuItemCount;
+    }
+
 }
