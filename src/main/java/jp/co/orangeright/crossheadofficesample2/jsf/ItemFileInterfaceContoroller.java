@@ -5,7 +5,17 @@
  */
 package jp.co.orangeright.crossheadofficesample2.jsf;
 
+import com.orangesignal.csv.CsvConfig;
+import com.orangesignal.csv.Csv;
+import com.orangesignal.csv.handlers.StringArrayListHandler;
+import com.orangesignal.csv.manager.CsvManager;
+import com.orangesignal.csv.manager.CsvManagerFactory;
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
@@ -59,13 +69,18 @@ public class ItemFileInterfaceContoroller implements Serializable {
 
     public String createWifiItem() {
         int count = 0;
+        CsvConfig csvConfig = new CsvConfig();
+        csvConfig.setSeparator(',');
+        csvConfig.setQuoteDisabled(false);
+        csvConfig.setQuote('"');
+        csvConfig.setSkipLines(1);
         try {
-            BufferedReader br = new BufferedReader(new InputStreamReader(this.dataFile.getInputStream()));
-            //1行目はヘッダなので処理しない。
-            String line = br.readLine();
-            while ((line = br.readLine()) != null || line.length() > 0) {
-                line = line.replaceAll("\"", "");
-                String[] cols = line.split(",");
+            File csvFile = this.getFile("/tmp/auwifi.csv");
+            List<String[]> csv = Csv.load(csvFile, csvConfig, new StringArrayListHandler());
+            for (String[] cols : csv) {
+                if (cols[0].length() == 0) {
+                    break;
+                }
                 ItemSearchCondition itemCondition = new ItemSearchCondition();
                 itemCondition.setItemcd(cols[0]);
                 List<Item> itemList = this.itemEjb.findAll(itemCondition);
@@ -77,7 +92,7 @@ public class ItemFileInterfaceContoroller implements Serializable {
                     this.itemController.getSelected().setCustomerid(this.customerEjb.find(14541));
                     this.itemController.getSelected().setUserid(this.userEjb.find("ariie"));
                     StringBuilder detail = new StringBuilder();
-                    detail.append("/****** 公衆Wi-Fi案件 ******/");
+                    detail.append("/****** au Wi-Fi 保守 ******/");
                     detail.append(System.lineSeparator());
                     detail.append(System.lineSeparator());
                     detail.append("対応ID: ");
@@ -109,7 +124,7 @@ public class ItemFileInterfaceContoroller implements Serializable {
                     count++;
                 }
             }
-            br.close();
+            csvFile.delete();
             JsfUtil.addSuccessMessage(count + "件登録しました。");
         } catch (Exception e) {
             return null;
@@ -119,26 +134,30 @@ public class ItemFileInterfaceContoroller implements Serializable {
 
     public String createWifiHoshItem() {
         int count = 0;
+        CsvConfig csvConfig = new CsvConfig();
+        csvConfig.setSeparator(',');
+        csvConfig.setQuoteDisabled(false);
+        csvConfig.setQuote('"');
+        csvConfig.setSkipLines(1);
         try {
-            BufferedReader br = new BufferedReader(new InputStreamReader(this.dataFile.getInputStream()));
-            //1行目はヘッダなので処理しない。
-            String line = br.readLine();
-            while ((line = br.readLine()) != null || line.length() > 0) {
-                line = line.replaceAll("\"", "");
-                String[] cols = line.split(",");
+            File csvFile = this.getFile("/tmp/w2wifi.csv");
+            List<String[]> csv = Csv.load(csvFile, csvConfig, new StringArrayListHandler());
+            for (String[] cols : csv) {
+                if (cols[0].length() == 0) {
+                    break;
+                }
                 ItemSearchCondition itemCondition = new ItemSearchCondition();
                 itemCondition.setItemcd(cols[0]);
                 List<Item> itemList = this.itemEjb.findAll(itemCondition);
                 if (itemList.size() > 0) {
 
-                //アポコメントに改行があった場合に対応。
-                } else if (cols.length > 20) {
+                } else {
                     this.itemController.prepareCreate();
                     this.itemController.getSelected().setItemcd(cols[0]);
                     this.itemController.getSelected().setCustomerid(this.customerEjb.find(6));
                     this.itemController.getSelected().setUserid(this.userEjb.find("ariie"));
                     StringBuilder detail = new StringBuilder();
-                    detail.append("/****** 公衆Wi-Fi(保守)案件 ******/");
+                    detail.append("/****** w2 Wi-Fi (保守) ******/");
                     detail.append(System.lineSeparator());
                     detail.append(System.lineSeparator());
                     detail.append("工事オーダーNo: ");
@@ -161,9 +180,9 @@ public class ItemFileInterfaceContoroller implements Serializable {
                     count++;
                 }
             }
-            br.close();
+            csvFile.delete();
             JsfUtil.addSuccessMessage(count + "件登録しました。");
-        } catch (Exception e) {
+        } catch (IOException e) {
             return null;
         }
         return null;
@@ -203,4 +222,62 @@ public class ItemFileInterfaceContoroller implements Serializable {
         this.wifihoshuItemCount = wifihoshuItemCount;
     }
 
+    public String calcCsv() {
+        CsvConfig csvConfig = new CsvConfig();
+        csvConfig.setSeparator(',');
+        csvConfig.setQuoteDisabled(false);
+        csvConfig.setQuote('"');
+        csvConfig.setSkipLines(1);
+        try {
+            File csvFile = this.getFile("/tmp/w2wifi.csv");
+            List<String[]> csv = Csv.load(csvFile, csvConfig, new StringArrayListHandler());
+            if (csv.size() > 0) {
+                for (String[] cols : csv) {
+                    if (cols[0].length() == 0) {
+                        break;
+                    }
+                    this.itemController.prepareCreate();
+                    this.itemController.getSelected().setItemcd(cols[0]);
+                    this.itemController.getSelected().setCustomerid(this.customerEjb.find(6));
+                    this.itemController.getSelected().setUserid(this.userEjb.find("ariie"));
+                    StringBuilder detail = new StringBuilder();
+                    detail.append("/****** w2 Wi-Fi (保守) ******/");
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("工事オーダーNo: ");
+                    detail.append(cols[0]);
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("設置場所名: ");
+                    detail.append(cols[4]);
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("住所: ");
+                    detail.append(cols[6]);
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("案件名: ");
+                    detail.append(cols[10]);
+                    this.itemController.getSelected().setDetail(detail.toString());
+                    this.itemController.getSelected().setMemo("");
+                    this.itemController.create();
+                }
+            }
+            csvFile.delete();
+        } catch (IOException e) {
+            return null;
+        }
+        return null;
+    }
+
+    private File getFile(String tempFile) {
+        try {
+            this.dataFile.write(tempFile);
+
+        } catch (IOException e) {
+
+        }
+        File file = new File(tempFile);
+        return file;
+    }
 }
