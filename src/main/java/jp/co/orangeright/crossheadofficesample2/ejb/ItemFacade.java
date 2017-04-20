@@ -91,6 +91,10 @@ public class ItemFacade extends AbstractFacade<Item> {
             cq.select(root).where(predicate, cb.like(root.get(Item_.detail).as(String.class), "%" + condition.getKeyword() + "%"));
             predicate = cq.getRestriction();
         }
+        if (condition.getKeyword() != null) {
+            cq.select(root).where(cb.or(predicate, cb.like(root.get(Item_.memo).as(String.class), "%" + condition.getKeyword() + "%")));
+            predicate = cq.getRestriction();
+        }
         if (condition.getCustomer() != null) {
             cq.select(root).where(predicate, cb.equal(root.get(Item_.customerid), condition.getCustomer()));
             predicate = cq.getRestriction();
