@@ -5,6 +5,7 @@
  */
 package jp.co.orangeright.crossheadofficesample2.ejb;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -80,93 +81,71 @@ public class ItemFacade extends AbstractFacade<Item> {
     }
 
     private CriteriaQuery getSearchQuery(ItemSearchCondition condition, CriteriaBuilder cb, CriteriaQuery cq, Root root) {
-        Predicate predicate;
-        cq.select(root).where(cb.equal(root.get(Item_.validrow), true));
-        predicate = cq.getRestriction();
+        List<Predicate> predicates = new ArrayList<>();
+        predicates.add(cb.equal(root.get(Item_.validrow), true));
         if (condition.getItemcd() != null) {
-            cq.select(root).where(predicate, cb.like(root.get(Item_.itemcd).as(String.class), "%" + condition.getItemcd() + "%"));
-            predicate = cq.getRestriction();
+            predicates.add(cb.like(root.get(Item_.itemcd).as(String.class), "%" + condition.getItemcd() + "%"));
         }
         if (condition.getKeyword() != null) {
-            cq.select(root).where(predicate, cb.like(root.get(Item_.detail).as(String.class), "%" + condition.getKeyword() + "%"));
-            predicate = cq.getRestriction();
-        }
-        if (condition.getKeyword() != null) {
-            cq.select(root).where(cb.or(predicate, cb.like(root.get(Item_.memo).as(String.class), "%" + condition.getKeyword() + "%")));
-            predicate = cq.getRestriction();
+            predicates.add(cb.or(cb.like(root.get(Item_.detail).as(String.class), "%" + condition.getKeyword() + "%"), cb.like(root.get(Item_.memo).as(String.class), "%" + condition.getKeyword() + "%")));
         }
         if (condition.getCustomer() != null) {
-            cq.select(root).where(predicate, cb.equal(root.get(Item_.customerid), condition.getCustomer()));
-            predicate = cq.getRestriction();
+            predicates.add(cb.equal(root.get(Item_.customerid), condition.getCustomer()));
         }
         if (condition.getUser() != null) {
-            cq.select(root).where(predicate, cb.equal(root.get(Item_.userid), condition.getUser()));
-            predicate = cq.getRestriction();
+            predicates.add(cb.equal(root.get(Item_.userid), condition.getUser()));
         }
         if (condition.getAppoint() != null) {
-            cq.select(root).where(predicate, cb.equal(root.get(Item_.appoint), condition.getAppoint()));
-            predicate = cq.getRestriction();
+            predicates.add(cb.equal(root.get(Item_.appoint), condition.getAppoint()));
         }
         if (condition.getWorked() != null) {
-            cq.select(root).where(predicate, cb.equal(root.get(Item_.worked), condition.getWorked()));
-            predicate = cq.getRestriction();
+            predicates.add(cb.equal(root.get(Item_.worked), condition.getWorked()));
         }
         if (condition.getFinished() != null) {
-            cq.select(root).where(predicate, cb.equal(root.get(Item_.finished), condition.getFinished()));
-            predicate = cq.getRestriction();
+            predicates.add(cb.equal(root.get(Item_.finished), condition.getFinished()));
         }
         if (condition.getOnhold() != null) {
-            cq.select(root).where(predicate, cb.equal(root.get(Item_.onhold), condition.getOnhold()));
-            predicate = cq.getRestriction();
+            predicates.add(cb.equal(root.get(Item_.onhold), condition.getOnhold()));
         }
         if (condition.getCancel() != null) {
-            cq.select(root).where(predicate, cb.equal(root.get(Item_.cancel), condition.getCancel()));
-            predicate = cq.getRestriction();
+            predicates.add(cb.equal(root.get(Item_.cancel), condition.getCancel()));
         }
         if (condition.getAccounting() != null) {
-            cq.select(root).where(predicate, cb.equal(root.get(Item_.accounting), condition.getAccounting()));
-            predicate = cq.getRestriction();
+            predicates.add(cb.equal(root.get(Item_.accounting), condition.getAccounting()));
         }
         if (condition.getTurnStart() != null) {
-            cq.select(root).where(predicate, cb.greaterThanOrEqualTo(root.get(Item_.scheid).get(Schedule_.validrow), true));
-            predicate = cq.getRestriction();
-            cq.select(root).where(predicate, cb.greaterThanOrEqualTo(root.get(Item_.scheid).get(Schedule_.datefrom), condition.getTurnStart()));
-            predicate = cq.getRestriction();
+            predicates.add(cb.equal(root.get(Item_.scheid).get(Schedule_.validrow), true));
+            predicates.add(cb.greaterThanOrEqualTo(root.get(Item_.scheid).get(Schedule_.datefrom), condition.getTurnStart()));
         }
         if (condition.getTurnEnd() != null) {
-            cq.select(root).where(predicate, cb.greaterThanOrEqualTo(root.get(Item_.scheid).get(Schedule_.validrow), true));
-            predicate = cq.getRestriction();
+            predicates.add(cb.equal(root.get(Item_.scheid).get(Schedule_.validrow), true));
             Calendar upper = Calendar.getInstance();
             upper.setTime(condition.getTurnEnd());
             upper.add(Calendar.DATE, 1);
             Date turnEnd = upper.getTime();
-            cq.select(root).where(predicate, cb.lessThan(root.get(Item_.scheid).get(Schedule_.datefrom), turnEnd));
-            predicate = cq.getRestriction();
+            predicates.add(cb.lessThan(root.get(Item_.scheid).get(Schedule_.datefrom), turnEnd));
         }
         if (condition.getAddDateStart() != null) {
-            cq.select(root).where(predicate, cb.greaterThanOrEqualTo(root.get(Item_.adddate), condition.getAddDateStart()));
-            predicate = cq.getRestriction();
+            predicates.add(cb.greaterThanOrEqualTo(root.get(Item_.adddate), condition.getAddDateStart()));
         }
         if (condition.getAddDateEnd() != null) {
             Calendar upper = Calendar.getInstance();
             upper.setTime(condition.getAddDateEnd());
             upper.add(Calendar.DATE, 1);
             Date turnEnd = upper.getTime();
-            cq.select(root).where(predicate, cb.lessThan(root.get(Item_.adddate), turnEnd));
-            predicate = cq.getRestriction();
+            predicates.add(cb.lessThan(root.get(Item_.adddate), turnEnd));
         }
         if (condition.getUpdateDateStart() != null) {
-            cq.select(root).where(predicate, cb.greaterThanOrEqualTo(root.get(Item_.updatedate), condition.getUpdateDateStart()));
-            predicate = cq.getRestriction();
+            predicates.add(cb.greaterThanOrEqualTo(root.get(Item_.updatedate), condition.getUpdateDateStart()));
         }
         if (condition.getUpdateDateEnd() != null) {
             Calendar upper = Calendar.getInstance();
             upper.setTime(condition.getUpdateDateEnd());
             upper.add(Calendar.DATE, 1);
             Date turnEnd = upper.getTime();
-            cq.select(root).where(predicate, cb.lessThan(root.get(Item_.updatedate), turnEnd));
-            predicate = cq.getRestriction();
+            predicates.add(cb.lessThan(root.get(Item_.updatedate), turnEnd));
         }
+        cq.select(root).where(cb.and(predicates.toArray(new Predicate[]{})));
         return cq;
     }
 
