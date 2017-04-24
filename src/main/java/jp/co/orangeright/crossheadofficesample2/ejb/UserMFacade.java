@@ -5,6 +5,7 @@
  */
 package jp.co.orangeright.crossheadofficesample2.ejb;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -71,17 +72,15 @@ public class UserMFacade extends AbstractFacade<UserM> {
     }
 
     private CriteriaQuery getSearchQuery(UserMSearchCondition condition, CriteriaBuilder cb, CriteriaQuery cq, Root root) {
-        Predicate predicate;
-        cq.select(root).where(cb.equal(root.get(UserM_.validrow), true));
-        predicate = cq.getRestriction();
+        List<Predicate> predicates = new ArrayList<>();
+        predicates.add(cb.equal(root.get(UserM_.validrow), true));
         if (condition.getUserName() != null) {
-            cq.select(root).where(predicate, cb.like(root.get(UserM_.username).as(String.class), "%" + condition.getUserName() + "%"));
-            predicate = cq.getRestriction();
+            predicates.add(cb.like(root.get(UserM_.username).as(String.class), "%" + condition.getUserName() + "%"));
         }
         if (condition.getGroup() != null) {
-            cq.select(root).where(predicate, cb.equal(root.get(UserM_.groupid), condition.getGroup()));
-            predicate = cq.getRestriction();
+            predicates.add(cb.equal(root.get(UserM_.groupid), condition.getGroup()));
         }
+        cq.select(root).where(cb.and(predicates.toArray(new Predicate[]{})));
         return cq;
     }
 

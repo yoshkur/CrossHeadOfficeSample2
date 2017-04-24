@@ -5,6 +5,7 @@
  */
 package jp.co.orangeright.crossheadofficesample2.ejb;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -24,19 +25,19 @@ import jp.co.orangeright.crossheadofficesample2.jsf.customer.CustomerSearchCondi
  */
 @Stateless
 public class CustomerFacade extends AbstractFacade<Customer> {
-
+    
     @PersistenceContext(unitName = "jp.co.orange-right_CrossHeadOfficeSample2_war_1.0-SNAPSHOTPU")
     private EntityManager em;
-
+    
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
-
+    
     public CustomerFacade() {
         super(Customer.class);
     }
-
+    
     public List<Customer> findAll(CustomerSearchCondition condition) {
         CriteriaBuilder cb = this.getEntityManager().getCriteriaBuilder();
         CriteriaQuery<Customer> cq = cb.createQuery(Customer.class);
@@ -46,7 +47,7 @@ public class CustomerFacade extends AbstractFacade<Customer> {
         Query q = this.getEntityManager().createQuery(cq);
         return q.getResultList();
     }
-
+    
     public List<Customer> findRange(int[] range, CustomerSearchCondition condition) {
         CriteriaBuilder cb = this.getEntityManager().getCriteriaBuilder();
         CriteriaQuery<Customer> cq = cb.createQuery(Customer.class);
@@ -58,25 +59,25 @@ public class CustomerFacade extends AbstractFacade<Customer> {
         q.setFirstResult(range[0]);
         return q.getResultList();
     }
-
+    
     public int count(CustomerSearchCondition condition) {
         CriteriaBuilder cb = this.getEntityManager().getCriteriaBuilder();
         CriteriaQuery cq = cb.createQuery();
         Root<Customer> root = cq.from(Customer.class);
         cq = this.getSearchQuery(condition, cb, cq, root);
-
+        
         cq.select(cb.count(root));
         Query q = getEntityManager().createQuery(cq);
         return ((Long) q.getSingleResult()).intValue();
     }
-
+    
     private CriteriaQuery getSearchQuery(CustomerSearchCondition condition, CriteriaBuilder cb, CriteriaQuery cq, Root root) {
-        Predicate predicate;
-        cq.select(root).where(cb.equal(root.get(Customer_.validrow), true));
-        predicate = cq.getRestriction();
+        List<Predicate> predicates = new ArrayList<>();
+        predicates.add(cb.equal(root.get(Customer_.validrow), true));
+        cq.select(root).where(cb.and(predicates.toArray(new Predicate[]{})));
         return cq;
     }
-
+    
     private void setOrderby(CustomerSearchCondition condition, CriteriaBuilder cb, CriteriaQuery cq, Root root) {
         if (condition.getOrderBy() != null) {
             if (condition.getAsc()) {

@@ -5,6 +5,7 @@
  */
 package jp.co.orangeright.crossheadofficesample2.ejb;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -79,9 +80,9 @@ public class ScheduleFacade extends AbstractFacade<Schedule> {
     }
 
     private CriteriaQuery getSearchQuery(ScheduleSearchCondition condition, CriteriaBuilder cb, CriteriaQuery cq, Root root) {
-        Predicate predicate;
-        cq.select(root).where(cb.equal(root.get(Schedule_.validrow), true));
-        predicate = cq.getRestriction();
+        List<Predicate> predicates = new ArrayList<>();
+        predicates.add(cb.equal(root.get(Schedule_.validrow), true));
+        cq.select(root).where(cb.and(predicates.toArray(new Predicate[]{})));
         return cq;
     }
 
