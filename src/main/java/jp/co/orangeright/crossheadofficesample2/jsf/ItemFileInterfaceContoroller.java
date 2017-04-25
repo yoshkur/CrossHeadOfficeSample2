@@ -8,21 +8,12 @@ package jp.co.orangeright.crossheadofficesample2.jsf;
 import com.orangesignal.csv.CsvConfig;
 import com.orangesignal.csv.Csv;
 import com.orangesignal.csv.handlers.StringArrayListHandler;
-import com.orangesignal.csv.manager.CsvManager;
-import com.orangesignal.csv.manager.CsvManagerFactory;
-import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
-import java.util.Set;
 import java.util.List;
-import java.util.TreeSet;
 import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.servlet.http.Part;
@@ -191,14 +182,9 @@ public class ItemFileInterfaceContoroller implements Serializable {
     public Integer getWifiItemCount() {
         ItemSearchCondition iCon = new ItemSearchCondition();
         iCon.setCustomer(this.customerEjb.find(14541));
-        Set<String> itemSet = new TreeSet<>();
-        for (Item item : this.itemEjb.findAll(iCon)) {
-            if (item.getItemcd().startsWith("tsk")) {
-                itemSet.add(item.getItemcd());
-            }
-        }
-        this.setWifiItemCount(itemSet.size());
-        return wifiItemCount;
+        iCon.setItemcd("tsk-");
+        this.setWifiItemCount(this.itemEjb.countItemid(iCon));
+        return this.wifiItemCount;
     }
 
     public void setWifiItemCount(Integer wifiItemCount) {
@@ -208,13 +194,7 @@ public class ItemFileInterfaceContoroller implements Serializable {
     public Integer getWifihoshuItemCount() {
         ItemSearchCondition iCon = new ItemSearchCondition();
         iCon.setCustomer(this.customerEjb.find(6));
-        Set<String> itemSet = new TreeSet<>();
-        for (Item item : this.itemEjb.findAll(iCon)) {
-            if (item.getItemcd().startsWith("order_work")) {
-                itemSet.add(item.getItemcd());
-            }
-        }
-        this.setWifihoshuItemCount(itemSet.size());
+        this.setWifihoshuItemCount(this.itemEjb.countItemid(iCon));
         return wifihoshuItemCount;
     }
 

@@ -80,6 +80,25 @@ public class ItemFacade extends AbstractFacade<Item> {
         return ((Long) q.getSingleResult()).intValue();
     }
 
+    public int countItemid(ItemSearchCondition condition) {
+        CriteriaBuilder cb = this.getEntityManager().getCriteriaBuilder();
+        CriteriaQuery cq = cb.createQuery();
+        Root<Item> root = cq.from(Item.class);
+        List<Predicate> predicates = new ArrayList<>();
+        predicates.add(cb.equal(root.get(Item_.validrow), true));
+        if (condition.getItemcd() != null) {
+            predicates.add(cb.like(root.get(Item_.itemcd).as(String.class), "%" + condition.getItemcd() + "%"));
+        }
+        if (condition.getCustomer() != null) {
+            predicates.add(cb.equal(root.get(Item_.customerid), condition.getCustomer()));
+        }
+        cq.select(root).where(cb.and(predicates.toArray(new Predicate[]{})));
+        cq.groupBy(root.get(Item_.itemcd));
+        cq.select(cb.count(root));
+        Query q = getEntityManager().createQuery(cq);
+        return q.getResultList().size();
+    }
+
     private CriteriaQuery getSearchQuery(ItemSearchCondition condition, CriteriaBuilder cb, CriteriaQuery cq, Root root) {
         List<Predicate> predicates = new ArrayList<>();
         predicates.add(cb.equal(root.get(Item_.validrow), true));
