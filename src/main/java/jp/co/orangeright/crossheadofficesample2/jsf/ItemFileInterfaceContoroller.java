@@ -66,7 +66,7 @@ public class ItemFileInterfaceContoroller implements Serializable {
         csvConfig.setQuote('"');
         csvConfig.setSkipLines(1);
         try {
-            File csvFile = this.getFile("/tmp/auwifi.csv");
+            File csvFile = this.getFile("/tmp/auwifi" + this.dataFile.getSubmittedFileName());
             List<String[]> csv = Csv.load(csvFile, csvConfig, new StringArrayListHandler());
             for (String[] cols : csv) {
                 if (cols[0].length() == 0) {
@@ -131,7 +131,7 @@ public class ItemFileInterfaceContoroller implements Serializable {
         csvConfig.setQuote('"');
         csvConfig.setSkipLines(1);
         try {
-            File csvFile = this.getFile("/tmp/w2wifi.csv");
+            File csvFile = this.getFile("/tmp/w2wifi" + this.dataFile.getSubmittedFileName());
             List<String[]> csv = Csv.load(csvFile, csvConfig, new StringArrayListHandler());
             for (String[] cols : csv) {
                 if (cols[0].length() == 0) {
@@ -200,54 +200,6 @@ public class ItemFileInterfaceContoroller implements Serializable {
 
     public void setWifihoshuItemCount(Integer wifihoshuItemCount) {
         this.wifihoshuItemCount = wifihoshuItemCount;
-    }
-
-    public String calcCsv() {
-        CsvConfig csvConfig = new CsvConfig();
-        csvConfig.setSeparator(',');
-        csvConfig.setQuoteDisabled(false);
-        csvConfig.setQuote('"');
-        csvConfig.setSkipLines(1);
-        try {
-            File csvFile = this.getFile("/tmp/w2wifi.csv");
-            List<String[]> csv = Csv.load(csvFile, csvConfig, new StringArrayListHandler());
-            if (csv.size() > 0) {
-                for (String[] cols : csv) {
-                    if (cols[0].length() == 0) {
-                        break;
-                    }
-                    this.itemController.prepareCreate();
-                    this.itemController.getSelected().setItemcd(cols[0]);
-                    this.itemController.getSelected().setCustomerid(this.customerEjb.find(6));
-                    this.itemController.getSelected().setUserid(this.userEjb.find("ariie"));
-                    StringBuilder detail = new StringBuilder();
-                    detail.append("/****** w2 Wi-Fi (保守) ******/");
-                    detail.append(System.lineSeparator());
-                    detail.append(System.lineSeparator());
-                    detail.append("工事オーダーNo: ");
-                    detail.append(cols[0]);
-                    detail.append(System.lineSeparator());
-                    detail.append(System.lineSeparator());
-                    detail.append("設置場所名: ");
-                    detail.append(cols[4]);
-                    detail.append(System.lineSeparator());
-                    detail.append(System.lineSeparator());
-                    detail.append("住所: ");
-                    detail.append(cols[6]);
-                    detail.append(System.lineSeparator());
-                    detail.append(System.lineSeparator());
-                    detail.append("案件名: ");
-                    detail.append(cols[10]);
-                    this.itemController.getSelected().setDetail(detail.toString());
-                    this.itemController.getSelected().setMemo("");
-                    this.itemController.create();
-                }
-            }
-            csvFile.delete();
-        } catch (IOException e) {
-            return null;
-        }
-        return null;
     }
 
     private File getFile(String tempFile) {
