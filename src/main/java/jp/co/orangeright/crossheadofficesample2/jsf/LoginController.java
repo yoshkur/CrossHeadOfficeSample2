@@ -26,6 +26,7 @@ public class LoginController implements Serializable {
     private UserM loginUser;
     @EJB
     private UserMFacade ejb;
+    private Boolean status = false;
 
     /**
      * Creates a new instance of LoginController
@@ -55,6 +56,7 @@ public class LoginController implements Serializable {
                     && tempUser.getPasswd().equals(this.loginUser.getPasswd())
                     && tempUser.getItemadmin()) {
                 this.loginUser = tempUser;
+                this.setStatus(true);
                 return "/index.xhtml?faces-redirect=true";
             }
         }
@@ -64,6 +66,7 @@ public class LoginController implements Serializable {
     public String logout() {
         if (this.loginUser.getValidrow()) {
             this.loginUser = null;
+            this.setStatus(false);
             return "/Login.xhtml?faces-redirect=true";
         } else {
             return "";
@@ -71,17 +74,25 @@ public class LoginController implements Serializable {
     }
 
     public String getLoginUserName() {
-        if (!this.getLoginUser().getValidrow()) {
-            ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-            externalContext.invalidateSession();
-            try {
-                externalContext.dispatch("/faces/Login.xhtml");
-            } catch (IOException e) {
+        return this.getLoginUser().getUsername();
+    }
 
-            }
-            return "";
-        } else {
-            return this.getLoginUser().getUsername();
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
+
+    public String forwardLoginPage() {
+        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+        externalContext.invalidateSession();
+        try {
+            externalContext.dispatch("/faces/Login.xhtml");
+        } catch (IOException e) {
+
         }
+        return "";
     }
 }
