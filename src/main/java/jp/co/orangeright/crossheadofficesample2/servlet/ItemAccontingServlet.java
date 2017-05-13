@@ -64,35 +64,44 @@ public class ItemAccontingServlet extends HttpServlet {
                 csvConfig.setQuoteDisabled(false);
                 csvConfig.setQuote('"');
                 List<String[]> csvColumns = new ArrayList<>();
-                for (Item item : this.itemEjb.findAll(itemCondition)) {
-                    String[] temp = {item.getItemid().toString(),
-                        "http://www.orange-right.co.jp/cross/item_edit.jsp?itemid=" + item.getItemid(),
-                        item.getItemcd(),
-                        new SimpleDateFormat("yyyy/MM/dd").format(item.getAdddate()),
-                        item.getCustomerid().toString(),
-                        this.customerEjb.find(item.getCustomerid()).getCustomername(),
-                        item.getUserid().getUserid(),
-                        item.getUserid().getUsername(),
-                        item.getScheid().getScheid().toString(),
-                        "http://www.orange-right.co.jp/cross/schedule_edit.jsp?scheid=" + item.getScheid().getScheid().toString(),
-                        new SimpleDateFormat("yyyy/MM/dd").format(item.getScheid().getDatefrom()),
-                        item.getWorkedreport().replaceAll("/var/www/www/", "http://www.orange-right.co.jp/"),
-                        item.getMemo(),
-                        String.valueOf(item.getDirectpayment()),
-                        item.getDirectpayment() ? "直収" : "本部請求",
-                        item.getDetail().contains("○受付窓口名：") ? item.getDetail().substring(item.getDetail().indexOf("○受付窓口名："), item.getDetail().indexOf("○", item.getDetail().indexOf("○受付窓口名："))) : "",
-                        item.getDetail().contains("○名称：") ? item.getDetail().substring(item.getDetail().indexOf("○名称："), item.getDetail().indexOf("○", item.getDetail().indexOf("○名称："))) : ""
-                    };
+                int accountingCount = this.itemEjb.count(itemCondition);
+                int PAGE_SIZE = 1000;
+                for (int i = 0; i < accountingCount; i += PAGE_SIZE) {
+                    for (Item item : this.itemEjb.findRange(new int[]{i, i + PAGE_SIZE}, itemCondition)) {
+                        String[] temp = {item.getItemid().toString(),
+                            "http://www.orange-right.co.jp/cross/item_edit.jsp?itemid=" + item.getItemid(),
+                            item.getItemcd(),
+                            new SimpleDateFormat("yyyy/MM/dd").format(item.getAdddate()),
+                            item.getCustomerid().getCustomerid().toString(),
+                            item.getCustomerid().getCustomername(),
+                            item.getUserid().getUserid(),
+                            item.getUserid().getUsername(),
+                            item.getScheid() == null ? "" : item.getScheid().getScheid().toString(),
+                            item.getScheid() == null ? "" : "http://www.orange-right.co.jp/cross/schedule_edit.jsp?scheid=" + item.getScheid().getScheid().toString(),
+                            item.getScheid() == null ? "" : new SimpleDateFormat("yyyy/MM/dd").format(item.getScheid().getDatefrom()),
+                            item.getWorkedreport().replaceAll("/var/www/www/", "http://www.orange-right.co.jp/"),
+                            item.getMemo(),
+                            String.valueOf(item.getDirectpayment()),
+                            item.getDirectpayment() ? "直収" : "本部請求",
+                            item.getDetail().contains("○受付窓口名：") 
+                                ? item.getDetail().substring(item.getDetail().indexOf("○受付窓口名：") + "○受付窓口名：".length(), item.getDetail().indexOf("○", item.getDetail().indexOf("○受付窓口名：") + "○受付窓口名：".length()) - 2) 
+                                : "",
+                            item.getDetail().contains("○名称：") 
+                                ? item.getDetail().substring(item.getDetail().indexOf("○名称：") + "○名称：".length(), item.getDetail().indexOf("○", item.getDetail().indexOf("○名称：") + "○名称：".length()) - 2) 
+                                : ""
+                        };
 
-                    csvColumns.add(temp);
+                        csvColumns.add(temp);
+                    }
+
                 }
 
                 response.setContentType("application/force-download");
-                response.setHeader("Content-Disposition", "attachment; filename*=\"" + URLEncoder.encode("itemaccounting", "UTF-8") + "\"");
+                response.setHeader("Content-Disposition", "attachment; filename*=\"" + URLEncoder.encode("itemaccounting.csv", "UTF-8") + "\"");
                 Csv.save(csvColumns, out, "UTF-8", csvConfig, new StringArrayListHandler());
             }
         } else {
-            response.sendRedirect("/index.xhtml");
+            response.sendRedirect("/CrossHeadOfficeSample2/faces/index.xhtml");
         }
     }
 
