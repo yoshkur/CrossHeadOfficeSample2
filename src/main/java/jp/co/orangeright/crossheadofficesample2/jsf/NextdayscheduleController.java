@@ -107,6 +107,10 @@ public class NextdayscheduleController implements Serializable {
         return this.noReplyList();
     }
 
+    public String prepareSendMessage() {
+        return "";
+    }
+    
     public String prepareView() {
         current = (Nextdayschedule) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
