@@ -118,7 +118,7 @@ public class ItemAccontingServlet extends HttpServlet {
                 }
 
                 response.setContentType("application/force-download");
-                response.setHeader("Content-Disposition", "attachment; filename*=\"" + URLEncoder.encode("itemaccounting.csv", "UTF-8") + "\"");
+                response.setHeader("Content-Disposition", "attachment; filename*=\"" + URLEncoder.encode("itemaccounting.xlsx", "UTF-8") + "\"");
                 workbook.write(out);
             }
         } else {
