@@ -26,6 +26,11 @@ import jp.co.orangeright.crossheadofficesample2.ejb.ItemFacade;
 import jp.co.orangeright.crossheadofficesample2.entity.Item;
 import jp.co.orangeright.crossheadofficesample2.jsf.LoginController;
 import jp.co.orangeright.crossheadofficesample2.jsf.item.ItemSearchCondition;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 
 /**
  *
@@ -59,46 +64,62 @@ public class ItemAccontingServlet extends HttpServlet {
                 itemCondition.setAccounting(Boolean.FALSE);
                 itemCondition.setWorked(Boolean.TRUE);
 
-                CsvConfig csvConfig = new CsvConfig();
-                csvConfig.setSeparator(',');
-                csvConfig.setQuoteDisabled(false);
-                csvConfig.setQuote('"');
-                List<String[]> csvColumns = new ArrayList<>();
+                Workbook workbook = new SXSSFWorkbook();
+                Row row;
+                int rowNumber = 0;
+                Cell cell;
+                int colNumber = 0;
+                Sheet sheet = workbook.createSheet();
                 int accountingCount = this.itemEjb.count(itemCondition);
                 int PAGE_SIZE = 1000;
-                for (int i = 0; i < accountingCount; i += PAGE_SIZE) {
+                for (int i = 0; i < accountingCount; i += PAGE_SIZE + 1) {
                     for (Item item : this.itemEjb.findRange(new int[]{i, i + PAGE_SIZE}, itemCondition)) {
-                        String[] temp = {item.getItemid().toString(),
-                            "http://www.orange-right.co.jp/cross/item_edit.jsp?itemid=" + item.getItemid(),
-                            item.getItemcd(),
-                            new SimpleDateFormat("yyyy/MM/dd").format(item.getAdddate()),
-                            item.getCustomerid().getCustomerid().toString(),
-                            item.getCustomerid().getCustomername(),
-                            item.getUserid().getUserid(),
-                            item.getUserid().getUsername(),
-                            item.getScheid() == null ? "" : item.getScheid().getScheid().toString(),
-                            item.getScheid() == null ? "" : "http://www.orange-right.co.jp/cross/schedule_edit.jsp?scheid=" + item.getScheid().getScheid().toString(),
-                            item.getScheid() == null ? "" : new SimpleDateFormat("yyyy/MM/dd").format(item.getScheid().getDatefrom()),
-                            item.getWorkedreport().replaceAll("/var/www/www/", "http://www.orange-right.co.jp/"),
-                            item.getMemo(),
-                            String.valueOf(item.getDirectpayment()),
-                            item.getDirectpayment() ? "直収" : "本部請求",
-                            item.getDetail().contains("○受付窓口名：") 
-                                ? item.getDetail().substring(item.getDetail().indexOf("○受付窓口名：") + "○受付窓口名：".length(), item.getDetail().indexOf("○", item.getDetail().indexOf("○受付窓口名：") + "○受付窓口名：".length()) - 2) 
-                                : "",
-                            item.getDetail().contains("○名称：") 
-                                ? item.getDetail().substring(item.getDetail().indexOf("○名称：") + "○名称：".length(), item.getDetail().indexOf("○", item.getDetail().indexOf("○名称：") + "○名称：".length()) - 2) 
-                                : ""
-                        };
+                        colNumber = 0;
+                        row = sheet.createRow(rowNumber++);
+                        cell = row.createCell(colNumber++);
+                        cell.setCellValue(item.getItemid().toString());
 
-                        csvColumns.add(temp);
+                        cell = row.createCell(colNumber++);
+                        cell.setCellValue(item.getItemcd());
+
+                        cell = row.createCell(colNumber++);
+                        cell.setCellValue(new SimpleDateFormat("yyyy/MM/dd").format(item.getAdddate()));
+
+                        cell = row.createCell(colNumber++);
+                        cell.setCellValue(item.getCustomerid().getCustomername());
+
+                        cell = row.createCell(colNumber++);
+                        cell.setCellValue(item.getUserid().getUsername());
+
+                        cell = row.createCell(colNumber++);
+                        cell.setCellValue(item.getScheid() == null ? "" : new SimpleDateFormat("yyyy/MM/dd").format(item.getScheid().getDatefrom()));
+
+                        cell = row.createCell(colNumber++);
+                        cell.setCellValue(item.getMemo());
+
+                        cell = row.createCell(colNumber++);
+                        cell.setCellValue(
+                                item.getDirectpayment()
+                                        ? "直収"
+                                        : "本部請求");
+
+                        cell = row.createCell(colNumber++);
+                        cell.setCellValue(
+                                item.getDetail().contains("○受付窓口名：")
+                                ? item.getDetail().substring(item.getDetail().indexOf("○受付窓口名：") + "○受付窓口名：".length(), item.getDetail().indexOf("○", item.getDetail().indexOf("○受付窓口名：") + "○受付窓口名：".length()) - 2)
+                                : "");
+
+                        cell = row.createCell(colNumber++);
+                        cell.setCellValue(
+                                item.getDetail().contains("○名称：")
+                                ? item.getDetail().substring(item.getDetail().indexOf("○名称：") + "○名称：".length(), item.getDetail().indexOf("○", item.getDetail().indexOf("○名称：") + "○名称：".length()) - 2)
+                                : "");
                     }
-
                 }
 
                 response.setContentType("application/force-download");
                 response.setHeader("Content-Disposition", "attachment; filename*=\"" + URLEncoder.encode("itemaccounting.csv", "UTF-8") + "\"");
-                Csv.save(csvColumns, out, "UTF-8", csvConfig, new StringArrayListHandler());
+                workbook.write(out);
             }
         } else {
             response.sendRedirect("/CrossHeadOfficeSample2/faces/index.xhtml");
