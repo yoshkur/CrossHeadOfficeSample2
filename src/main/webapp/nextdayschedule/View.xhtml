@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewNextdayscheduleTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewNextdayscheduleLabel_id}"/>
+                    <h:outputText value="#{nextdayscheduleController.selected.id}" title="#{bundle.ViewNextdayscheduleTitle_id}"/>
+                    <h:outputText value="#{bundle.ViewNextdayscheduleLabel_sendto}"/>
+                    <h:outputText value="#{nextdayscheduleController.selected.sendto}" title="#{bundle.ViewNextdayscheduleTitle_sendto}"/>
+                    <h:outputText value="#{bundle.ViewNextdayscheduleLabel_sendmessagetitle}"/>
+                    <h:outputText value="#{nextdayscheduleController.selected.sendmessagetitle}" title="#{bundle.ViewNextdayscheduleTitle_sendmessagetitle}"/>
+                    <h:outputText value="#{bundle.ViewNextdayscheduleLabel_sendmessage}"/>
+                    <h:outputText value="#{nextdayscheduleController.selected.sendmessage}" title="#{bundle.ViewNextdayscheduleTitle_sendmessage}"/>
+                    <h:outputText value="#{bundle.ViewNextdayscheduleLabel_returnflg}"/>
+                    <h:outputText value="#{nextdayscheduleController.selected.returnflg}" title="#{bundle.ViewNextdayscheduleTitle_returnflg}"/>
+                    <h:outputText value="#{bundle.ViewNextdayscheduleLabel_returnmessage}"/>
+                    <h:outputText value="#{nextdayscheduleController.selected.returnmessage}" title="#{bundle.ViewNextdayscheduleTitle_returnmessage}"/>
+                    <h:outputText value="#{bundle.ViewNextdayscheduleLabel_adddate}"/>
+                    <h:outputText value="#{nextdayscheduleController.selected.adddate}" title="#{bundle.ViewNextdayscheduleTitle_adddate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:outputText>
+                    <h:outputText value="#{bundle.ViewNextdayscheduleLabel_addprogram}"/>
+                    <h:outputText value="#{nextdayscheduleController.selected.addprogram}" title="#{bundle.ViewNextdayscheduleTitle_addprogram}"/>
+                    <h:outputText value="#{bundle.ViewNextdayscheduleLabel_addcode}"/>
+                    <h:outputText value="#{nextdayscheduleController.selected.addcode}" title="#{bundle.ViewNextdayscheduleTitle_addcode}"/>
+                    <h:outputText value="#{bundle.ViewNextdayscheduleLabel_updatedate}"/>
+                    <h:outputText value="#{nextdayscheduleController.selected.updatedate}" title="#{bundle.ViewNextdayscheduleTitle_updatedate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:outputText>
+                    <h:outputText value="#{bundle.ViewNextdayscheduleLabel_updateprogram}"/>
+                    <h:outputText value="#{nextdayscheduleController.selected.updateprogram}" title="#{bundle.ViewNextdayscheduleTitle_updateprogram}"/>
+                    <h:outputText value="#{bundle.ViewNextdayscheduleLabel_updatecode}"/>
+                    <h:outputText value="#{nextdayscheduleController.selected.updatecode}" title="#{bundle.ViewNextdayscheduleTitle_updatecode}"/>
+                    <h:outputText value="#{bundle.ViewNextdayscheduleLabel_validrow}"/>
+                    <h:outputText value="#{nextdayscheduleController.selected.validrow}" title="#{bundle.ViewNextdayscheduleTitle_validrow}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{nextdayscheduleController.destroyAndView}" value="#{bundle.ViewNextdayscheduleDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewNextdayscheduleEditLink}"/>
+                <br />
+                <h:commandLink action="#{nextdayscheduleController.prepareCreate}" value="#{bundle.ViewNextdayscheduleCreateLink}" />
+                <br />
+                <h:commandLink action="#{nextdayscheduleController.prepareList}" value="#{bundle.ViewNextdayscheduleShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewNextdayscheduleIndexLink}"/>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

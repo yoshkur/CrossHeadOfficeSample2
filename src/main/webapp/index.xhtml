@@ -43,6 +43,12 @@
                     <h:link outcome="/item/Search" value="案件検索条件指定" />
                 </p>
 
+                <h4>翌日スケジュール確認</h4>
+                <p>
+                    <p:commandLink action="#{nextdayscheduleController.noReplyList()}" value="翌日スケジュール確認未回答" />
+                </p>
+                
+                
                 <h4>案件登録</h4>
                 <p>
                     <h:link outcome="/item/Create" value="日本PC案件登録" />

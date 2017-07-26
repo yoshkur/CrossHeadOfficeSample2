@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditNextdayscheduleTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.EditNextdayscheduleLabel_id}" for="id" />
+                    <h:inputText id="id" value="#{nextdayscheduleController.selected.id}" title="#{bundle.EditNextdayscheduleTitle_id}" required="true" requiredMessage="#{bundle.EditNextdayscheduleRequiredMessage_id}"/>
+                    <h:outputLabel value="#{bundle.EditNextdayscheduleLabel_sendto}" for="sendto" />
+                    <h:inputText id="sendto" value="#{nextdayscheduleController.selected.sendto}" title="#{bundle.EditNextdayscheduleTitle_sendto}" />
+                    <h:outputLabel value="#{bundle.EditNextdayscheduleLabel_sendmessagetitle}" for="sendmessagetitle" />
+                    <h:inputText id="sendmessagetitle" value="#{nextdayscheduleController.selected.sendmessagetitle}" title="#{bundle.EditNextdayscheduleTitle_sendmessagetitle}" />
+                    <h:outputLabel value="#{bundle.EditNextdayscheduleLabel_sendmessage}" for="sendmessage" />
+                    <h:inputText id="sendmessage" value="#{nextdayscheduleController.selected.sendmessage}" title="#{bundle.EditNextdayscheduleTitle_sendmessage}" />
+                    <h:outputLabel value="#{bundle.EditNextdayscheduleLabel_returnflg}" for="returnflg" />
+                    <h:inputText id="returnflg" value="#{nextdayscheduleController.selected.returnflg}" title="#{bundle.EditNextdayscheduleTitle_returnflg}" />
+                    <h:outputLabel value="#{bundle.EditNextdayscheduleLabel_returnmessage}" for="returnmessage" />
+                    <h:inputText id="returnmessage" value="#{nextdayscheduleController.selected.returnmessage}" title="#{bundle.EditNextdayscheduleTitle_returnmessage}" />
+                    <h:outputLabel value="#{bundle.EditNextdayscheduleLabel_adddate}" for="adddate" />
+                    <h:inputText id="adddate" value="#{nextdayscheduleController.selected.adddate}" title="#{bundle.EditNextdayscheduleTitle_adddate}" required="true" requiredMessage="#{bundle.EditNextdayscheduleRequiredMessage_adddate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.EditNextdayscheduleLabel_addprogram}" for="addprogram" />
+                    <h:inputText id="addprogram" value="#{nextdayscheduleController.selected.addprogram}" title="#{bundle.EditNextdayscheduleTitle_addprogram}" required="true" requiredMessage="#{bundle.EditNextdayscheduleRequiredMessage_addprogram}"/>
+                    <h:outputLabel value="#{bundle.EditNextdayscheduleLabel_addcode}" for="addcode" />
+                    <h:inputText id="addcode" value="#{nextdayscheduleController.selected.addcode}" title="#{bundle.EditNextdayscheduleTitle_addcode}" required="true" requiredMessage="#{bundle.EditNextdayscheduleRequiredMessage_addcode}"/>
+                    <h:outputLabel value="#{bundle.EditNextdayscheduleLabel_updatedate}" for="updatedate" />
+                    <h:inputText id="updatedate" value="#{nextdayscheduleController.selected.updatedate}" title="#{bundle.EditNextdayscheduleTitle_updatedate}" required="true" requiredMessage="#{bundle.EditNextdayscheduleRequiredMessage_updatedate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.EditNextdayscheduleLabel_updateprogram}" for="updateprogram" />
+                    <h:inputText id="updateprogram" value="#{nextdayscheduleController.selected.updateprogram}" title="#{bundle.EditNextdayscheduleTitle_updateprogram}" required="true" requiredMessage="#{bundle.EditNextdayscheduleRequiredMessage_updateprogram}"/>
+                    <h:outputLabel value="#{bundle.EditNextdayscheduleLabel_updatecode}" for="updatecode" />
+                    <h:inputText id="updatecode" value="#{nextdayscheduleController.selected.updatecode}" title="#{bundle.EditNextdayscheduleTitle_updatecode}" required="true" requiredMessage="#{bundle.EditNextdayscheduleRequiredMessage_updatecode}"/>
+                    <h:outputLabel value="#{bundle.EditNextdayscheduleLabel_validrow}" for="validrow" />
+                    <h:inputText id="validrow" value="#{nextdayscheduleController.selected.validrow}" title="#{bundle.EditNextdayscheduleTitle_validrow}" required="true" requiredMessage="#{bundle.EditNextdayscheduleRequiredMessage_validrow}"/>
+                </h:panelGrid>
+                <h:commandLink action="#{nextdayscheduleController.update}" value="#{bundle.EditNextdayscheduleSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundle.EditNextdayscheduleViewLink}"/>
+                <br />
+                <h:commandLink action="#{nextdayscheduleController.prepareList}" value="#{bundle.EditNextdayscheduleShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.EditNextdayscheduleIndexLink}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>
