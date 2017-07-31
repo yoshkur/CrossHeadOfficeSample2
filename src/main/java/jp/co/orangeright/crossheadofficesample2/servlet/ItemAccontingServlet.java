@@ -5,15 +5,10 @@
  */
 package jp.co.orangeright.crossheadofficesample2.servlet;
 
-import com.orangesignal.csv.Csv;
-import com.orangesignal.csv.CsvConfig;
-import com.orangesignal.csv.handlers.StringArrayListHandler;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
 import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
@@ -57,7 +52,6 @@ public class ItemAccontingServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
         if (this.loginController.getStatus()) {
             try (OutputStream out = response.getOutputStream()) {
                 ItemSearchCondition itemCondition = new ItemSearchCondition();
@@ -120,6 +114,7 @@ public class ItemAccontingServlet extends HttpServlet {
                 response.setContentType("application/force-download");
                 response.setHeader("Content-Disposition", "attachment; filename*=\"" + URLEncoder.encode("itemaccounting.xlsx", "UTF-8") + "\"");
                 workbook.write(out);
+
             }
         } else {
             response.sendRedirect("/CrossHeadOfficeSample2/faces/index.xhtml");

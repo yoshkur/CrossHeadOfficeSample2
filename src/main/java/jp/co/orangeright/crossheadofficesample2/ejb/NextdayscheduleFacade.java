@@ -96,10 +96,6 @@ public class NextdayscheduleFacade extends AbstractFacade<Nextdayschedule> {
     }
 
     private Expression makeOrderBy(NextdayscheduleSearchCondition condition, CriteriaBuilder cb, CriteriaQuery cq, Root root) {
-        if (condition.getOrderBy().equals(Nextdayschedule_.adddate)) {
-            return root.get(Nextdayschedule_.adddate);
-        } else {
-            return root.get(condition.getOrderBy());
-        }
+        return root.get(condition.getOrderBy());
     }
 }

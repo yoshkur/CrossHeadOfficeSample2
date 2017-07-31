@@ -16,9 +16,9 @@
                 </h:panelGroup>
                 <h:outputText escape="false" value="全員の確認がとれてます。" rendered="#{nextdayscheduleController.items.rowCount == 0}"/>
                 <h:panelGroup rendered="#{nextdayscheduleController.items.rowCount > 0}">
-                    <h:outputText value="#{nextdayscheduleController.pagination.pageFirstItem + 1}..#{nextdayscheduleController.pagination.pageLastItem + 1}/#{nextdayscheduleController.pagination.itemsCount}"/>&nbsp;
-                    <h:commandLink action="#{nextdayscheduleController.previous}" value="#{bundle.Previous} #{nextdayscheduleController.pagination.pageSize}" rendered="#{nextdayscheduleController.pagination.hasPreviousPage}"/>&nbsp;
-                    <h:commandLink action="#{nextdayscheduleController.next}" value="#{bundle.Next} #{nextdayscheduleController.pagination.pageSize}" rendered="#{nextdayscheduleController.pagination.hasNextPage}"/>&nbsp;
+                    <h:outputText value="#{nextdayscheduleController.pagination.pageFirstItem + 1}〜#{nextdayscheduleController.pagination.pageLastItem + 1}件/#{nextdayscheduleController.pagination.itemsCount}件中"/>&nbsp;
+                    <h:commandLink action="#{nextdayscheduleController.previousNoReply()}" value="#{bundle.Previous} #{nextdayscheduleController.pagination.pageSize}" rendered="#{nextdayscheduleController.pagination.hasPreviousPage}"/>&nbsp;
+                    <h:commandLink action="#{nextdayscheduleController.nextNoReply()}" value="#{bundle.Next} #{nextdayscheduleController.pagination.pageSize}" rendered="#{nextdayscheduleController.pagination.hasNextPage}"/>&nbsp;
                     <h:dataTable value="#{nextdayscheduleController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
                         <h:column>
                             <f:facet name="header">
