@@ -5,10 +5,15 @@
  */
 package jp.co.orangeright.crossheadofficesample2.servlet;
 
+import com.orangesignal.csv.Csv;
+import com.orangesignal.csv.CsvConfig;
+import com.orangesignal.csv.handlers.StringArrayListHandler;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.EJB;
 import javax.inject.Inject;
 import javax.servlet.ServletException;
@@ -58,62 +63,40 @@ public class ItemAccontingServlet extends HttpServlet {
                 itemCondition.setAccounting(Boolean.FALSE);
                 itemCondition.setWorked(Boolean.TRUE);
 
-                Workbook workbook = new SXSSFWorkbook();
-                Row row;
-                int rowNumber = 0;
-                Cell cell;
-                int colNumber = 0;
-                Sheet sheet = workbook.createSheet();
+                CsvConfig csvConfig = new CsvConfig();
+                csvConfig.setSeparator(',');
+                csvConfig.setQuoteDisabled(false);
+                csvConfig.setQuote('"');
+                List<String[]> csvColumns = new ArrayList<>();
                 int accountingCount = this.itemEjb.count(itemCondition);
+
                 int PAGE_SIZE = 10;
-                for (int i = 0; i < accountingCount; i += PAGE_SIZE + 1) {
+                for (int i = 0; i < accountingCount; i += PAGE_SIZE) {
                     for (Item item : this.itemEjb.findRange(new int[]{i, i + PAGE_SIZE}, itemCondition)) {
-                        colNumber = 0;
-                        row = sheet.createRow(rowNumber++);
-                        cell = row.createCell(colNumber++);
-                        cell.setCellValue(item.getItemid().toString());
+                        String[] temp = {item.getItemid().toString(),
+                            item.getItemcd(),
+                            new SimpleDateFormat("yyyy/MM/dd").format(item.getAdddate()),
+                            item.getCustomerid().getCustomername(),
+                            item.getUserid().getUsername(),
+                            item.getScheid() == null ? "" : new SimpleDateFormat("yyyy/MM/dd").format(item.getScheid().getDatefrom()),
+                            item.getMemo(),
+                            item.getDirectpayment() ? "直収" : "本部請求",
+                            item.getDetail().contains("○受付窓口名：")
+                            ? item.getDetail().substring(item.getDetail().indexOf("○受付窓口名：") + "○受付窓口名：".length(), item.getDetail().indexOf("○", item.getDetail().indexOf("○受付窓口名：") + "○受付窓口名：".length()) - 2)
+                            : "",
+                            item.getDetail().contains("○名称：")
+                            ? item.getDetail().substring(item.getDetail().indexOf("○名称：") + "○名称：".length(), item.getDetail().indexOf("○", item.getDetail().indexOf("○名称：") + "○名称：".length()) - 2)
+                            : ""
+                        };
 
-                        cell = row.createCell(colNumber++);
-                        cell.setCellValue(item.getItemcd());
-
-                        cell = row.createCell(colNumber++);
-                        cell.setCellValue(new SimpleDateFormat("yyyy/MM/dd").format(item.getAdddate()));
-
-                        cell = row.createCell(colNumber++);
-                        cell.setCellValue(item.getCustomerid().getCustomername());
-
-                        cell = row.createCell(colNumber++);
-                        cell.setCellValue(item.getUserid().getUsername());
-
-                        cell = row.createCell(colNumber++);
-                        cell.setCellValue(item.getScheid() == null ? "" : new SimpleDateFormat("yyyy/MM/dd").format(item.getScheid().getDatefrom()));
-
-                        cell = row.createCell(colNumber++);
-                        cell.setCellValue(item.getMemo());
-
-                        cell = row.createCell(colNumber++);
-                        cell.setCellValue(
-                                item.getDirectpayment()
-                                        ? "直収"
-                                        : "本部請求");
-
-                        cell = row.createCell(colNumber++);
-                        cell.setCellValue(
-                                item.getDetail().contains("○受付窓口名：")
-                                ? item.getDetail().substring(item.getDetail().indexOf("○受付窓口名：") + "○受付窓口名：".length(), item.getDetail().indexOf("○", item.getDetail().indexOf("○受付窓口名：") + "○受付窓口名：".length()) - 2)
-                                : "");
-
-                        cell = row.createCell(colNumber++);
-                        cell.setCellValue(
-                                item.getDetail().contains("○名称：")
-                                ? item.getDetail().substring(item.getDetail().indexOf("○名称：") + "○名称：".length(), item.getDetail().indexOf("○", item.getDetail().indexOf("○名称：") + "○名称：".length()) - 2)
-                                : "");
+                        csvColumns.add(temp);
                     }
+
                 }
 
                 response.setContentType("application/force-download");
-                response.setHeader("Content-Disposition", "attachment; filename*=\"" + URLEncoder.encode("itemaccounting.xlsx", "UTF-8") + "\"");
-                workbook.write(out);
+                response.setHeader("Content-Disposition", "attachment; filename*=\"" + URLEncoder.encode("itemaccounting.csv", "UTF-8") + "\"");
+                Csv.save(csvColumns, out, "UTF-8", csvConfig, new StringArrayListHandler());
 
             }
         } else {
