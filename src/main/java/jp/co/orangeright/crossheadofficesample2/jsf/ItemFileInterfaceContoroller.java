@@ -107,8 +107,6 @@ public class ItemFileInterfaceContoroller implements Serializable {
                     detail.append(cols[8]);
                     detail.append(System.lineSeparator());
                     detail.append(System.lineSeparator());
-                    detail.append("電話番号: ");
-                    detail.append(cols[9]);
                     this.itemController.getSelected().setDetail(detail.toString());
                     this.itemController.getSelected().setMemo("");
                     this.itemController.create();

@@ -71,7 +71,7 @@ public class ItemAccontingServlet extends HttpServlet {
                 int accountingCount = this.itemEjb.count(itemCondition);
 
                 int PAGE_SIZE = 10;
-                for (int i = 0; i < accountingCount; i += PAGE_SIZE) {
+                for (int i = 0; i < accountingCount; i += PAGE_SIZE + 1) {
                     for (Item item : this.itemEjb.findRange(new int[]{i, i + PAGE_SIZE}, itemCondition)) {
                         String[] temp = {item.getItemid().toString(),
                             item.getItemcd(),
