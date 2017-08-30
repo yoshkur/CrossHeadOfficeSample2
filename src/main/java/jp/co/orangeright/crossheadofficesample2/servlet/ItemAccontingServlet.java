@@ -96,7 +96,7 @@ public class ItemAccontingServlet extends HttpServlet {
 
                 response.setContentType("application/force-download");
                 response.setHeader("Content-Disposition", "attachment; filename*=\"" + URLEncoder.encode("itemaccounting.csv", "UTF-8") + "\"");
-                Csv.save(csvColumns, out, "UTF-8", csvConfig, new StringArrayListHandler());
+                Csv.save(csvColumns, out, "Windows-31J", csvConfig, new StringArrayListHandler());
 
             }
         } else {
