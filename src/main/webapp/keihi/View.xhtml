@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ViewKeihiTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputText value="#{bundle.ViewKeihiLabel_itemid}"/>
+                    <h:outputText value="#{keihiController.selected.itemid}" title="#{bundle.ViewKeihiTitle_itemid}"/>
+                    <h:outputText value="#{bundle.ViewKeihiLabel_recorddate}"/>
+                    <h:outputText value="#{keihiController.selected.recorddate}" title="#{bundle.ViewKeihiTitle_recorddate}">
+                        <f:convertDateTime pattern="HH:mm:ss" />
+                    </h:outputText>
+                    <h:outputText value="#{bundle.ViewKeihiLabel_recordprogram}"/>
+                    <h:outputText value="#{keihiController.selected.recordprogram}" title="#{bundle.ViewKeihiTitle_recordprogram}"/>
+                    <h:outputText value="#{bundle.ViewKeihiLabel_recorduserid}"/>
+                    <h:outputText value="#{keihiController.selected.recorduserid}" title="#{bundle.ViewKeihiTitle_recorduserid}"/>
+                    <h:outputText value="#{bundle.ViewKeihiLabel_recordvalid}"/>
+                    <h:outputText value="#{keihiController.selected.recordvalid}" title="#{bundle.ViewKeihiTitle_recordvalid}"/>
+                    <h:outputText value="#{bundle.ViewKeihiLabel_shomohin}"/>
+                    <h:outputText value="#{keihiController.selected.shomohin}" title="#{bundle.ViewKeihiTitle_shomohin}"/>
+                    <h:outputText value="#{bundle.ViewKeihiLabel_sharyo}"/>
+                    <h:outputText value="#{keihiController.selected.sharyo}" title="#{bundle.ViewKeihiTitle_sharyo}"/>
+                    <h:outputText value="#{bundle.ViewKeihiLabel_kotsuhi}"/>
+                    <h:outputText value="#{keihiController.selected.kotsuhi}" title="#{bundle.ViewKeihiTitle_kotsuhi}"/>
+                    <h:outputText value="#{bundle.ViewKeihiLabel_nidukuriunchin}"/>
+                    <h:outputText value="#{keihiController.selected.nidukuriunchin}" title="#{bundle.ViewKeihiTitle_nidukuriunchin}"/>
+                    <h:outputText value="#{bundle.ViewKeihiLabel_konetsuhi}"/>
+                    <h:outputText value="#{keihiController.selected.konetsuhi}" title="#{bundle.ViewKeihiTitle_konetsuhi}"/>
+                    <h:outputText value="#{bundle.ViewKeihiLabel_kosaihi}"/>
+                    <h:outputText value="#{keihiController.selected.kosaihi}" title="#{bundle.ViewKeihiTitle_kosaihi}"/>
+                    <h:outputText value="#{bundle.ViewKeihiLabel_shuzenhi}"/>
+                    <h:outputText value="#{keihiController.selected.shuzenhi}" title="#{bundle.ViewKeihiTitle_shuzenhi}"/>
+                    <h:outputText value="#{bundle.ViewKeihiLabel_zappi}"/>
+                    <h:outputText value="#{keihiController.selected.zappi}" title="#{bundle.ViewKeihiTitle_zappi}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{keihiController.destroyAndView}" value="#{bundle.ViewKeihiDestroyLink}"/>
+                <br />
+                <br />
+                <h:link outcome="Edit" value="#{bundle.ViewKeihiEditLink}"/>
+                <br />
+                <h:commandLink action="#{keihiController.prepareCreate}" value="#{bundle.ViewKeihiCreateLink}" />
+                <br />
+                <h:commandLink action="#{keihiController.prepareList}" value="#{bundle.ViewKeihiShowAllLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ViewKeihiIndexLink}"/>
+
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

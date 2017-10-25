@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.EditKeihiTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.EditKeihiLabel_itemid}" for="itemid" />
+                    <h:inputText id="itemid" value="#{keihiController.selected.itemid}" title="#{bundle.EditKeihiTitle_itemid}" required="true" requiredMessage="#{bundle.EditKeihiRequiredMessage_itemid}"/>
+                    <h:outputLabel value="#{bundle.EditKeihiLabel_recorddate}" for="recorddate" />
+                    <h:inputText id="recorddate" value="#{keihiController.selected.recorddate}" title="#{bundle.EditKeihiTitle_recorddate}" required="true" requiredMessage="#{bundle.EditKeihiRequiredMessage_recorddate}">
+                        <f:convertDateTime pattern="HH:mm:ss" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.EditKeihiLabel_recordprogram}" for="recordprogram" />
+                    <h:inputText id="recordprogram" value="#{keihiController.selected.recordprogram}" title="#{bundle.EditKeihiTitle_recordprogram}" />
+                    <h:outputLabel value="#{bundle.EditKeihiLabel_recorduserid}" for="recorduserid" />
+                    <h:inputText id="recorduserid" value="#{keihiController.selected.recorduserid}" title="#{bundle.EditKeihiTitle_recorduserid}" />
+                    <h:outputLabel value="#{bundle.EditKeihiLabel_recordvalid}" for="recordvalid" />
+                    <h:inputText id="recordvalid" value="#{keihiController.selected.recordvalid}" title="#{bundle.EditKeihiTitle_recordvalid}" />
+                    <h:outputLabel value="#{bundle.EditKeihiLabel_shomohin}" for="shomohin" />
+                    <h:inputText id="shomohin" value="#{keihiController.selected.shomohin}" title="#{bundle.EditKeihiTitle_shomohin}" />
+                    <h:outputLabel value="#{bundle.EditKeihiLabel_sharyo}" for="sharyo" />
+                    <h:inputText id="sharyo" value="#{keihiController.selected.sharyo}" title="#{bundle.EditKeihiTitle_sharyo}" />
+                    <h:outputLabel value="#{bundle.EditKeihiLabel_kotsuhi}" for="kotsuhi" />
+                    <h:inputText id="kotsuhi" value="#{keihiController.selected.kotsuhi}" title="#{bundle.EditKeihiTitle_kotsuhi}" />
+                    <h:outputLabel value="#{bundle.EditKeihiLabel_nidukuriunchin}" for="nidukuriunchin" />
+                    <h:inputText id="nidukuriunchin" value="#{keihiController.selected.nidukuriunchin}" title="#{bundle.EditKeihiTitle_nidukuriunchin}" />
+                    <h:outputLabel value="#{bundle.EditKeihiLabel_konetsuhi}" for="konetsuhi" />
+                    <h:inputText id="konetsuhi" value="#{keihiController.selected.konetsuhi}" title="#{bundle.EditKeihiTitle_konetsuhi}" />
+                    <h:outputLabel value="#{bundle.EditKeihiLabel_kosaihi}" for="kosaihi" />
+                    <h:inputText id="kosaihi" value="#{keihiController.selected.kosaihi}" title="#{bundle.EditKeihiTitle_kosaihi}" />
+                    <h:outputLabel value="#{bundle.EditKeihiLabel_shuzenhi}" for="shuzenhi" />
+                    <h:inputText id="shuzenhi" value="#{keihiController.selected.shuzenhi}" title="#{bundle.EditKeihiTitle_shuzenhi}" />
+                    <h:outputLabel value="#{bundle.EditKeihiLabel_zappi}" for="zappi" />
+                    <h:inputText id="zappi" value="#{keihiController.selected.zappi}" title="#{bundle.EditKeihiTitle_zappi}" />
+                </h:panelGrid>
+                <h:commandLink action="#{keihiController.update}" value="#{bundle.EditKeihiSaveLink}"/>
+                <br />
+                <br />
+                <h:link outcome="View" value="#{bundle.EditKeihiViewLink}"/>
+                <br />
+                <h:commandLink action="#{keihiController.prepareList}" value="#{bundle.EditKeihiShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.EditKeihiIndexLink}" />
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

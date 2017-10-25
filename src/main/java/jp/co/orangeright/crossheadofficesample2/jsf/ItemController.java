@@ -56,6 +56,8 @@ public class ItemController implements Serializable {
     private String userSearchReturnPage;
     @Inject
     private LoginController loginController;
+    @Inject
+    private KeihiController keihiController;
 
     public ItemController() {
     }
@@ -577,7 +579,8 @@ public class ItemController implements Serializable {
     public String prepareView() {
         current = (Item) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
-        return "View";
+        this.keihiController.setCurrent(this.current.getItemid());
+        return "/item/View?faces-redirect=true";
     }
 
     public String prepareCreate() {
@@ -660,7 +663,7 @@ public class ItemController implements Serializable {
             return null;
         }
     }
-    
+
     public String prepareEdit() {
         current = (Item) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();

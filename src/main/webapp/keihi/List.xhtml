@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.ListKeihiTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:form styleClass="jsfcrud_list_form">
+                <h:panelGroup id="messagePanel" layout="block">
+                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+                </h:panelGroup>
+                <h:outputText escape="false" value="#{bundle.ListKeihiEmpty}" rendered="#{keihiController.items.rowCount == 0}"/>
+                <h:panelGroup rendered="#{keihiController.items.rowCount > 0}">
+                    <h:outputText value="#{keihiController.pagination.pageFirstItem + 1}..#{keihiController.pagination.pageLastItem + 1}/#{keihiController.pagination.itemsCount}"/>&nbsp;
+                    <h:commandLink action="#{keihiController.previous}" value="#{bundle.Previous} #{keihiController.pagination.pageSize}" rendered="#{keihiController.pagination.hasPreviousPage}"/>&nbsp;
+                    <h:commandLink action="#{keihiController.next}" value="#{bundle.Next} #{keihiController.pagination.pageSize}" rendered="#{keihiController.pagination.hasNextPage}"/>&nbsp;
+                    <h:dataTable value="#{keihiController.items}" var="item" border="0" cellpadding="2" cellspacing="0" rowClasses="jsfcrud_odd_row,jsfcrud_even_row" rules="all" style="border:solid 1px">
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListKeihiTitle_itemid}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.itemid}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListKeihiTitle_recorddate}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.recorddate}">
+                                <f:convertDateTime pattern="HH:mm:ss" />
+                            </h:outputText>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListKeihiTitle_recordprogram}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.recordprogram}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListKeihiTitle_recorduserid}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.recorduserid}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListKeihiTitle_recordvalid}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.recordvalid}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListKeihiTitle_shomohin}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.shomohin}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListKeihiTitle_sharyo}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.sharyo}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListKeihiTitle_kotsuhi}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.kotsuhi}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListKeihiTitle_nidukuriunchin}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.nidukuriunchin}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListKeihiTitle_konetsuhi}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.konetsuhi}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListKeihiTitle_kosaihi}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.kosaihi}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListKeihiTitle_shuzenhi}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.shuzenhi}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="#{bundle.ListKeihiTitle_zappi}"/>
+                            </f:facet>
+                            <h:outputText value="#{item.zappi}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="&nbsp;"/>
+                            </f:facet>
+                            <h:commandLink action="#{keihiController.prepareView}" value="#{bundle.ListKeihiViewLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{keihiController.prepareEdit}" value="#{bundle.ListKeihiEditLink}"/>
+                            <h:outputText value=" "/>
+                            <h:commandLink action="#{keihiController.destroy}" value="#{bundle.ListKeihiDestroyLink}"/>
+                        </h:column>
+                    </h:dataTable>
+                </h:panelGroup>
+                <br />
+                <h:commandLink action="#{keihiController.prepareCreate}" value="#{bundle.ListKeihiCreateLink}"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.ListKeihiIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

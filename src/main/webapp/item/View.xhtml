@@ -61,6 +61,18 @@
                     <h:outputText value="#{itemController.selected.updatedate}" title="#{bundle.ItemTitle_updatedate}">
                         <f:convertDateTime pattern="yyyy/MM/dd HH:mm:ss" />
                     </h:outputText>
+
+                    <p:outputLabel value="交通費" rendered="#{keihiController.keihi}"/>
+                    <h:outputText value="#{keihiController.selected.kotsuhi}" title="交通費" rendered="#{keihiController.keihi}"/>
+
+                    <p:outputLabel value="送料" rendered="#{keihiController.keihi}"/>
+                    <h:outputText value="#{keihiController.selected.nidukuriunchin}" title="送料" rendered="#{keihiController.keihi}"/>
+
+                    <p:outputLabel value="交通費・送料"/>
+                    <h:commandLink action="#{keihiController.prepareEditItemKeihi()}" value="編集" rendered="#{keihiController.keihi}"/>
+
+                    <h:commandLink action="#{keihiController.prepareCreateItemKeihi()}" value="登録" rendered="#{!keihiController.keihi}"/>
+
                 </p:panelGrid>
                 <h:outputLink value="http://www.orange-right.co.jp/cross/item_edit.jsp?itemid=#{itemController.selected.itemid}" target="_new">
                     <h:outputText value="Crossで閲覧"/>
