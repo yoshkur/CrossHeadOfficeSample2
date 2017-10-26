@@ -83,7 +83,15 @@ public class KeihiController implements Serializable {
         return "Create";
     }
 
-    public String prepareCreateItemKeihi() {
+    public String prepareCreateItemKeihi(Integer itemid) {
+        this.current = new Keihi();
+        this.current.setItemid(itemid);
+        this.current.setKonetsuhi(0);
+        this.current.setKosaihi(0);
+        this.current.setSharyo(0);
+        this.current.setShomohin(0);
+        this.current.setShuzenhi(0);
+        this.current.setZappi(0);
         selectedItemIndex = -1;
         return "/keihi/CreateItemKeihi?faces-redirect=true";
     }
@@ -105,12 +113,6 @@ public class KeihiController implements Serializable {
             this.current.setRecordprogram(this.getClass().getName());
             this.current.setRecorduserid(this.loginController.getLoginUser().getUserid());
             this.current.setRecordvalid(Boolean.TRUE);
-            this.current.setKonetsuhi(0);
-            this.current.setKosaihi(0);
-            this.current.setSharyo(0);
-            this.current.setShomohin(0);
-            this.current.setShuzenhi(0);
-            this.current.setZappi(0);
             getFacade().create(current);
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("KeihiCreated"));
             return "/item/View?faces-redirect=true";

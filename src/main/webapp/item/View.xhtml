@@ -70,8 +70,7 @@
 
                     <p:outputLabel value="交通費・送料"/>
                     <h:commandLink action="#{keihiController.prepareEditItemKeihi()}" value="編集" rendered="#{keihiController.keihi}"/>
-
-                    <h:commandLink action="#{keihiController.prepareCreateItemKeihi()}" value="登録" rendered="#{!keihiController.keihi}"/>
+                    <h:commandLink action="#{keihiController.prepareCreateItemKeihi(itemController.selected.itemid)}" value="登録" rendered="#{!keihiController.keihi}"/>
 
                 </p:panelGrid>
                 <h:outputLink value="http://www.orange-right.co.jp/cross/item_edit.jsp?itemid=#{itemController.selected.itemid}" target="_new">
