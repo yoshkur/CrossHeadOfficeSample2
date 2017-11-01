@@ -5,6 +5,7 @@
  */
 package jp.co.orangeright.crossheadofficesample2.servlet;
 
+
 import com.orangesignal.csv.Csv;
 import com.orangesignal.csv.CsvConfig;
 import com.orangesignal.csv.handlers.StringArrayListHandler;
@@ -26,30 +27,27 @@ import jp.co.orangeright.crossheadofficesample2.ejb.ItemFacade;
 import jp.co.orangeright.crossheadofficesample2.ejb.KeihiFacade;
 import jp.co.orangeright.crossheadofficesample2.entity.Item;
 import jp.co.orangeright.crossheadofficesample2.entity.Keihi;
+import jp.co.orangeright.crossheadofficesample2.jsf.ItemController;
 import jp.co.orangeright.crossheadofficesample2.jsf.LoginController;
-import jp.co.orangeright.crossheadofficesample2.jsf.item.ItemSearchCondition;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 
 /**
  *
  * @author yosh
  */
-@WebServlet(name = "ItemAccontingServlet", urlPatterns = {"/item/ItemAccontingServlet"})
-public class ItemAccontingServlet extends HttpServlet {
+@WebServlet(name = "ItemServlet", urlPatterns = {"/item/ItemServlet"})
+public class ItemServlet extends HttpServlet {
 
     @EJB
     private ItemFacade itemEjb;
     @EJB
-    private KeihiFacade keihiEjb;
-    @EJB
     private CustomerFacade customerEjb;
+    @EJB
+    private KeihiFacade keihiEjb;
     @Inject
     private LoginController loginController;
-
+    @Inject
+    private ItemController itemContoroller;
+    
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -63,16 +61,13 @@ public class ItemAccontingServlet extends HttpServlet {
             throws ServletException, IOException {
         if (this.loginController.getStatus()) {
             try (OutputStream out = response.getOutputStream()) {
-                ItemSearchCondition itemCondition = new ItemSearchCondition();
-                itemCondition.setAccounting(Boolean.FALSE);
-                itemCondition.setWorked(Boolean.TRUE);
 
                 CsvConfig csvConfig = new CsvConfig();
                 csvConfig.setSeparator(',');
                 csvConfig.setQuoteDisabled(false);
                 csvConfig.setQuote('"');
                 List<String[]> csvColumns = new ArrayList<>();
-                int accountingCount = this.itemEjb.count(itemCondition);
+                int accountingCount = this.itemEjb.count(this.itemContoroller.getCondition());
                 String[] header = {"ItemID",
                     "案件コード",
                     "案件追加日",
@@ -80,9 +75,6 @@ public class ItemAccontingServlet extends HttpServlet {
                     "作業者",
                     "訪問予定",
                     "メモ",
-                    "支払い",
-                    "受付窓口名",
-                    "名称",
                     "交通費",
                     "送料",
                 };
@@ -90,7 +82,7 @@ public class ItemAccontingServlet extends HttpServlet {
 
                 int PAGE_SIZE = 10;
                 for (int i = 0; i < accountingCount; i += PAGE_SIZE + 1) {
-                    for (Item item : this.itemEjb.findRange(new int[]{i, i + PAGE_SIZE}, itemCondition)) {
+                    for (Item item : this.itemEjb.findRange(new int[]{i, i + PAGE_SIZE}, this.itemContoroller.getCondition())) {
                         Keihi keihiTemp = this.getKeihiInstance(item.getItemid());
                         String[] temp = {item.getItemid().toString(),
                             item.getItemcd(),
@@ -99,13 +91,6 @@ public class ItemAccontingServlet extends HttpServlet {
                             item.getUserid().getUsername(),
                             item.getScheid() == null ? "" : new SimpleDateFormat("yyyy/MM/dd").format(item.getScheid().getDatefrom()),
                             item.getMemo(),
-                            item.getDirectpayment() ? "直収" : "本部請求",
-                            item.getDetail().contains("○受付窓口名：")
-                            ? item.getDetail().substring(item.getDetail().indexOf("○受付窓口名：") + "○受付窓口名：".length(), item.getDetail().indexOf("○", item.getDetail().indexOf("○受付窓口名：") + "○受付窓口名：".length()) - 2)
-                            : "",
-                            item.getDetail().contains("○名称：")
-                            ? item.getDetail().substring(item.getDetail().indexOf("○名称：") + "○名称：".length(), item.getDetail().indexOf("○", item.getDetail().indexOf("○名称：") + "○名称：".length()) - 2)
-                            : "",
                             keihiTemp.getKotsuhi().toString(),
                             keihiTemp.getNidukuriunchin().toString(),
                         };
@@ -116,7 +101,7 @@ public class ItemAccontingServlet extends HttpServlet {
                 }
 
                 response.setContentType("application/force-download");
-                response.setHeader("Content-Disposition", "attachment; filename*=\"" + URLEncoder.encode("itemaccounting.csv", "UTF-8") + "\"");
+                response.setHeader("Content-Disposition", "attachment; filename*=\"" + URLEncoder.encode("item.csv", "UTF-8") + "\"");
                 Csv.save(csvColumns, out, "Windows-31J", csvConfig, new StringArrayListHandler());
 
             }

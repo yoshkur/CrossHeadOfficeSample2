@@ -28,6 +28,7 @@
                         <f:selectItems value="#{itemController.pageSizeList}"/>
                     </p:selectOneMenu>
                     <h:commandLink action="#{itemController.searchList()}" value="更新" />
+                    　　　<a href="/CrossHeadOfficeSample2/faces/item/ItemServlet">CSVファイルダウンロード</a>
                     <p:dataTable id="datalist" value="#{itemController.items}" var="item"
                                  resizableColumns="true" liveResize="false"
                                  paginator="false"
