@@ -81,8 +81,8 @@ public class ItemAccontingServlet extends HttpServlet {
                     "訪問予定",
                     "メモ",
                     "支払い",
-                    "受付窓口名",
-                    "名称",
+//                    "受付窓口名",
+//                    "名称",
                     "交通費",
                     "送料",
                 };
@@ -100,12 +100,12 @@ public class ItemAccontingServlet extends HttpServlet {
                             item.getScheid() == null ? "" : new SimpleDateFormat("yyyy/MM/dd").format(item.getScheid().getDatefrom()),
                             item.getMemo(),
                             item.getDirectpayment() ? "直収" : "本部請求",
-                            item.getDetail().contains("○受付窓口名：")
-                            ? item.getDetail().substring(item.getDetail().indexOf("○受付窓口名：") + "○受付窓口名：".length(), item.getDetail().indexOf("○", item.getDetail().indexOf("○受付窓口名：") + "○受付窓口名：".length()) - 2)
-                            : "",
-                            item.getDetail().contains("○名称：")
-                            ? item.getDetail().substring(item.getDetail().indexOf("○名称：") + "○名称：".length(), item.getDetail().indexOf("○", item.getDetail().indexOf("○名称：") + "○名称：".length()) - 2)
-                            : "",
+//                            item.getDetail().contains("○受付窓口名：")
+//                            ? item.getDetail().substring(item.getDetail().indexOf("○受付窓口名：") + "○受付窓口名：".length(), item.getDetail().indexOf("○", item.getDetail().indexOf("○受付窓口名：") + "○受付窓口名：".length()) - 2)
+//                            : "",
+//                            item.getDetail().contains("○名称：")
+//                            ? item.getDetail().substring(item.getDetail().indexOf("○名称：") + "○名称：".length(), item.getDetail().indexOf("○", item.getDetail().indexOf("○名称：") + "○名称：".length()) - 2)
+//                            : "",
                             keihiTemp.getKotsuhi().toString(),
                             keihiTemp.getNidukuriunchin().toString(),
                         };
