@@ -68,6 +68,12 @@
                     <p:outputLabel value="送料" rendered="#{keihiController.keihi}"/>
                     <h:outputText value="#{keihiController.selected.nidukuriunchin}" title="送料" rendered="#{keihiController.keihi}"/>
 
+                    <p:outputLabel value="発送日" rendered="#{keihiController.keihi}"/>
+                    <h:outputText value="#{keihiController.selected.hassobi}" title="送料" rendered="#{keihiController.keihi}"/>
+
+                    <p:outputLabel value="経費関係備考" rendered="#{keihiController.keihi}"/>
+                    <h:outputText value="#{keihiController.selected.memo}" title="送料" rendered="#{keihiController.keihi}"/>
+
                     <p:outputLabel value="交通費・送料"/>
                     <h:commandLink action="#{keihiController.prepareEditItemKeihi()}" value="編集" rendered="#{keihiController.keihi}"/>
                     <h:commandLink action="#{keihiController.prepareCreateItemKeihi(itemController.selected.itemid)}" value="登録" rendered="#{!keihiController.keihi}"/>

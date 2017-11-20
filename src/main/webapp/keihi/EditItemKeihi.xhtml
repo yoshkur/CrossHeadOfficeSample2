@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:p="http://primefaces.org/ui">
 
     <ui:composition template="/template.xhtml">
         <ui:define name="title">
@@ -16,14 +16,16 @@
             <h:form>
                 <h:panelGrid columns="2">
                     <h:outputLabel value="交通費" for="kotsuhi" />
-                    <h:inputText id="kotsuhi" value="#{keihiController.selected.kotsuhi}" title="#{bundle.CreateKeihiTitle_kotsuhi}" />
+                    <h:inputText id="kotsuhi" value="#{keihiController.selected.kotsuhi}" title="交通費" required="true" />
                     <h:outputLabel value="送料" for="nidukuriunchin" />
-                    <h:inputText id="nidukuriunchin" value="#{keihiController.selected.nidukuriunchin}" title="#{bundle.CreateKeihiTitle_nidukuriunchin}" />
+                    <h:inputText id="nidukuriunchin" value="#{keihiController.selected.nidukuriunchin}" title="送料" required="true" />
+                    <h:outputLabel value="発送日" for="hassobi" />
+                    <p:calendar id="hassobi" value="#{keihiController.selected.hassobi}" pattern="yyyy/MM/dd" title="発送日" />
+                    <h:outputLabel value="経費関係備考" for="memo" />
+                    <h:inputText id="memo" value="#{keihiController.selected.memo}" title="備考" />
                 </h:panelGrid>
                 <h:commandLink action="#{keihiController.updateItemKeihi()}" value="編集"/>
                 <br />
-                <br />
-                <h:commandLink action="#{itemController.prepareList}" value="#{bundle.ItemShowAllLink}"/>
                 <br />
                 <h:link outcome="/index" value="#{bundle.IndexLink}" />
             </h:form>

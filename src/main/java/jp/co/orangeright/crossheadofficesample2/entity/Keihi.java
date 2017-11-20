@@ -63,6 +63,10 @@ public class Keihi implements Serializable {
     private Integer kosaihi;
     private Integer shuzenhi;
     private Integer zappi;
+    @Temporal(TemporalType.DATE)
+    private Date hassobi;
+    @Size(max = 2147483647)
+    private String memo;
 
     public Keihi() {
     }
@@ -180,6 +184,22 @@ public class Keihi implements Serializable {
         this.zappi = zappi;
     }
 
+    public Date getHassobi() {
+        return hassobi;
+    }
+
+    public void setHassobi(Date hassobi) {
+        this.hassobi = hassobi;
+    }
+
+    public String getMemo() {
+        return memo;
+    }
+
+    public void setMemo(String memo) {
+        this.memo = memo;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -204,5 +224,5 @@ public class Keihi implements Serializable {
     public String toString() {
         return "jp.co.orangeright.crossheadofficesample2.entity.Keihi[ itemid=" + itemid + " ]";
     }
-    
+
 }
