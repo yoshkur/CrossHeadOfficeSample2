@@ -5,7 +5,6 @@
  */
 package jp.co.orangeright.crossheadofficesample2.servlet;
 
-
 import com.orangesignal.csv.Csv;
 import com.orangesignal.csv.CsvConfig;
 import com.orangesignal.csv.handlers.StringArrayListHandler;
@@ -47,7 +46,7 @@ public class ItemServlet extends HttpServlet {
     private LoginController loginController;
     @Inject
     private ItemController itemContoroller;
-    
+
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -61,6 +60,8 @@ public class ItemServlet extends HttpServlet {
             throws ServletException, IOException {
         if (this.loginController.getStatus()) {
             try (OutputStream out = response.getOutputStream()) {
+                response.setContentType("application/force-download");
+                response.setHeader("Content-Disposition", "attachment; filename*=\"" + URLEncoder.encode("item.csv", "UTF-8") + "\"");
 
                 CsvConfig csvConfig = new CsvConfig();
                 csvConfig.setSeparator(',');
@@ -76,8 +77,7 @@ public class ItemServlet extends HttpServlet {
                     "訪問予定",
                     "メモ",
                     "交通費",
-                    "送料",
-                };
+                    "送料",};
                 csvColumns.add(header);
 
                 int PAGE_SIZE = 10;
@@ -92,17 +92,17 @@ public class ItemServlet extends HttpServlet {
                             item.getScheid() == null ? "" : new SimpleDateFormat("yyyy/MM/dd").format(item.getScheid().getDatefrom()),
                             item.getMemo(),
                             keihiTemp.getKotsuhi().toString(),
-                            keihiTemp.getNidukuriunchin().toString(),
-                        };
+                            keihiTemp.getNidukuriunchin().toString(),};
 
                         csvColumns.add(temp);
                     }
 
                 }
 
-                response.setContentType("application/force-download");
-                response.setHeader("Content-Disposition", "attachment; filename*=\"" + URLEncoder.encode("item.csv", "UTF-8") + "\"");
                 Csv.save(csvColumns, out, "Windows-31J", csvConfig, new StringArrayListHandler());
+
+            } catch (IOException e) {
+                response.sendRedirect("/CrossHeadOfficeSample2/faces/index.xhtml");
 
             }
         } else {

@@ -44,6 +44,7 @@ public class ItemFileInterfaceContoroller implements Serializable {
     private Integer wifiItemCount;
     private Integer wifihoshuItemCount;
     private Integer miraitoWifiItemCount;
+    private Integer todenHomeItemCount;
 
     /**
      * Creates a new instance of ItemFileInterfaceContoroller
@@ -272,6 +273,232 @@ public class ItemFileInterfaceContoroller implements Serializable {
 
     public void setMiraitoWifiItemCount(Integer miraitoWifiItemCount) {
         this.miraitoWifiItemCount = miraitoWifiItemCount;
+    }
+
+    public String createTodenHomeItem() {
+        int count = 0;
+        CsvConfig csvConfig = new CsvConfig();
+        csvConfig.setSeparator(',');
+        csvConfig.setQuoteDisabled(false);
+        csvConfig.setQuote('"');
+        csvConfig.setSkipLines(1);
+        try {
+            File csvFile = this.getFile("/tmp/todenhome" + this.dataFile.getSubmittedFileName());
+            List<String[]> csv = Csv.load(csvFile, "Windows-31J", csvConfig, new StringArrayListHandler());
+            for (String[] cols : csv) {
+                if (cols[0].length() == 0) {
+                    break;
+                }
+                String itemCd = cols[0] + "-" + cols[1];
+                ItemSearchCondition itemCondition = new ItemSearchCondition();
+                itemCondition.setItemcd(itemCd);
+                List<Item> itemList = this.itemEjb.findAll(itemCondition);
+                if (itemList.size() > 0) {
+                    //登録があったら何もしない。
+                } else {
+                    this.itemController.prepareCreate();
+                    this.itemController.getSelected().setItemcd(itemCd);
+                    this.itemController.getSelected().setCustomerid(this.customerEjb.find(31925));
+                    this.itemController.getSelected().setUserid(this.userEjb.find("mitanto"));
+                    StringBuilder detail = new StringBuilder();
+                    detail.append("/****** 東電　おうちで安心 ******/");
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("契約番号: ");
+                    detail.append(cols[0]);
+                    detail.append(System.lineSeparator());
+                    detail.append("枝番: ");
+                    detail.append(cols[1]);
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("エネルギーセンサー: ");
+                    detail.append(cols[13]);
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("スマートホームハブ: ");
+                    detail.append(cols[14]);
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("スマートタグ: ");
+                    detail.append(cols[15]);
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("マルチセンサーブリッジ: ");
+                    detail.append(cols[16]);
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("マルチセンサー子機: ");
+                    detail.append(cols[17]);
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("マルチファンクションライト_ライト: ");
+                    detail.append(cols[18]);
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("マルチファンクションライト_ユニット: ");
+                    detail.append(cols[19]);
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("タブレット: ");
+                    detail.append(cols[20]);
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("WiFiルーター: ");
+                    detail.append(cols[21]);
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("IoTサービスNo: ");
+                    detail.append(cols[57]);
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("設置宅ID: ");
+                    detail.append(cols[58]);
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("工事担当者アカウント: ");
+                    detail.append(cols[59]);
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("工事担当者パスワード: ");
+                    detail.append(cols[60]);
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("Notionアカウント: ");
+                    detail.append(cols[61]);
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("Notionパスワード: ");
+                    detail.append(cols[62]);
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("契約ステータス: ");
+                    detail.append(cols[79]);
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("契約者氏名_カナ: ");
+                    detail.append(cols[80]);
+                    detail.append(cols[81]);
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("契約者氏名_漢字: ");
+                    detail.append(cols[82]);
+                    detail.append(cols[83]);
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("性別: ");
+                    detail.append(cols[84]);
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("契約者生年月日: ");
+                    detail.append(cols[85]);
+                    detail.append("/");
+                    detail.append(cols[86]);
+                    detail.append("/");
+                    detail.append(cols[87]);
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("契約者住所_郵便番号: ");
+                    detail.append(cols[88]);
+                    detail.append(System.lineSeparator());
+                    detail.append("契約者住所: ");
+                    detail.append(cols[89]);
+                    detail.append(cols[90]);
+                    detail.append(cols[91]);
+                    detail.append(cols[92]);
+                    detail.append(cols[93]);
+                    detail.append(cols[94]);
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("契約者連絡先: ");
+                    detail.append(cols[95]);
+                    detail.append("-");
+                    detail.append(cols[96]);
+                    detail.append("-");
+                    detail.append(cols[97]);
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("契約者連絡先_携帯番号: ");
+                    detail.append(cols[98]);
+                    detail.append("-");
+                    detail.append(cols[99]);
+                    detail.append("-");
+                    detail.append(cols[100]);
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("メールアドレス: ");
+                    detail.append(cols[101]);
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("設置先住所区分: ");
+                    detail.append(cols[102]);
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("設置先情報_氏名_カナ: ");
+                    detail.append(cols[103]);
+                    detail.append(cols[104]);
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("設置先情報_氏名_漢字: ");
+                    detail.append(cols[105]);
+                    detail.append(cols[106]);
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("設置先情報_郵便番号: ");
+                    detail.append(cols[107]);
+                    detail.append(System.lineSeparator());
+                    detail.append("設置先情報: ");
+                    detail.append(cols[108]);
+                    detail.append(cols[109]);
+                    detail.append(cols[110]);
+                    detail.append(cols[111]);
+                    detail.append(cols[112]);
+                    detail.append(cols[113]);
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("設置先情報_連絡先: ");
+                    detail.append(cols[114]);
+                    detail.append("-");
+                    detail.append(cols[115]);
+                    detail.append("-");
+                    detail.append(cols[116]);
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("設置先情報_連絡先_携帯番号: ");
+                    detail.append(cols[117]);
+                    detail.append("-");
+                    detail.append(cols[118]);
+                    detail.append("-");
+                    detail.append(cols[119]);
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("備考: ");
+                    detail.append(cols[120]);
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    this.itemController.getSelected().setDetail(detail.toString());
+                    this.itemController.getSelected().setMemo("");
+                    this.itemController.create();
+                    count++;
+                }
+            }
+            csvFile.delete();
+            JsfUtil.addSuccessMessage(count + "件登録しました。");
+        } catch (Exception e) {
+            return null;
+        }
+        return null;
+    }
+
+    public Integer getTodenHomeItemCount() {
+        ItemSearchCondition iCon = new ItemSearchCondition();
+        iCon.setCustomer(this.customerEjb.find(31925));
+        iCon.setItemcd("CO");
+        this.setTodenHomeItemCount(this.itemEjb.countItemid(iCon));
+        return todenHomeItemCount;
+    }
+
+    public void setTodenHomeItemCount(Integer todenHomeItemCount) {
+        this.todenHomeItemCount = todenHomeItemCount;
     }
 
     private File getFile(String tempFile) {
