@@ -109,7 +109,10 @@ public class ItemAccontingServlet extends HttpServlet {
                             //                            ? item.getDetail().substring(item.getDetail().indexOf("○名称：") + "○名称：".length(), item.getDetail().indexOf("○", item.getDetail().indexOf("○名称：") + "○名称：".length()) - 2)
                             //                            : "",
                             keihiTemp.getKotsuhi().toString(),
-                            keihiTemp.getNidukuriunchin().toString(),};
+                            keihiTemp.getNidukuriunchin().toString(),
+                            new SimpleDateFormat("yyyy/MM/dd").format(keihiTemp.getHassobi()),
+                            keihiTemp.getMemo()
+                        };
 
                         csvColumns.add(temp);
                     }

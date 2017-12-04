@@ -92,7 +92,10 @@ public class ItemServlet extends HttpServlet {
                             item.getScheid() == null ? "" : new SimpleDateFormat("yyyy/MM/dd").format(item.getScheid().getDatefrom()),
                             item.getMemo(),
                             keihiTemp.getKotsuhi().toString(),
-                            keihiTemp.getNidukuriunchin().toString(),};
+                            keihiTemp.getNidukuriunchin().toString(),
+                            new SimpleDateFormat("yyyy/MM/dd").format(keihiTemp.getHassobi()),
+                            keihiTemp.getMemo()
+                        };
 
                         csvColumns.add(temp);
                     }
