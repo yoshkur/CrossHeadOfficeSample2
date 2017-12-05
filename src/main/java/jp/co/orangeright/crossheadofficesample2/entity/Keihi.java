@@ -6,6 +6,7 @@
 package jp.co.orangeright.crossheadofficesample2.entity;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Entity;
@@ -192,6 +193,13 @@ public class Keihi implements Serializable {
         this.hassobi = hassobi;
     }
 
+    public String getFormattedHassobi() {
+        if (this.getHassobi() != null ) {
+            return new SimpleDateFormat("yyyy/MM/dd").format(this.getHassobi());
+        } else {
+            return "";
+        }
+    }
     public String getMemo() {
         return memo;
     }

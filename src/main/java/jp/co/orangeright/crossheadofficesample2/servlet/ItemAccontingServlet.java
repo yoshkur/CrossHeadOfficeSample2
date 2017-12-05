@@ -110,7 +110,7 @@ public class ItemAccontingServlet extends HttpServlet {
                             //                            : "",
                             keihiTemp.getKotsuhi().toString(),
                             keihiTemp.getNidukuriunchin().toString(),
-                            new SimpleDateFormat("yyyy/MM/dd").format(keihiTemp.getHassobi()),
+                            keihiTemp.getFormattedHassobi(),
                             keihiTemp.getMemo()
                         };
 

@@ -93,7 +93,7 @@ public class ItemServlet extends HttpServlet {
                             item.getMemo(),
                             keihiTemp.getKotsuhi().toString(),
                             keihiTemp.getNidukuriunchin().toString(),
-                            new SimpleDateFormat("yyyy/MM/dd").format(keihiTemp.getHassobi()),
+                            keihiTemp.getFormattedHassobi(),
                             keihiTemp.getMemo()
                         };
 
