@@ -13,6 +13,7 @@ import java.io.IOException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.inject.Inject;
@@ -45,6 +46,7 @@ public class ItemFileInterfaceContoroller implements Serializable {
     private Integer wifihoshuItemCount;
     private Integer miraitoWifiItemCount;
     private Integer todenHomeItemCount;
+    private Integer harmoItemCount;
 
     /**
      * Creates a new instance of ItemFileInterfaceContoroller
@@ -499,6 +501,108 @@ public class ItemFileInterfaceContoroller implements Serializable {
 
     public void setTodenHomeItemCount(Integer todenHomeItemCount) {
         this.todenHomeItemCount = todenHomeItemCount;
+    }
+
+    public String createHarmoItem() {
+        int count = 0;
+        CsvConfig csvConfig = new CsvConfig();
+        csvConfig.setSeparator(',');
+        csvConfig.setQuoteDisabled(false);
+        csvConfig.setQuote('"');
+        csvConfig.setSkipLines(3);
+        try {
+            File csvFile = this.getFile("/tmp/harmo" + this.dataFile.getSubmittedFileName());
+            List<String[]> csv = Csv.load(csvFile, csvConfig, new StringArrayListHandler());
+            for (String[] cols : csv) {
+                if (cols[1].length() == 0) {
+                    break;
+                }
+                String itemCd = cols[1];
+                ItemSearchCondition itemCondition = new ItemSearchCondition();
+                itemCondition.setItemcd(itemCd);
+                List<Item> itemList = this.itemEjb.findAll(itemCondition);
+                if (itemList.size() > 0) {
+                    //登録があったら何もしない。
+                } else {
+                    this.itemController.prepareCreate();
+                    this.itemController.getSelected().setItemcd(itemCd);
+                    this.itemController.getSelected().setCustomerid(this.customerEjb.find(50227));
+                    this.itemController.getSelected().setUserid(this.userEjb.find("mitanto"));
+                    StringBuilder detail = new StringBuilder();
+                    detail.append("/****** harmo薬局 ******/");
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("案件番号: ");
+                    detail.append(cols[1]);
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("契約者・薬局・病院名: ");
+                    detail.append(cols[2]);
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("PCメーカー: ");
+                    detail.append(cols[4]);
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("PC型番: ");
+                    detail.append(cols[5]);
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("タブレット枚数: ");
+                    detail.append(cols[6]);
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("導入するタブレットの枚数: ");
+                    detail.append(cols[7]);
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("設置先郵便番号: ");
+                    detail.append(cols[9]);
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("設置先住所: ");
+                    detail.append(cols[10]);
+                    detail.append(cols[11]);
+                    detail.append(cols[12]);
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("電話番号: ");
+                    detail.append(cols[13]);
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("FAX番号: ");
+                    detail.append(cols[14]);
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("備考: ");
+                    detail.append(cols[16]);
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    this.itemController.getSelected().setDetail(detail.toString());
+                    this.itemController.getSelected().setMemo("");
+                    this.itemController.create();
+                    count++;
+                }
+            }
+            csvFile.delete();
+            JsfUtil.addSuccessMessage(count + "件登録しました。");
+
+        } catch (Exception e) {
+            String msg = e.getLocalizedMessage();
+            return null;
+        }
+        return null;
+    }
+
+    public Integer getHarmoItemCount() {
+        ItemSearchCondition iCon = new ItemSearchCondition();
+        iCon.setCustomer(this.customerEjb.find(50227));
+        this.setHarmoItemCount(this.itemEjb.countItemid(iCon));
+        return harmoItemCount;
+    }
+
+    public void setHarmoItemCount(Integer harmoItemCount) {
+        this.harmoItemCount = harmoItemCount;
     }
 
     private File getFile(String tempFile) {
