@@ -540,7 +540,35 @@ public class ItemController implements Serializable {
         this.getCondition().setAddDateEnd(null);
         this.getCondition().setUpdateDateStart(null);
         this.getCondition().setUpdateDateEnd(null);
-        this.getPagination().setPageSize(100);
+        this.getPagination().setPage(0);
+        this.setPageSize(this.getPageSizeList().get(this.getPageSizeList().size() - 1));
+        recreateModel();
+        return "/item/List?faces-redirect=true";
+    }
+
+    public String accounting3MonthList() {
+        this.getCondition().setKeyword(null);
+        this.getCondition().setCustomer(null);
+        this.getCondition().setUser(null);
+        this.getCondition().setFinished(null);
+        this.getCondition().setAccounting(Boolean.FALSE);
+        this.getCondition().setItemcd(null);
+        this.getCondition().setPayment(null);
+        this.getCondition().setAppoint(null);
+        this.getCondition().setWorked(null);
+        Calendar cal = GregorianCalendar.getInstance();
+        cal.set(Calendar.HOUR, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
+        cal.add(Calendar.DAY_OF_YEAR, -100);
+        this.getCondition().setTurnStart(cal.getTime());
+        this.getCondition().setTurnEnd(null);
+        this.getCondition().setCancel(null);
+        this.getCondition().setOnhold(null);
+        this.getCondition().setAddDateStart(null);
+        this.getCondition().setAddDateEnd(null);
+        this.getCondition().setUpdateDateStart(null);
+        this.getCondition().setUpdateDateEnd(null);
         this.getPagination().setPage(0);
         this.setPageSize(this.getPageSizeList().get(this.getPageSizeList().size() - 1));
         recreateModel();

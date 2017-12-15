@@ -10,75 +10,85 @@
         </ui:define>
         <ui:define name="body">
             <h:form styleClass="jsfcrud_list_form">
-
                 <h3><h:link outcome="/item/List" value="案件" /></h3>
-                <h4>アポイント</h4>
-                <p>
-                    <p:commandLink action="#{itemController.appointList()}" value="アポイント中" />
-                </p>
-                <p>
-                    <p:commandLink action="#{itemController.appointLateList()}" value="アポイント中(登録後1週間経過)" />
-                </p>
-                <h4>作業</h4>
-                <p>
-                    <p:commandLink action="#{itemController.twoDayslatersWorkList()}" value="明後日訪問予定" />
-                </p>
-                <p>
-                    <p:commandLink action="#{itemController.tomorrowsWorkList()}" value="明日訪問予定" />
-                </p>
-                <p>
-                    <p:commandLink action="#{itemController.todaysWorkList()}" value="本日訪問予定" />
-                </p>
-                <p>
-                    <p:commandLink action="#{itemController.willWorkList()}" value="作業待ち" />
-                </p>
-                <p>
-                    <p:commandLink action="#{itemController.notWorkReportList()}" value="作業報告待ち" />
-                </p>
-                <p>
-                    <p:commandLink action="#{itemController.workedList()}" value="作業済み" />
-                </p>
-                <h4>案件検索</h4>
-                <p>
-                    <h:link outcome="/item/Search" value="案件検索条件指定" />
-                </p>
+                <p:accordionPanel dynamic="true" cache="true">
+                    <p:tab title="アポイント">
+                        <h:panelGrid columns="1" cellpadding="10">
+                            <p:commandLink action="#{itemController.appointList()}" value="アポイント中" />
+                        </h:panelGrid>
+                        <h:panelGrid columns="1" cellpadding="10">
+                            <p:commandLink action="#{itemController.appointLateList()}" value="アポイント中(登録後1週間経過)" />
+                        </h:panelGrid>
+                    </p:tab>
+                    <p:tab title="作業">
+                        <h:panelGrid columns="1" cellpadding="10">
+                            <p:commandLink action="#{itemController.twoDayslatersWorkList()}" value="明後日訪問予定" />
+                        </h:panelGrid>
+                        <h:panelGrid columns="1" cellpadding="10">
+                            <p:commandLink action="#{itemController.tomorrowsWorkList()}" value="明日訪問予定" />
+                        </h:panelGrid>
+                        <h:panelGrid columns="1" cellpadding="10">
+                            <p:commandLink action="#{itemController.todaysWorkList()}" value="本日訪問予定" />
+                        </h:panelGrid>
+                        <h:panelGrid columns="1" cellpadding="10">
+                            <p:commandLink action="#{itemController.willWorkList()}" value="作業待ち" />
+                        </h:panelGrid>
+                        <h:panelGrid columns="1" cellpadding="10">
+                            <p:commandLink action="#{itemController.notWorkReportList(1)}" value="作業報告待ち" />
+                        </h:panelGrid>
+                        <h:panelGrid columns="1" cellpadding="10">
+                            <p:commandLink action="#{itemController.workedList()}" value="作業済み" />
+                        </h:panelGrid>
+                    </p:tab>
+                    <p:tab title="案件検索">
+                        <h:panelGrid columns="1" cellpadding="10">
+                            <h:link outcome="/item/Search" value="案件検索条件指定" />
+                        </h:panelGrid>
+                    </p:tab>
+                    <p:tab title="翌日スケジュール確認">
+                        <h:panelGrid columns="1" cellpadding="10">
+                            <p:commandLink action="#{nextdayscheduleController.prepareCreate()}" value="翌日スケジュール確認送信フォーム" />
+                        </h:panelGrid>
+                        <h:panelGrid columns="1" cellpadding="10">
+                            <p:commandLink action="#{nextdayscheduleController.noReplyList()}" value="翌日スケジュール確認未回答" />
+                        </h:panelGrid>
+                        <h:panelGrid columns="1" cellpadding="10">
+                            <p:commandLink action="#{nextdayscheduleController.prepareList()}" value="翌日スケジュール確認全リスト" />
+                        </h:panelGrid>
+                    </p:tab>
+                    <p:tab title="案件登録">
+                        <h:panelGrid columns="1" cellpadding="10">
+                            <h:link outcome="/item/Create" value="日本PC案件登録" />
+                        </h:panelGrid>
+                        <h:panelGrid columns="1" cellpadding="10">
+                            <h:link outcome="/item/WiFiItemCreate" value="au Wi-Fi 保守案件登録" />
+                        </h:panelGrid>
+                        <h:panelGrid columns="1" cellpadding="10">
+                            <h:link outcome="/item/WiFiHoshuItemCreate" value="w2 Wi-Fi (保守)案件登録" />
+                        </h:panelGrid>
+                        <h:panelGrid columns="1" cellpadding="10">
+                            <h:link outcome="/item/MiraitoWiFiItemCreate" value="au Wi-Fi 保守(関西)案件登録" />
+                        </h:panelGrid>
+                        <h:panelGrid columns="1" cellpadding="10">
+                            <h:link outcome="/item/TodenHomeItemCreate" value="東電　おうちで安心案件登録" />
+                        </h:panelGrid>
+                        <h:panelGrid columns="1" cellpadding="10">
+                            <h:link outcome="/item/HarmoItemCreate" value="harmo薬局案件登録" />
+                        </h:panelGrid>
+                    </p:tab>
+                    <p:tab title="経理">
+                        <h:panelGrid columns="1" cellpadding="10">
+                            <p:commandLink action="#{itemController.accountingList()}" value="経理確認案件" />
+                        </h:panelGrid>
+                        <h:panelGrid columns="1" cellpadding="10">
+                            <p:commandLink action="#{itemController.accounting3MonthList()}" value="経理確認案件(100日以内に訪問した案件)" />
+                        </h:panelGrid>
+                        <h:panelGrid columns="1" cellpadding="10">
+                            <a href="/CrossHeadOfficeSample2/faces/item/ItemAccontingServlet">経理処理用ファイルダウンロード</a>
+                        </h:panelGrid>
+                    </p:tab>
+                </p:accordionPanel>
 
-                <h4>翌日スケジュール確認</h4>
-                <p>
-                    <p:commandLink action="#{nextdayscheduleController.prepareCreate()}" value="翌日スケジュール確認送信フォーム" />
-                </p>
-                <p>
-                    <p:commandLink action="#{nextdayscheduleController.noReplyList()}" value="翌日スケジュール確認未回答" />
-                </p>
-                <p>
-                    <p:commandLink action="#{nextdayscheduleController.prepareList()}" value="翌日スケジュール確認全リスト" />
-                </p>
-                
-                
-                <h4>案件登録</h4>
-                <p>
-                    <h:link outcome="/item/Create" value="日本PC案件登録" />
-                </p>
-                <p>
-                    <h:link outcome="/item/WiFiItemCreate" value="au Wi-Fi 保守案件登録" />
-                </p>
-                <p>
-                    <h:link outcome="/item/WiFiHoshuItemCreate" value="w2 Wi-Fi (保守)案件登録" />
-                </p>
-                <p>
-                    <h:link outcome="/item/MiraitoWiFiItemCreate" value="au Wi-Fi 保守(関西)案件登録" />
-                </p>
-                <p>
-                    <h:link outcome="/item/TodenHomeItemCreate" value="東電　おうちで安心案件登録" />
-                </p>
-                <p>
-                    <h:link outcome="/item/HarmoItemCreate" value="harmo薬局案件登録" />
-                </p>
-
-                <h4>経理</h4>
-                <p>
-                    <a href="/CrossHeadOfficeSample2/faces/item/ItemAccontingServlet">経理処理用ファイルダウンロード</a>
-                </p>
 
                 <h3>システム</h3>
                 <p>
