@@ -46,15 +46,11 @@
                         </h:panelGrid>
                     </p:tab>
                     <p:tab title="翌日スケジュール確認">
-                        <h:panelGrid columns="1" cellpadding="10">
-                            <p:commandLink action="#{nextdayscheduleController.prepareCreate()}" value="翌日スケジュール確認送信フォーム" />
-                        </h:panelGrid>
-                        <h:panelGrid columns="1" cellpadding="10">
+                        <p:panelGrid columns="1">
+                            <p:link outcome="/nextdayschedule/Send" value="翌日スケジュール確認発信" />
                             <p:commandLink action="#{nextdayscheduleController.noReplyList()}" value="翌日スケジュール確認未回答" />
-                        </h:panelGrid>
-                        <h:panelGrid columns="1" cellpadding="10">
                             <p:commandLink action="#{nextdayscheduleController.prepareList()}" value="翌日スケジュール確認全リスト" />
-                        </h:panelGrid>
+                        </p:panelGrid>
                     </p:tab>
                     <p:tab title="案件登録">
                         <h:panelGrid columns="1" cellpadding="10">

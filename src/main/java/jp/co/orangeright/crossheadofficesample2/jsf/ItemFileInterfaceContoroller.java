@@ -24,6 +24,10 @@ import jp.co.orangeright.crossheadofficesample2.ejb.UserMFacade;
 import jp.co.orangeright.crossheadofficesample2.entity.Item;
 import jp.co.orangeright.crossheadofficesample2.jsf.item.ItemSearchCondition;
 import jp.co.orangeright.crossheadofficesample2.jsf.util.JsfUtil;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 
 /**
  *
@@ -278,6 +282,187 @@ public class ItemFileInterfaceContoroller implements Serializable {
     }
 
     public String createTodenHomeItem() {
+        return this.createTodenHomeItemCsv();
+    }
+
+    public String createTodenHomeItemExcel() {
+        int count = 0;
+        try {
+            File excelFile = this.getFile("/tmp/todenhome" + this.dataFile.getSubmittedFileName());
+            Workbook workbook = WorkbookFactory.create(excelFile);
+            Sheet sheet = workbook.getSheet("Sheet1");
+            for (int rowNumber = sheet.getFirstRowNum() + 1; rowNumber <= sheet.getLastRowNum(); rowNumber++) {
+                String itemCd = this.getTodenExcelCellValue(sheet.getRow(rowNumber).getCell(0));
+                ItemSearchCondition itemCondition = new ItemSearchCondition();
+                itemCondition.setItemcd(itemCd);
+                List<Item> itemList = this.itemEjb.findAll(itemCondition);
+                if (itemList.size() > 0) {
+                    //登録があったら何もしない。
+                } else {
+                    this.itemController.prepareCreate();
+                    this.itemController.getSelected().setItemcd(itemCd);
+                    this.itemController.getSelected().setCustomerid(this.customerEjb.find(31925));
+                    this.itemController.getSelected().setUserid(this.userEjb.find("mitanto"));
+                    StringBuilder detail = new StringBuilder();
+                    detail.append("/****** 東電　おうちで安心 ******/");
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("契約番号: ");
+                    detail.append(this.getTodenExcelCellValue(sheet.getRow(rowNumber).getCell(0)));
+                    detail.append(System.lineSeparator());
+                    detail.append("枝番: ");
+                    detail.append(this.getTodenExcelCellValue(sheet.getRow(rowNumber).getCell(1)));
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("エネルギーセンサー: ");
+                    detail.append(this.getTodenExcelCellValue(sheet.getRow(rowNumber).getCell(13)));
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("スマートホームハブ: ");
+                    detail.append(this.getTodenExcelCellValue(sheet.getRow(rowNumber).getCell(14)));
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("スマートタグ: ");
+                    detail.append(this.getTodenExcelCellValue(sheet.getRow(rowNumber).getCell(15)));
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("マルチセンサーブリッジ: ");
+                    detail.append(this.getTodenExcelCellValue(sheet.getRow(rowNumber).getCell(16)));
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("マルチセンサー子機: ");
+                    detail.append(this.getTodenExcelCellValue(sheet.getRow(rowNumber).getCell(17)));
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("マルチファンクションライト_ライト: ");
+                    detail.append(this.getTodenExcelCellValue(sheet.getRow(rowNumber).getCell(18)));
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("マルチファンクションライト_ユニット: ");
+                    detail.append(this.getTodenExcelCellValue(sheet.getRow(rowNumber).getCell(19)));
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("タブレット: ");
+                    detail.append(this.getTodenExcelCellValue(sheet.getRow(rowNumber).getCell(20)));
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("WiFiルーター: ");
+                    detail.append(this.getTodenExcelCellValue(sheet.getRow(rowNumber).getCell(21)));
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("IoTサービスNo: ");
+                    detail.append(this.getTodenExcelCellValue(sheet.getRow(rowNumber).getCell(57)));
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("設置宅ID: ");
+                    detail.append(this.getTodenExcelCellValue(sheet.getRow(rowNumber).getCell(58)));
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("工事担当者アカウント: ");
+                    detail.append(this.getTodenExcelCellValue(sheet.getRow(rowNumber).getCell(59)));
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("工事担当者パスワード: ");
+                    detail.append(this.getTodenExcelCellValue(sheet.getRow(rowNumber).getCell(60)));
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("Notionアカウント: ");
+                    detail.append(this.getTodenExcelCellValue(sheet.getRow(rowNumber).getCell(61)));
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("Notionパスワード: ");
+                    detail.append(this.getTodenExcelCellValue(sheet.getRow(rowNumber).getCell(62)));
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("契約ステータス: ");
+                    detail.append(this.getTodenExcelCellValue(sheet.getRow(rowNumber).getCell(79)));
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("契約者氏名_カナ: ");
+                    detail.append(this.getTodenExcelCellValue(sheet.getRow(rowNumber).getCell(80)));
+                    detail.append(this.getTodenExcelCellValue(sheet.getRow(rowNumber).getCell(81)));
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("契約者氏名_漢字: ");
+                    detail.append(this.getTodenExcelCellValue(sheet.getRow(rowNumber).getCell(82)));
+                    detail.append(this.getTodenExcelCellValue(sheet.getRow(rowNumber).getCell(83)));
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("性別: ");
+                    detail.append(this.getTodenExcelCellValue(sheet.getRow(rowNumber).getCell(84)));
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("契約者生年月日: ");
+                    detail.append(this.getTodenExcelCellValue(sheet.getRow(rowNumber).getCell(85)));
+                    detail.append("/");
+                    detail.append(this.getTodenExcelCellValue(sheet.getRow(rowNumber).getCell(86)));
+                    detail.append("/");
+                    detail.append(this.getTodenExcelCellValue(sheet.getRow(rowNumber).getCell(87)));
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+//                    detail.append("設置先住所区分: ");
+//                    detail.append(this.getTodenExcelCellValue(sheet.getRow(rowNumber).getCell(102)));
+//                    detail.append(System.lineSeparator());
+//                    detail.append(System.lineSeparator());
+                    detail.append("設置先情報_郵便番号: ");
+                    detail.append(this.getTodenExcelCellValue(sheet.getRow(rowNumber).getCell(107)));
+                    detail.append(System.lineSeparator());
+                    detail.append("設置先情報_住所: ");
+                    detail.append(this.getTodenExcelCellValue(sheet.getRow(rowNumber).getCell(108)));
+                    detail.append(this.getTodenExcelCellValue(sheet.getRow(rowNumber).getCell(109)));
+                    detail.append(this.getTodenExcelCellValue(sheet.getRow(rowNumber).getCell(110)));
+                    detail.append(this.getTodenExcelCellValue(sheet.getRow(rowNumber).getCell(111)));
+                    detail.append(this.getTodenExcelCellValue(sheet.getRow(rowNumber).getCell(112)));
+                    detail.append(this.getTodenExcelCellValue(sheet.getRow(rowNumber).getCell(113)));
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("設置先情報_連絡先: ");
+                    detail.append(this.getTodenExcelCellValue(sheet.getRow(rowNumber).getCell(114)));
+                    detail.append("-");
+                    detail.append(this.getTodenExcelCellValue(sheet.getRow(rowNumber).getCell(115)));
+                    detail.append("-");
+                    detail.append(this.getTodenExcelCellValue(sheet.getRow(rowNumber).getCell(116)));
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("設置先情報_連絡先_携帯番号: ");
+                    detail.append(this.getTodenExcelCellValue(sheet.getRow(rowNumber).getCell(117)));
+                    detail.append("-");
+                    detail.append(this.getTodenExcelCellValue(sheet.getRow(rowNumber).getCell(118)));
+                    detail.append("-");
+                    detail.append(this.getTodenExcelCellValue(sheet.getRow(rowNumber).getCell(119)));
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("備考: ");
+                    detail.append(this.getTodenExcelCellValue(sheet.getRow(rowNumber).getCell(120)));
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    this.itemController.getSelected().setDetail(detail.toString());
+                    this.itemController.getSelected().setMemo("");
+                    this.itemController.create();
+                    count++;
+                }
+            }
+            excelFile.delete();
+            JsfUtil.addSuccessMessage(count + "件登録しました。");
+        } catch (Exception e) {
+            return null;
+        }
+        return null;
+    }
+
+    private String getTodenExcelCellValue(Cell cell) {
+        int cellType = cell.getCellType();
+        switch (cellType) {
+            case Cell.CELL_TYPE_BLANK:
+                return "";
+            case Cell.CELL_TYPE_NUMERIC:
+                return Integer.toString(Double.valueOf(cell.getNumericCellValue()).intValue());
+            default:
+                return cell.getStringCellValue();
+        }
+    }
+
+    public String createTodenHomeItemCsv() {
         int count = 0;
         CsvConfig csvConfig = new CsvConfig();
         csvConfig.setSeparator(',');
