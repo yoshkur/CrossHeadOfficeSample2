@@ -148,10 +148,10 @@ public class UserM implements Serializable {
     private int roworder;
     private Boolean bbspermit;
     private Boolean itemadmin;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userid")
-    private List<Schedule> scheduleList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userid")
-    private List<Item> itemList;
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userid")
+//    private List<Schedule> scheduleList;
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userid")
+//    private List<Item> itemList;
 
     public UserM() {
     }
@@ -405,23 +405,23 @@ public class UserM implements Serializable {
         this.itemadmin = itemadmin;
     }
 
-    @XmlTransient
-    public List<Schedule> getScheduleList() {
-        return scheduleList;
-    }
-
-    public void setScheduleList(List<Schedule> scheduleList) {
-        this.scheduleList = scheduleList;
-    }
-
-    @XmlTransient
-    public List<Item> getItemList() {
-        return itemList;
-    }
-
-    public void setItemList(List<Item> itemList) {
-        this.itemList = itemList;
-    }
+//    @XmlTransient
+//    public List<Schedule> getScheduleList() {
+//        return scheduleList;
+//    }
+//
+//    public void setScheduleList(List<Schedule> scheduleList) {
+//        this.scheduleList = scheduleList;
+//    }
+//
+//    @XmlTransient
+//    public List<Item> getItemList() {
+//        return itemList;
+//    }
+//
+//    public void setItemList(List<Item> itemList) {
+//        this.itemList = itemList;
+//    }
 
     @Override
     public int hashCode() {

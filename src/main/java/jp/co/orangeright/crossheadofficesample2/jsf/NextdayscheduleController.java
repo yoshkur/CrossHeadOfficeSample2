@@ -78,11 +78,11 @@ public class NextdayscheduleController implements Serializable {
 
     public PaginationHelper getPagination() {
         if (pagination == null) {
-            pagination = new PaginationHelper(1000) {
+            pagination = new PaginationHelper(20) {
 
                 @Override
                 public int getItemsCount() {
-                    return getFacade().count();
+                    return getFacade().count(getCondition());
                 }
 
                 @Override
@@ -100,13 +100,15 @@ public class NextdayscheduleController implements Serializable {
     }
 
     public String prepareList() {
-        this.getCondition();
+        this.getCondition().setReturnflg(null);
+        this.getPagination().setPage(0);
         recreateModel();
         return "/nextdayschedule/List?faces-redirect=true";
     }
 
     public String noReplyList() {
         this.getCondition().setReturnflg(false);
+        this.getPagination().setPage(0);
         recreateModel();
         return "/nextdayschedule/NoReplyList?faces-redirect=true";
     }
@@ -180,13 +182,13 @@ public class NextdayscheduleController implements Serializable {
     public String prepareView() {
         current = (Nextdayschedule) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
-        return "View?faces-redirect=true";
+        return "/nextdayschedule/View?faces-redirect=true";
     }
 
     public String prepareCreate() {
         current = new Nextdayschedule();
         selectedItemIndex = -1;
-        return "Create?faces-redirect=true";
+        return "/nextdayschedule/Create?faces-redirect=true";
     }
 
     public String create() {
@@ -203,14 +205,14 @@ public class NextdayscheduleController implements Serializable {
     public String prepareEdit() {
         current = (Nextdayschedule) getItems().getRowData();
         selectedItemIndex = pagination.getPageFirstItem() + getItems().getRowIndex();
-        return "Edit?faces-redirect=true";
+        return "/nextdayschedule/Edit?faces-redirect=true";
     }
 
     public String update() {
         try {
             getFacade().edit(current);
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("NextdayscheduleUpdated"));
-            return "View?faces-redirect=true";
+            return "/nextdayschedule/View?faces-redirect=true";
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e, ResourceBundle.getBundle("/Bundle").getString("PersistenceErrorOccured"));
             return null;
@@ -223,7 +225,7 @@ public class NextdayscheduleController implements Serializable {
         performDestroy();
         recreatePagination();
         recreateModel();
-        return "List?faces-redirect=true";
+        return "/nextdayschedule/List?faces-redirect=true";
     }
 
     public String destroyAndView() {
@@ -231,11 +233,11 @@ public class NextdayscheduleController implements Serializable {
         recreateModel();
         updateCurrentItem();
         if (selectedItemIndex >= 0) {
-            return "View?faces-redirect=true";
+            return "/nextdayschedule/View?faces-redirect=true";
         } else {
             // all items were removed - go back to list
             recreateModel();
-            return "List?faces-redirect=true";
+            return "/nextdayschedule/List?faces-redirect=true";
         }
     }
 
@@ -281,13 +283,13 @@ public class NextdayscheduleController implements Serializable {
     public String next() {
         getPagination().nextPage();
         recreateModel();
-        return "List";
+        return "/nextdayschedule/List?faces-redirect=true";
     }
 
     public String previous() {
         getPagination().previousPage();
         recreateModel();
-        return "List";
+        return "/nextdayschedule/List?faces-redirect=true";
     }
 
     public String nextNoReply() {

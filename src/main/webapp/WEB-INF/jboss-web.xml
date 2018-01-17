@@ -4,5 +4,5 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://www.jboss.com/xml/ns/javaee http://www.jboss.org/j2ee/schema/jboss-web_10_0.xsd">
     <context-root>/CrossHeadOfficeSample2</context-root>
-    <security-domain>cross-login</security-domain>
+    <security-domain>crossJdbc</security-domain>
 </jboss-web>

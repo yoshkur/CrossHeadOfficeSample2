@@ -28,10 +28,8 @@ import jp.co.orangeright.crossheadofficesample2.ejb.UserMFacade;
 import jp.co.orangeright.crossheadofficesample2.entity.Schedule;
 import jp.co.orangeright.crossheadofficesample2.entity.Item_;
 import jp.co.orangeright.crossheadofficesample2.entity.Schedule_;
-import jp.co.orangeright.crossheadofficesample2.entity.UserM_;
 import jp.co.orangeright.crossheadofficesample2.jsf.customer.CustomerSearchCondition;
 import jp.co.orangeright.crossheadofficesample2.jsf.item.ItemSearchCondition;
-import jp.co.orangeright.crossheadofficesample2.jsf.userm.UserMSearchCondition;
 
 @Named("itemController")
 @SessionScoped
@@ -288,7 +286,7 @@ public class ItemController implements Serializable {
         this.getCondition().setUpdateDateStart(null);
         this.getCondition().setUpdateDateEnd(null);
         this.getPagination().setPage(0);
-        this.getPagination().setPageSize(10000);
+        this.getPagination().setPageSize(100);
         this.setPageSize(this.getPagination().getPageSize());
         recreateModel();
         return "/item/CountExecutedItem?faces-redirect=true";
@@ -324,7 +322,7 @@ public class ItemController implements Serializable {
         this.getCondition().setUpdateDateStart(null);
         this.getCondition().setUpdateDateEnd(null);
         this.getPagination().setPage(0);
-        this.getPagination().setPageSize(10000);
+        this.getPagination().setPageSize(100);
         this.setPageSize(this.getPagination().getPageSize());
         recreateModel();
         return "/item/CountRegisteredItem?faces-redirect=true";

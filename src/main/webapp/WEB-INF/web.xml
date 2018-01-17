@@ -22,19 +22,36 @@
         <welcome-file>faces/index.xhtml</welcome-file>
     </welcome-file-list>
     <security-constraint>
-        <display-name>jimu</display-name>
+        <display-name>CrossWebresource</display-name>
         <web-resource-collection>
-            <web-resource-name>Cross</web-resource-name>
+            <web-resource-name>CrossWebresource</web-resource-name>
             <description/>
-            <url-pattern>/faces/*</url-pattern>
+            <url-pattern>/webresources/*</url-pattern>
+            <http-method>GET</http-method>
+            <http-method>PUT</http-method>
+            <http-method>HEAD</http-method>
+            <http-method>POST</http-method>
         </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>kanri</role-name>
+            <role-name>honbu</role-name>
+        </auth-constraint>
     </security-constraint>
     <login-config>
         <auth-method>BASIC</auth-method>
-        <realm-name>Authentication</realm-name>
+        <realm-name>Cross User</realm-name>
     </login-config>
     <security-role>
         <description/>
-        <role-name>cross-login</role-name>
+        <role-name>kanri</role-name>
+    </security-role>
+    <security-role>
+        <description/>
+        <role-name>sagyo</role-name>
+    </security-role>
+    <security-role>
+        <description/>
+        <role-name>honbu</role-name>
     </security-role>
 </web-app>
