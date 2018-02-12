@@ -13,7 +13,6 @@ import java.io.IOException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.inject.Inject;
@@ -74,7 +73,7 @@ public class ItemFileInterfaceContoroller implements Serializable {
         csvConfig.setQuote('"');
         csvConfig.setSkipLines(1);
         try {
-            File csvFile = this.getFile("/tmp/auwifi" + this.dataFile.getSubmittedFileName());
+            File csvFile = this.getFile("auwifi" + this.dataFile.getSubmittedFileName());
             List<String[]> csv = Csv.load(csvFile, csvConfig, new StringArrayListHandler());
             for (String[] cols : csv) {
                 if (cols[0].length() == 0) {
@@ -149,7 +148,7 @@ public class ItemFileInterfaceContoroller implements Serializable {
         csvConfig.setQuote('"');
         csvConfig.setSkipLines(1);
         try {
-            File csvFile = this.getFile("/tmp/w2wifi" + this.dataFile.getSubmittedFileName());
+            File csvFile = this.getFile("w2wifi" + this.dataFile.getSubmittedFileName());
             List<String[]> csv = Csv.load(csvFile, csvConfig, new StringArrayListHandler());
             for (String[] cols : csv) {
                 if (cols[0].length() == 0) {
@@ -216,7 +215,7 @@ public class ItemFileInterfaceContoroller implements Serializable {
         csvConfig.setQuote('"');
         csvConfig.setSkipLines(1);
         try {
-            File csvFile = this.getFile("/tmp/miraitoauwifi" + this.dataFile.getSubmittedFileName());
+            File csvFile = this.getFile("miraitoauwifi" + this.dataFile.getSubmittedFileName());
             List<String[]> csv = Csv.load(csvFile, csvConfig, new StringArrayListHandler());
             for (String[] cols : csv) {
                 if (cols[1].length() == 0) {
@@ -288,7 +287,7 @@ public class ItemFileInterfaceContoroller implements Serializable {
     public String createTodenHomeItemExcel() {
         int count = 0;
         try {
-            File excelFile = this.getFile("/tmp/todenhome" + this.dataFile.getSubmittedFileName());
+            File excelFile = this.getFile("todenhome" + this.dataFile.getSubmittedFileName());
             Workbook workbook = WorkbookFactory.create(excelFile);
             Sheet sheet = workbook.getSheet("Sheet1");
             for (int rowNumber = sheet.getFirstRowNum() + 1; rowNumber <= sheet.getLastRowNum(); rowNumber++) {
@@ -470,7 +469,7 @@ public class ItemFileInterfaceContoroller implements Serializable {
         csvConfig.setQuote('"');
         csvConfig.setSkipLines(1);
         try {
-            File csvFile = this.getFile("/tmp/todenhome" + this.dataFile.getSubmittedFileName());
+            File csvFile = this.getFile("todenhome" + this.dataFile.getSubmittedFileName());
             List<String[]> csv = Csv.load(csvFile, "Windows-31J", csvConfig, new StringArrayListHandler());
             for (String[] cols : csv) {
                 if (cols[0].length() == 0) {
@@ -663,7 +662,7 @@ public class ItemFileInterfaceContoroller implements Serializable {
                     detail.append(System.lineSeparator());
                     detail.append(System.lineSeparator());
                     this.itemController.getSelected().setDetail(detail.toString());
-                    this.itemController.getSelected().setMemo("");
+                    this.itemController.getSelected().setMemo(cols[109] + "アポ1「」アポ2「」アポ3「」");
                     this.itemController.create();
                     count++;
                 }
@@ -696,7 +695,7 @@ public class ItemFileInterfaceContoroller implements Serializable {
         csvConfig.setQuote('"');
         csvConfig.setSkipLines(3);
         try {
-            File csvFile = this.getFile("/tmp/harmo" + this.dataFile.getSubmittedFileName());
+            File csvFile = this.getFile("harmo" + this.dataFile.getSubmittedFileName());
             List<String[]> csv = Csv.load(csvFile, csvConfig, new StringArrayListHandler());
             for (String[] cols : csv) {
                 if (cols[1].length() == 0) {
@@ -790,14 +789,15 @@ public class ItemFileInterfaceContoroller implements Serializable {
         this.harmoItemCount = harmoItemCount;
     }
 
-    private File getFile(String tempFile) {
+    private File getFile(String tempFileName) {
+        File file = new File(System.getProperty("java.io.tmpdir"), tempFileName);
+        String tempFile = file.getAbsolutePath();
         try {
             this.dataFile.write(tempFile);
 
         } catch (IOException e) {
 
         }
-        File file = new File(tempFile);
         return file;
     }
 }
