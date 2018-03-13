@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="#{bundle.CreateMessageTitle}"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:panelGroup id="messagePanel" layout="block">
+                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
+            </h:panelGroup>
+            <h:form>
+                <h:panelGrid columns="2">
+                    <h:outputLabel value="#{bundle.CreateMessageLabel_messageid}" for="messageid" />
+                    <h:inputText id="messageid" value="#{messageController.selected.messageid}" title="#{bundle.CreateMessageTitle_messageid}" required="true" requiredMessage="#{bundle.CreateMessageRequiredMessage_messageid}"/>
+                    <h:outputLabel value="#{bundle.CreateMessageLabel_subject}" for="subject" />
+                    <h:inputText id="subject" value="#{messageController.selected.subject}" title="#{bundle.CreateMessageTitle_subject}" required="true" requiredMessage="#{bundle.CreateMessageRequiredMessage_subject}"/>
+                    <h:outputLabel value="#{bundle.CreateMessageLabel_messagetime}" for="messagetime" />
+                    <h:inputText id="messagetime" value="#{messageController.selected.messagetime}" title="#{bundle.CreateMessageTitle_messagetime}" required="true" requiredMessage="#{bundle.CreateMessageRequiredMessage_messagetime}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.CreateMessageLabel_messagefrom}" for="messagefrom" />
+                    <h:inputText id="messagefrom" value="#{messageController.selected.messagefrom}" title="#{bundle.CreateMessageTitle_messagefrom}" required="true" requiredMessage="#{bundle.CreateMessageRequiredMessage_messagefrom}"/>
+                    <h:outputLabel value="#{bundle.CreateMessageLabel_body}" for="body" />
+                    <h:inputText id="body" value="#{messageController.selected.body}" title="#{bundle.CreateMessageTitle_body}" />
+                    <h:outputLabel value="#{bundle.CreateMessageLabel_messageto}" for="messageto" />
+                    <h:inputText id="messageto" value="#{messageController.selected.messageto}" title="#{bundle.CreateMessageTitle_messageto}" required="true" requiredMessage="#{bundle.CreateMessageRequiredMessage_messageto}"/>
+                    <h:outputLabel value="#{bundle.CreateMessageLabel_readst}" for="readst" />
+                    <h:inputText id="readst" value="#{messageController.selected.readst}" title="#{bundle.CreateMessageTitle_readst}" required="true" requiredMessage="#{bundle.CreateMessageRequiredMessage_readst}"/>
+                    <h:outputLabel value="#{bundle.CreateMessageLabel_readtime}" for="readtime" />
+                    <h:inputText id="readtime" value="#{messageController.selected.readtime}" title="#{bundle.CreateMessageTitle_readtime}" >
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.CreateMessageLabel_adddate}" for="adddate" />
+                    <h:inputText id="adddate" value="#{messageController.selected.adddate}" title="#{bundle.CreateMessageTitle_adddate}" required="true" requiredMessage="#{bundle.CreateMessageRequiredMessage_adddate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.CreateMessageLabel_addprogram}" for="addprogram" />
+                    <h:inputText id="addprogram" value="#{messageController.selected.addprogram}" title="#{bundle.CreateMessageTitle_addprogram}" required="true" requiredMessage="#{bundle.CreateMessageRequiredMessage_addprogram}"/>
+                    <h:outputLabel value="#{bundle.CreateMessageLabel_addcode}" for="addcode" />
+                    <h:inputText id="addcode" value="#{messageController.selected.addcode}" title="#{bundle.CreateMessageTitle_addcode}" required="true" requiredMessage="#{bundle.CreateMessageRequiredMessage_addcode}"/>
+                    <h:outputLabel value="#{bundle.CreateMessageLabel_updatedate}" for="updatedate" />
+                    <h:inputText id="updatedate" value="#{messageController.selected.updatedate}" title="#{bundle.CreateMessageTitle_updatedate}" required="true" requiredMessage="#{bundle.CreateMessageRequiredMessage_updatedate}">
+                        <f:convertDateTime pattern="MM/dd/yyyy HH:mm:ss" />
+                    </h:inputText>
+                    <h:outputLabel value="#{bundle.CreateMessageLabel_updateprogram}" for="updateprogram" />
+                    <h:inputText id="updateprogram" value="#{messageController.selected.updateprogram}" title="#{bundle.CreateMessageTitle_updateprogram}" required="true" requiredMessage="#{bundle.CreateMessageRequiredMessage_updateprogram}"/>
+                    <h:outputLabel value="#{bundle.CreateMessageLabel_updatecode}" for="updatecode" />
+                    <h:inputText id="updatecode" value="#{messageController.selected.updatecode}" title="#{bundle.CreateMessageTitle_updatecode}" required="true" requiredMessage="#{bundle.CreateMessageRequiredMessage_updatecode}"/>
+                    <h:outputLabel value="#{bundle.CreateMessageLabel_validrow}" for="validrow" />
+                    <h:inputText id="validrow" value="#{messageController.selected.validrow}" title="#{bundle.CreateMessageTitle_validrow}" required="true" requiredMessage="#{bundle.CreateMessageRequiredMessage_validrow}"/>
+                </h:panelGrid>
+                <br />
+                <h:commandLink action="#{messageController.create}" value="#{bundle.CreateMessageSaveLink}" />
+                <br />
+                <br />
+                <h:commandLink action="#{messageController.prepareList}" value="#{bundle.CreateMessageShowAllLink}" immediate="true"/>
+                <br />
+                <br />
+                <h:link outcome="/index" value="#{bundle.CreateMessageIndexLink}"/>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+
+</html>

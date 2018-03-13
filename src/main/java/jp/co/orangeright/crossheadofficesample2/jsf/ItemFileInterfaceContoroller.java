@@ -13,6 +13,7 @@ import java.io.IOException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.inject.Inject;
@@ -21,6 +22,7 @@ import jp.co.orangeright.crossheadofficesample2.ejb.CustomerFacade;
 import jp.co.orangeright.crossheadofficesample2.ejb.ItemFacade;
 import jp.co.orangeright.crossheadofficesample2.ejb.UserMFacade;
 import jp.co.orangeright.crossheadofficesample2.entity.Item;
+import jp.co.orangeright.crossheadofficesample2.entity.UserM;
 import jp.co.orangeright.crossheadofficesample2.jsf.item.ItemSearchCondition;
 import jp.co.orangeright.crossheadofficesample2.jsf.util.JsfUtil;
 import org.apache.poi.ss.usermodel.Cell;
@@ -35,7 +37,7 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 @Named(value = "itemFileInterfaceContoroller")
 @SessionScoped
 public class ItemFileInterfaceContoroller implements Serializable {
-
+    
     private Part dataFile;
     @Inject
     private ItemController itemController;
@@ -50,21 +52,27 @@ public class ItemFileInterfaceContoroller implements Serializable {
     private Integer miraitoWifiItemCount;
     private Integer todenHomeItemCount;
     private Integer harmoItemCount;
+    @Inject
+    transient private OrangeRightMailBean mailBean;
+    @Inject
+    private MessageController messageController;
+    @Inject
+    private LoginController loginController;
 
     /**
      * Creates a new instance of ItemFileInterfaceContoroller
      */
     public ItemFileInterfaceContoroller() {
     }
-
+    
     public Part getDataFile() {
         return dataFile;
     }
-
+    
     public void setDataFile(Part dataFile) {
         this.dataFile = dataFile;
     }
-
+    
     public String createWifiItem() {
         int count = 0;
         CsvConfig csvConfig = new CsvConfig();
@@ -83,7 +91,7 @@ public class ItemFileInterfaceContoroller implements Serializable {
                 itemCondition.setItemcd(cols[0]);
                 List<Item> itemList = this.itemEjb.findAll(itemCondition);
                 if (itemList.size() > 0) {
-
+                    
                 } else {
                     this.itemController.prepareCreate();
                     this.itemController.getSelected().setItemcd(cols[0]);
@@ -127,7 +135,7 @@ public class ItemFileInterfaceContoroller implements Serializable {
         }
         return null;
     }
-
+    
     public Integer getWifiItemCount() {
         ItemSearchCondition iCon = new ItemSearchCondition();
         iCon.setCustomer(this.customerEjb.find(14541));
@@ -135,11 +143,11 @@ public class ItemFileInterfaceContoroller implements Serializable {
         this.setWifiItemCount(this.itemEjb.countItemid(iCon));
         return this.wifiItemCount;
     }
-
+    
     public void setWifiItemCount(Integer wifiItemCount) {
         this.wifiItemCount = wifiItemCount;
     }
-
+    
     public String createWifiHoshItem() {
         int count = 0;
         CsvConfig csvConfig = new CsvConfig();
@@ -158,7 +166,7 @@ public class ItemFileInterfaceContoroller implements Serializable {
                 itemCondition.setItemcd(cols[0]);
                 List<Item> itemList = this.itemEjb.findAll(itemCondition);
                 if (itemList.size() > 0) {
-
+                    
                 } else {
                     this.itemController.prepareCreate();
                     this.itemController.getSelected().setItemcd(cols[0]);
@@ -195,18 +203,18 @@ public class ItemFileInterfaceContoroller implements Serializable {
         }
         return null;
     }
-
+    
     public Integer getWifihoshuItemCount() {
         ItemSearchCondition iCon = new ItemSearchCondition();
         iCon.setCustomer(this.customerEjb.find(6));
         this.setWifihoshuItemCount(this.itemEjb.countItemid(iCon));
         return wifihoshuItemCount;
     }
-
+    
     public void setWifihoshuItemCount(Integer wifihoshuItemCount) {
         this.wifihoshuItemCount = wifihoshuItemCount;
     }
-
+    
     public String createMiraitoWifiItem() {
         int count = 0;
         CsvConfig csvConfig = new CsvConfig();
@@ -225,7 +233,7 @@ public class ItemFileInterfaceContoroller implements Serializable {
                 itemCondition.setItemcd(cols[1]);
                 List<Item> itemList = this.itemEjb.findAll(itemCondition);
                 if (itemList.size() > 0) {
-
+                    
                 } else {
                     this.itemController.prepareCreate();
                     this.itemController.getSelected().setItemcd(cols[1]);
@@ -267,7 +275,7 @@ public class ItemFileInterfaceContoroller implements Serializable {
         }
         return null;
     }
-
+    
     public Integer getMiraitoWifiItemCount() {
         ItemSearchCondition iCon = new ItemSearchCondition();
         iCon.setCustomer(this.customerEjb.find(15820));
@@ -275,15 +283,15 @@ public class ItemFileInterfaceContoroller implements Serializable {
         this.setMiraitoWifiItemCount(this.itemEjb.countItemid(iCon));
         return this.miraitoWifiItemCount;
     }
-
+    
     public void setMiraitoWifiItemCount(Integer miraitoWifiItemCount) {
         this.miraitoWifiItemCount = miraitoWifiItemCount;
     }
-
+    
     public String createTodenHomeItem() {
         return this.createTodenHomeItemCsv();
     }
-
+    
     public String createTodenHomeItemExcel() {
         int count = 0;
         try {
@@ -448,7 +456,7 @@ public class ItemFileInterfaceContoroller implements Serializable {
         }
         return null;
     }
-
+    
     private String getTodenExcelCellValue(Cell cell) {
         int cellType = cell.getCellType();
         switch (cellType) {
@@ -460,7 +468,7 @@ public class ItemFileInterfaceContoroller implements Serializable {
                 return cell.getStringCellValue();
         }
     }
-
+    
     public String createTodenHomeItemCsv() {
         int count = 0;
         CsvConfig csvConfig = new CsvConfig();
@@ -481,11 +489,17 @@ public class ItemFileInterfaceContoroller implements Serializable {
                 List<Item> itemList = this.itemEjb.findAll(itemCondition);
                 if (itemList.size() > 0) {
                     //登録があったら何もしない。
+                    JsfUtil.addErrorMessage(itemCd + " is exist.");
                 } else {
                     this.itemController.prepareCreate();
                     this.itemController.getSelected().setItemcd(itemCd);
                     this.itemController.getSelected().setCustomerid(this.customerEjb.find(31925));
-                    this.itemController.getSelected().setUserid(this.userEjb.find("mitanto"));
+//                    if (this.isTantofuriwake(cols[44].trim())) {
+//                        this.itemController.getSelected().setUserid(this.userEjb.find(cols[44].trim()));
+//                        
+//                    }
+                    UserM user = this.validUser(cols[44].trim());
+                    this.itemController.getSelected().setUserid(this.userEjb.find(user.getUserid()));
                     StringBuilder detail = new StringBuilder();
                     detail.append("/****** 東電　おうちで安心 ******/");
                     detail.append(System.lineSeparator());
@@ -557,113 +571,107 @@ public class ItemFileInterfaceContoroller implements Serializable {
                     detail.append(cols[62]);
                     detail.append(System.lineSeparator());
                     detail.append(System.lineSeparator());
+                    detail.append("ロックアカウント: ");
+                    detail.append(cols[63]);
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("ロックパスワード: ");
+                    detail.append(cols[64]);
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
                     detail.append("契約ステータス: ");
-                    detail.append(cols[79]);
-                    detail.append(System.lineSeparator());
-                    detail.append(System.lineSeparator());
-                    detail.append("契約者氏名_カナ: ");
-                    detail.append(cols[80]);
                     detail.append(cols[81]);
                     detail.append(System.lineSeparator());
                     detail.append(System.lineSeparator());
-                    detail.append("契約者氏名_漢字: ");
+                    detail.append("契約者氏名_カナ: ");
                     detail.append(cols[82]);
                     detail.append(cols[83]);
                     detail.append(System.lineSeparator());
                     detail.append(System.lineSeparator());
-                    detail.append("性別: ");
+                    detail.append("契約者氏名_漢字: ");
                     detail.append(cols[84]);
+                    detail.append(cols[85]);
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("性別: ");
+                    detail.append(cols[86]);
                     detail.append(System.lineSeparator());
                     detail.append(System.lineSeparator());
                     detail.append("契約者生年月日: ");
-                    detail.append(cols[85]);
-                    detail.append("/");
-                    detail.append(cols[86]);
-                    detail.append("/");
                     detail.append(cols[87]);
+                    detail.append("/");
+                    detail.append(cols[88]);
+                    detail.append("/");
+                    detail.append(cols[89]);
                     detail.append(System.lineSeparator());
                     detail.append(System.lineSeparator());
-//                    detail.append("契約者住所_郵便番号: ");
-//                    detail.append(cols[88]);
-//                    detail.append(System.lineSeparator());
-//                    detail.append("契約者住所: ");
-//                    detail.append(cols[89]);
-//                    detail.append(cols[90]);
-//                    detail.append(cols[91]);
-//                    detail.append(cols[92]);
-//                    detail.append(cols[93]);
-//                    detail.append(cols[94]);
-//                    detail.append(System.lineSeparator());
-//                    detail.append(System.lineSeparator());
-//                    detail.append("契約者連絡先: ");
-//                    detail.append(cols[95]);
-//                    detail.append("-");
-//                    detail.append(cols[96]);
-//                    detail.append("-");
-//                    detail.append(cols[97]);
-//                    detail.append(System.lineSeparator());
-//                    detail.append(System.lineSeparator());
-//                    detail.append("契約者連絡先_携帯番号: ");
-//                    detail.append(cols[98]);
-//                    detail.append("-");
-//                    detail.append(cols[99]);
-//                    detail.append("-");
-//                    detail.append(cols[100]);
-//                    detail.append(System.lineSeparator());
-//                    detail.append(System.lineSeparator());
-//                    detail.append("メールアドレス: ");
-//                    detail.append(cols[101]);
-//                    detail.append(System.lineSeparator());
-//                    detail.append(System.lineSeparator());
                     detail.append("設置先住所区分: ");
-                    detail.append(cols[102]);
+                    detail.append(cols[104]);
                     detail.append(System.lineSeparator());
                     detail.append(System.lineSeparator());
-//                    detail.append("設置先情報_氏名_カナ: ");
-//                    detail.append(cols[103]);
-//                    detail.append(cols[104]);
-//                    detail.append(System.lineSeparator());
-//                    detail.append(System.lineSeparator());
-//                    detail.append("設置先情報_氏名_漢字: ");
-//                    detail.append(cols[105]);
-//                    detail.append(cols[106]);
-//                    detail.append(System.lineSeparator());
-//                    detail.append(System.lineSeparator());
                     detail.append("設置先情報_郵便番号: ");
-                    detail.append(cols[107]);
+                    detail.append(cols[109]);
                     detail.append(System.lineSeparator());
                     detail.append("設置先情報_住所: ");
-                    detail.append(cols[108]);
-                    detail.append(cols[109]);
                     detail.append(cols[110]);
                     detail.append(cols[111]);
                     detail.append(cols[112]);
                     detail.append(cols[113]);
+                    detail.append(cols[114]);
+                    detail.append(cols[115]);
                     detail.append(System.lineSeparator());
                     detail.append(System.lineSeparator());
                     detail.append("設置先情報_連絡先: ");
-                    detail.append(cols[114]);
-                    detail.append("-");
-                    detail.append(cols[115]);
-                    detail.append("-");
                     detail.append(cols[116]);
-                    detail.append(System.lineSeparator());
-                    detail.append(System.lineSeparator());
-                    detail.append("設置先情報_連絡先_携帯番号: ");
+                    detail.append("-");
                     detail.append(cols[117]);
                     detail.append("-");
                     detail.append(cols[118]);
-                    detail.append("-");
+                    detail.append(System.lineSeparator());
+                    detail.append(System.lineSeparator());
+                    detail.append("設置先情報_連絡先_携帯番号: ");
                     detail.append(cols[119]);
+                    detail.append("-");
+                    detail.append(cols[120]);
+                    detail.append("-");
+                    detail.append(cols[121]);
                     detail.append(System.lineSeparator());
                     detail.append(System.lineSeparator());
                     detail.append("備考: ");
-                    detail.append(cols[120]);
+                    detail.append(cols[122]);
                     detail.append(System.lineSeparator());
                     detail.append(System.lineSeparator());
                     this.itemController.getSelected().setDetail(detail.toString());
-                    this.itemController.getSelected().setMemo(cols[109] + "アポ1「」アポ2「」アポ3「」");
+                    this.itemController.getSelected().setMemo(cols[111] + "アポ1「」アポ2「」アポ3「」");
                     this.itemController.create();
+                    String subject = user.getUsername() + "さんからの伝言メモ";
+                    String body = "下記案件が登録になりました。" + System.getProperty("line.separator")
+                            + System.getProperty("line.separator")
+                            + detail.toString();
+                    String to = user.getMobilemail();
+                    this.mailBean.setSub(subject);
+                    this.mailBean.setBody(body);
+                    this.mailBean.setTo(to);
+                    if (user.getMobilemail() != null && !"".equals(user.getMobilemail())) {
+                        this.mailBean.send();
+                    }
+                    if (user.getUserid() != "mitanto") {
+                        this.messageController.prepareCreate();
+                        this.messageController.getSelected().setSubject(subject);
+                        this.messageController.getSelected().setBody(body);
+                        this.messageController.getSelected().setMessageto(user.getUserid());
+                        this.messageController.getSelected().setMessagefrom("jimu");
+                        this.messageController.getSelected().setMessagetime(new Date());
+                        this.messageController.getSelected().setReadst(false);
+                        this.messageController.getSelected().setValidrow(true);
+                        this.messageController.getSelected().setAddcode(this.loginController.getLoginUser().getUserid());
+                        this.messageController.getSelected().setAdddate(new Date());
+                        this.messageController.getSelected().setAddprogram(this.getClass().getName());
+                        this.messageController.getSelected().setUpdatecode(this.loginController.getLoginUser().getUserid());
+                        this.messageController.getSelected().setUpdatedate(new Date());
+                        this.messageController.getSelected().setUpdateprogram(this.getClass().getName());
+                        this.messageController.create();
+                    }
                     count++;
                 }
             }
@@ -674,7 +682,7 @@ public class ItemFileInterfaceContoroller implements Serializable {
         }
         return null;
     }
-
+    
     public Integer getTodenHomeItemCount() {
         ItemSearchCondition iCon = new ItemSearchCondition();
         iCon.setCustomer(this.customerEjb.find(31925));
@@ -682,11 +690,29 @@ public class ItemFileInterfaceContoroller implements Serializable {
         this.setTodenHomeItemCount(this.itemEjb.countItemid(iCon));
         return todenHomeItemCount;
     }
-
+    
     public void setTodenHomeItemCount(Integer todenHomeItemCount) {
         this.todenHomeItemCount = todenHomeItemCount;
     }
-
+    
+    private boolean isTantofuriwake(String userid) {
+        if (userid == null || userid.equals("")) {
+            return false;
+        } else {
+            UserM user = this.userEjb.find(userid);
+            return user != null;
+        }
+    }
+    
+    private UserM validUser(String userid) {
+        UserM user = this.userEjb.find(userid);
+        if (user == null) {
+            return this.userEjb.find("mitanto");
+        } else {
+            return user;
+        }
+    }
+    
     public String createHarmoItem() {
         int count = 0;
         CsvConfig csvConfig = new CsvConfig();
@@ -770,33 +796,33 @@ public class ItemFileInterfaceContoroller implements Serializable {
             }
             csvFile.delete();
             JsfUtil.addSuccessMessage(count + "件登録しました。");
-
+            
         } catch (Exception e) {
             String msg = e.getLocalizedMessage();
             return null;
         }
         return null;
     }
-
+    
     public Integer getHarmoItemCount() {
         ItemSearchCondition iCon = new ItemSearchCondition();
         iCon.setCustomer(this.customerEjb.find(50227));
         this.setHarmoItemCount(this.itemEjb.countItemid(iCon));
         return harmoItemCount;
     }
-
+    
     public void setHarmoItemCount(Integer harmoItemCount) {
         this.harmoItemCount = harmoItemCount;
     }
-
+    
     private File getFile(String tempFileName) {
         File file = new File(System.getProperty("java.io.tmpdir"), tempFileName);
         String tempFile = file.getAbsolutePath();
         try {
             this.dataFile.write(tempFile);
-
+            
         } catch (IOException e) {
-
+            
         }
         return file;
     }

@@ -79,6 +79,11 @@ public class OrangeRightMailBean {
     }
 
     @Asynchronous
+    public String send() throws MessagingException {
+        return this.send(this.getTo(), this.getSub(), this.getBody());
+    }
+
+    @Asynchronous
     public String mailSendButtom() throws MessagingException {
         return this.send(this.getTo(), this.getSub(), this.getBody());
     }
