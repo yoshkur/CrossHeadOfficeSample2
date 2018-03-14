@@ -24,6 +24,7 @@ import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 import javax.inject.Inject;
+import javax.mail.MessagingException;
 import jp.co.orangeright.crossheadofficesample2.ejb.ItemFacade;
 import jp.co.orangeright.crossheadofficesample2.entity.Item;
 import jp.co.orangeright.crossheadofficesample2.entity.UserM;
@@ -139,7 +140,7 @@ public class NextdayscheduleController implements Serializable {
         cal.set(Calendar.HOUR, 0);
         cal.set(Calendar.MINUTE, 0);
         cal.set(Calendar.SECOND, 0);
-        cal.add(Calendar.DAY_OF_MONTH, 1);
+        cal.add(Calendar.DAY_OF_YEAR, 1);
         conditionTemp.setTurnStart(cal.getTime());
         conditionTemp.setTurnEnd(cal.getTime());
         conditionTemp.setCancel(Boolean.FALSE);
@@ -175,6 +176,12 @@ public class NextdayscheduleController implements Serializable {
             this.current.setUpdatedate(new Date());
             this.current.setUpdateprogram(this.getClass().getName());
             this.create();
+            this.mailBean.setTo(user.getMobilemail());
+            try {
+                this.mailBean.send();
+            } catch (MessagingException e) {
+                System.out.println(e.getLocalizedMessage());
+            }
         }
         return "/faces/index?faces-redirect=true";
     }
