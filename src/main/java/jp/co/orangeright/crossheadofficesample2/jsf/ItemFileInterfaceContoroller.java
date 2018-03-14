@@ -498,7 +498,7 @@ public class ItemFileInterfaceContoroller implements Serializable {
 //                        this.itemController.getSelected().setUserid(this.userEjb.find(cols[44].trim()));
 //                        
 //                    }
-                    UserM user = this.validUser(cols[44].trim());
+                    UserM user = this.validUser(cols[44].trim(), itemCd);
                     this.itemController.getSelected().setUserid(this.userEjb.find(user.getUserid()));
                     StringBuilder detail = new StringBuilder();
                     detail.append("/****** 東電　おうちで安心 ******/");
@@ -704,9 +704,10 @@ public class ItemFileInterfaceContoroller implements Serializable {
         }
     }
     
-    private UserM validUser(String userid) {
+    private UserM validUser(String userid, String itemCd) {
         UserM user = this.userEjb.find(userid);
         if (user == null) {
+                    JsfUtil.addErrorMessage(itemCd + ": " + userid + " is not exist.");
             return this.userEjb.find("mitanto");
         } else {
             return user;
