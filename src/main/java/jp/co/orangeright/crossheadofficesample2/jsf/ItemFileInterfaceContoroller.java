@@ -123,7 +123,7 @@ public class ItemFileInterfaceContoroller implements Serializable {
                     detail.append(System.lineSeparator());
                     detail.append(System.lineSeparator());
                     this.itemController.getSelected().setDetail(detail.toString());
-                    this.itemController.getSelected().setMemo("");
+                    this.itemController.getSelected().setMemo(cols[5].trim() + cols[6].trim());
                     this.itemController.create();
                     count++;
                 }
@@ -185,13 +185,14 @@ public class ItemFileInterfaceContoroller implements Serializable {
                     detail.append(System.lineSeparator());
                     detail.append(System.lineSeparator());
                     detail.append("住所: ");
-                    detail.append(cols[6]);
+                    String jusho = cols[6].trim();
+                    detail.append(jusho);
                     detail.append(System.lineSeparator());
                     detail.append(System.lineSeparator());
                     detail.append("案件名: ");
                     detail.append(cols[10]);
                     this.itemController.getSelected().setDetail(detail.toString());
-                    this.itemController.getSelected().setMemo("");
+                    this.itemController.getSelected().setMemo(jusho.substring(8, jusho.length()));
                     this.itemController.create();
                     count++;
                 }
