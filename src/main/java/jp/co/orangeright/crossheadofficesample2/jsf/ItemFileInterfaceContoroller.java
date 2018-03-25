@@ -408,10 +408,6 @@ public class ItemFileInterfaceContoroller implements Serializable {
                     detail.append(this.getTodenExcelCellValue(sheet.getRow(rowNumber).getCell(87)));
                     detail.append(System.lineSeparator());
                     detail.append(System.lineSeparator());
-//                    detail.append("設置先住所区分: ");
-//                    detail.append(this.getTodenExcelCellValue(sheet.getRow(rowNumber).getCell(102)));
-//                    detail.append(System.lineSeparator());
-//                    detail.append(System.lineSeparator());
                     detail.append("設置先情報_郵便番号: ");
                     detail.append(this.getTodenExcelCellValue(sheet.getRow(rowNumber).getCell(107)));
                     detail.append(System.lineSeparator());
@@ -495,10 +491,6 @@ public class ItemFileInterfaceContoroller implements Serializable {
                     this.itemController.prepareCreate();
                     this.itemController.getSelected().setItemcd(itemCd);
                     this.itemController.getSelected().setCustomerid(this.customerEjb.find(31925));
-//                    if (this.isTantofuriwake(cols[44].trim())) {
-//                        this.itemController.getSelected().setUserid(this.userEjb.find(cols[44].trim()));
-//                        
-//                    }
                     UserM user = this.validUser(cols[44].trim(), itemCd);
                     this.itemController.getSelected().setUserid(this.userEjb.find(user.getUserid()));
                     StringBuilder detail = new StringBuilder();
@@ -645,7 +637,7 @@ public class ItemFileInterfaceContoroller implements Serializable {
                     this.itemController.getSelected().setDetail(detail.toString());
                     this.itemController.getSelected().setMemo(cols[111] + "アポ1「」アポ2「」アポ3「」");
                     this.itemController.create();
-                    String subject = user.getUsername() + "さんからの伝言メモ";
+                    String subject = this.loginController.getLoginUserName() + "さんからの伝言メモ";
                     String body = "下記案件が登録になりました。" + System.getProperty("line.separator")
                             + System.getProperty("line.separator")
                             + detail.toString();
