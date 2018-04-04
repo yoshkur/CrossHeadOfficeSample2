@@ -77,7 +77,9 @@ public class ItemServlet extends HttpServlet {
                     "訪問予定",
                     "メモ",
                     "交通費",
-                    "送料",};
+                    "送料",
+                    "発送日",
+                    "経費メモ",};
                 csvColumns.add(header);
 
                 int PAGE_SIZE = 10;
