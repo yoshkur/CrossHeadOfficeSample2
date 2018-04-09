@@ -87,7 +87,9 @@ public class ItemAccontingServlet extends HttpServlet {
                     //                    "受付窓口名",
                     //                    "名称",
                     "交通費",
-                    "送料",};
+                    "送料",
+                    "発送日",
+                    "経費メモ",};
                 csvColumns.add(header);
 
                 int PAGE_SIZE = 10;
