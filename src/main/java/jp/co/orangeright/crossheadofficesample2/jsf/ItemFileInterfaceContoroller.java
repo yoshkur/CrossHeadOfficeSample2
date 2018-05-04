@@ -648,7 +648,7 @@ public class ItemFileInterfaceContoroller implements Serializable {
                     if (user.getMobilemail() != null && !"".equals(user.getMobilemail())) {
                         this.mailBean.send();
                     }
-                    if (user.getUserid() != "mitanto") {
+                    if (!"mitanto".equals(user.getUserid())) {
                         this.messageController.prepareCreate();
                         this.messageController.getSelected().setSubject(subject);
                         this.messageController.getSelected().setBody(body);
